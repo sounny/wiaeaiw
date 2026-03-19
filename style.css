@@ -503,23 +503,44 @@ header {
 .dot.yellow { background: #eab308; }
 .dot.green { background: #22c55e; }
 
-.card-body { padding: 20px; }
-.line { height: 10px; background: var(--bg-primary); margin-bottom: 10px; border-radius: 4px; }
-.l1 { width: 80%; }
-.l2 { width: 60%; }
+.card-body.terminal {
+  background: #0f172a;
+  height: calc(100% - 44px);
+  padding: 1.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
 
-.img-placeholder {
-  margin-top: 20px;
-  height: 150px;
-  background-color: #0f172a;
-  background-image:
-    linear-gradient(rgba(56, 189, 248, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(56, 189, 248, 0.1) 1px, transparent 1px);
-  background-size: 40px 40px;
-  border-radius: 8px;
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(56, 189, 248, 0.2);
+.terminal-prompt {
+  color: var(--accent-primary);
+  opacity: 0.8;
+}
+
+.terminal-content {
+  line-height: 1.5;
+}
+
+.terminal-text {
+  color: #a5f3fc;
+  text-shadow: 0 0 5px rgba(165, 243, 252, 0.4);
+}
+
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 1.1em;
+  background: var(--accent-primary);
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: cursor-blink 1s step-end infinite;
+}
+
+@keyframes cursor-blink {
+  50% { opacity: 0; }
 }
 
 /* ============================================

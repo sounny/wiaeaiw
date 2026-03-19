@@ -132,6 +132,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
     statNumbers.forEach(stat => statObserver.observe(stat));
   }
+
+  // Typewriter effect for terminal in hero card
+  const typewriterElement = document.getElementById('terminal-typewriter');
+  if (typewriterElement) {
+    const textToType = "AI for everyone";
+    let index = 0;
+    const typingSpeed = 150; // Slowly
+
+    function typeChar() {
+      if (index < textToType.length) {
+        typewriterElement.textContent += textToType.charAt(index);
+        index++;
+        setTimeout(typeChar, typingSpeed);
+      } else {
+        // Pause at the end before restarting
+        setTimeout(() => {
+          typewriterElement.textContent = "";
+          index = 0;
+          typeChar();
+        }, 3000);
+      }
+    }
+
+    // Start typing after a short initial delay
+    setTimeout(typeChar, 1000);
+  }
 });
 
 // Copy code functionality
