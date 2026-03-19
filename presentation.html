@@ -103,9 +103,23 @@
         z-index: 100;
         transition: all 0.2s;
       }
-      .exit-btn:hover {
+      .exit-btn:hover, .fullscreen-btn:hover {
         background: var(--accent-primary);
         border-color: var(--accent-primary);
+      }
+      .fullscreen-btn {
+        position: fixed;
+        top: 1.5rem;
+        right: 1.5rem;
+        background: rgba(255,255,255,0.1);
+        border: 1px solid var(--border-color);
+        color: var(--text-primary);
+        padding: 0.4rem 1rem;
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        z-index: 100;
+        transition: all 0.2s;
       }
       @media (max-width: 768px) {
         .two-col { grid-template-columns: 1fr; gap: 1.5rem; }
@@ -114,6 +128,7 @@
   </head>
   <body>
     <a href="index.html" class="exit-btn">&#8592; Back to Workshop</a>
+    <button class="fullscreen-btn" id="fullscreenBtn">&#9974; Fullscreen</button>
     <div class="progress-bar" id="progressBar"></div>
 
     <div class="presentation-wrapper">
@@ -340,6 +355,16 @@
         if (e.key === 'ArrowLeft') {
           e.preventDefault();
           if (current > 0) { current--; showSlide(current); }
+        }
+      });
+
+      document.getElementById('fullscreenBtn').addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen();
+          document.getElementById('fullscreenBtn').textContent = "Exit Fullscreen";
+        } else {
+          document.exitFullscreen();
+          document.getElementById('fullscreenBtn').textContent = "⛶ Fullscreen";
         }
       });
 
