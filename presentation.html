@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Presentation | AI Workshop: Skills in Motion</title>
+    <meta name="description" content="Interactive slide deck for the WIA-Europe AI Workshop exploring the $2 trillion AI economy, gender bias, and agentic AI paradigms." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      body { overflow: hidden; }
+      header { display: none; }
+      .slide-nav-hint {
+        position: fixed;
+        bottom: 5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        opacity: 0.5;
+        z-index: 100;
+      }
+      .slide-list {
+        list-style: none;
+        text-align: left;
+        max-width: 700px;
+        margin: 2rem auto 0;
+      }
+      .slide-list li {
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--border-color);
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .slide-list li .list-icon {
+        font-size: 1.5rem;
+      }
+      .slide-list li strong {
+        color: var(--text-primary);
+      }
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        max-width: 1000px;
+        text-align: left;
+        margin-top: 2rem;
+      }
+      .two-col-item h3 {
+        margin-bottom: 0.75rem;
+        font-size: 1.4rem;
+      }
+      .two-col-item p {
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+      .slide-img {
+        max-width: 400px;
+        height: auto;
+        border-radius: 16px;
+        border: 2px solid var(--border-color);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        margin: 2rem auto;
+      }
+      .flow-diagram {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .flow-box {
+        padding: 1rem 1.5rem;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        font-weight: 600;
+        font-family: var(--font-heading);
+        text-align: center;
+        min-width: 120px;
+      }
+      .flow-arrow {
+        font-size: 1.5rem;
+        color: var(--accent-primary);
+      }
+      .exit-btn {
+        position: fixed;
+        top: 1.5rem;
+        left: 1.5rem;
+        background: rgba(255,255,255,0.1);
+        border: 1px solid var(--border-color);
+        color: var(--text-primary);
+        padding: 0.4rem 1rem;
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        z-index: 100;
+        transition: all 0.2s;
+      }
+      .exit-btn:hover {
+        background: var(--accent-primary);
+        border-color: var(--accent-primary);
+      }
+      @media (max-width: 768px) {
+        .two-col { grid-template-columns: 1fr; gap: 1.5rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="index.html" class="exit-btn">&#8592; Back to Workshop</a>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="presentation-wrapper">
+
+      <!-- Slide 1: Title -->
+      <section class="slide active slide-image-bg" style="background-image: url('assets/hero_statue_ai.png');">
+        <p class="hero-badge" style="margin-bottom: 2rem;">WIA-Europe Symposium 2026</p>
+        <h1>The Agentic Shift: <span class="gradient-text">Skills in Motion</span></h1>
+        <p style="margin-bottom: 2rem;">A Workshop on AI Agency, Gender Equity, and the Future of Work</p>
+        <p style="font-size: 1rem; color: var(--accent-cyan);">Dr. Moulay Anwar Sounny-Slitine | International Space University</p>
+        <p style="font-size: 0.85rem; margin-top: 1rem;">May 6, 2026 | 13:00 CET</p>
+      </section>
+
+      <!-- Slide 2: Agenda -->
+      <section class="slide slide-gradient-1">
+        <h2>Today's <span class="gradient-text">Agenda</span></h2>
+        <ul class="slide-list">
+          <li><span class="list-icon">&#128200;</span> <strong>Part 1:</strong> The $2 Trillion AI Economy</li>
+          <li><span class="list-icon">&#9878;&#65039;</span> <strong>Part 2:</strong> Gender Bias in AI Adoption</li>
+          <li><span class="list-icon">&#129302;</span> <strong>Part 3:</strong> The Agentic Paradigm</li>
+          <li><span class="list-icon">&#128187;</span> <strong>Part 4:</strong> Hands-on Lab with Gemini CLI</li>
+          <li><span class="list-icon">&#10067;</span> <strong>Part 5:</strong> Q&A and Closing</li>
+        </ul>
+      </section>
+
+      <!-- Slide 3: AI Economy -->
+      <section class="slide slide-gradient-2">
+        <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-primary); margin-bottom: 1rem;">Part 1: The Economic Landscape</p>
+        <div class="big-stat">$2 Trillion</div>
+        <h2>Global AI Investment by 2026</h2>
+        <p style="margin-top: 1.5rem;">From healthcare to aerospace, AI is not a future technology. It is the present economic engine reshaping every industry, every career, and every skill requirement.</p>
+      </section>
+
+      <!-- Slide 4: Why It Matters -->
+      <section class="slide slide-gradient-1">
+        <h2>Why Should <span class="gradient-text">You</span> Care?</h2>
+        <div class="two-col">
+          <div class="two-col-item">
+            <h3 style="color: var(--accent-cyan);">&#128640; Career Velocity</h3>
+            <p>Professionals who adopt AI tools today are 2.3x more likely to be promoted within 3 years. The skill gap is widening, not closing.</p>
+          </div>
+          <div class="two-col-item">
+            <h3 style="color: var(--accent-purple);">&#128161; The New Literacy</h3>
+            <p>Just as spreadsheets redefined finance and CAD redefined engineering, AI literacy is becoming the baseline expectation across all fields.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 5: Gender Bias -->
+      <section class="slide slide-gradient-3">
+        <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-tertiary); margin-bottom: 1rem;">Part 2: The Adoption Gap</p>
+        <div class="big-stat">37%</div>
+        <h2>Female AI Adoption Gap</h2>
+        <p style="margin-top: 1.5rem;">Research shows women adopt AI tools at significantly lower rates than men. This is not about capability; it is about access, confidence, and representation.</p>
+      </section>
+
+      <!-- Slide 6: Root Causes -->
+      <section class="slide slide-gradient-1">
+        <h2>Where Does the <span class="gradient-text">Gap</span> Come From?</h2>
+        <div class="comparison-row">
+          <div class="comparison-box highlight-bad">
+            <h3 style="color: #ef4444;">&#10060; The Problem</h3>
+            <ul style="list-style: none; padding: 0; margin-top: 1rem; text-align: left;">
+              <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#8226; AI tools marketed in technical jargon</li>
+              <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#8226; Male-dominated developer communities</li>
+              <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#8226; Lack of relatable use cases</li>
+              <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#8226; "Imposter syndrome" amplification</li>
+            </ul>
+          </div>
+          <div class="comparison-box highlight-good">
+            <h3 style="color: #10b981;">&#9989; The Solution</h3>
+            <ul style="list-style: none; padding: 0; margin-top: 1rem; text-align: left;">
+              <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#8226; Hands-on, guided workshops</li>
+              <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#8226; Communities like WIA-Europe</li>
+              <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#8226; Practical, domain-relevant exercises</li>
+              <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#8226; Visible female role models in AI</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 7: Agentic Paradigm intro -->
+      <section class="slide slide-gradient-2">
+        <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-primary); margin-bottom: 1rem;">Part 3: The Paradigm Shift</p>
+        <h1>From <span class="gradient-text">Prompter</span> to <span class="gradient-text">Orchestrator</span></h1>
+        <p style="margin-top: 1.5rem;">The most profound shift in AI is not about smarter models. It is about AI that <strong>acts</strong> rather than <strong>answers</strong>.</p>
+      </section>
+
+      <!-- Slide 8: Old vs New -->
+      <section class="slide slide-gradient-1">
+        <h2>The <span class="gradient-text">Agentic</span> Difference</h2>
+        <div class="comparison-row">
+          <div class="comparison-box" style="background: rgba(148, 163, 184, 0.1); border: 1px solid var(--border-color);">
+            <h3 style="color: var(--text-secondary);">&#128172; Traditional AI (Chatbot)</h3>
+            <ul style="list-style: none; padding: 0; margin-top: 1rem; text-align: left;">
+              <li style="padding: 0.5rem 0; color: var(--text-secondary);">You ask a question</li>
+              <li style="padding: 0.5rem 0; color: var(--text-secondary);">AI gives a text answer</li>
+              <li style="padding: 0.5rem 0; color: var(--text-secondary);">You copy-paste manually</li>
+              <li style="padding: 0.5rem 0; color: var(--text-secondary);">Single turn interaction</li>
+            </ul>
+          </div>
+          <div class="comparison-box" style="background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3);">
+            <h3 style="color: var(--accent-primary);">&#129302; Agentic AI</h3>
+            <ul style="list-style: none; padding: 0; margin-top: 1rem; text-align: left;">
+              <li style="padding: 0.5rem 0; color: var(--text-secondary);">You define a goal</li>
+              <li style="padding: 0.5rem 0; color: var(--text-secondary);">AI plans a multi-step strategy</li>
+              <li style="padding: 0.5rem 0; color: var(--text-secondary);">AI reads files, writes code, runs tests</li>
+              <li style="padding: 0.5rem 0; color: var(--text-secondary);">Autonomous execution loop</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 9: Agentic Flow -->
+      <section class="slide slide-gradient-2">
+        <h2>The Agentic <span class="gradient-text">Workflow</span></h2>
+        <div class="flow-diagram">
+          <div class="flow-box" style="border-color: var(--accent-primary);">&#127919; Goal</div>
+          <span class="flow-arrow">&#8594;</span>
+          <div class="flow-box" style="border-color: var(--accent-secondary);">&#128064; Observe</div>
+          <span class="flow-arrow">&#8594;</span>
+          <div class="flow-box" style="border-color: var(--accent-tertiary);">&#129504; Plan</div>
+          <span class="flow-arrow">&#8594;</span>
+          <div class="flow-box" style="border-color: var(--success-color);">&#9881;&#65039; Act</div>
+          <span class="flow-arrow">&#8594;</span>
+          <div class="flow-box" style="border-color: var(--warning-color);">&#128269; Reflect</div>
+          <span class="flow-arrow">&#8635;</span>
+        </div>
+        <p style="margin-top: 2rem; max-width: 700px;">The agent cycles through observe, plan, act, and reflect until the goal is achieved. You are the director. The AI is the team.</p>
+      </section>
+
+      <!-- Slide 10: Agentic Architecture -->
+      <section class="slide slide-gradient-3">
+        <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-cyan); margin-bottom: 1rem;">Part 4: The Agentic Architecture</p>
+        <h2>Building the AI <span class="highlight">Brain</span></h2>
+        <div class="two-col">
+          <div class="two-col-item">
+            <h3 style="color: var(--accent-primary);">📄 agents.md</h3>
+            <p>The <strong>Constitution</strong>. Persistent rules and directives that define the AI's role, technical constraints, and operating style for the entire project.</p>
+          </div>
+          <div class="two-col-item">
+            <h3 style="color: var(--accent-secondary);">📑 gemini.md</h3>
+            <p>The <strong>Workspace Context</strong>. Task-specific roadmaps and analysis generated by the AI to maintain state and memory across prompts.</p>
+          </div>
+        </div>
+        <p style="margin-top: 2rem; font-size: 1.1rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">We don't just prompt; we <strong>architect</strong> persistence.</p>
+      </section>
+
+      <!-- Slide 11: Gemini CLI -->
+      <section class="slide slide-gradient-1">
+        <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-tertiary); margin-bottom: 1rem;">Part 5: Hands-on Lab</p>
+        <h1>Meet <span class="gradient-text">Gemini CLI</span></h1>
+        <p style="margin-top: 1.5rem; max-width: 700px;">Google's open-source command-line AI agent. It lives in your terminal, reads your <code>agents.md</code>, and executes your mission.</p>
+        <div class="flow-diagram" style="margin-top: 3rem;">
+          <div class="flow-box" style="border-color: var(--accent-primary);">agents.md</div>
+          <span class="flow-arrow">+</span>
+          <div class="flow-box" style="border-color: var(--accent-secondary);">Terminal</div>
+          <span class="flow-arrow">+</span>
+          <div class="flow-box" style="border-color: var(--accent-tertiary);">Gemini CLI</div>
+          <span class="flow-arrow">=</span>
+          <div class="flow-box" style="border-color: var(--success-color); background: rgba(16, 185, 129, 0.15);">&#128640; Action</div>
+        </div>
+      </section>
+
+      <!-- Slide 12: Let's Go -->
+      <section class="slide slide-image-bg" style="background-image: url('assets/hero_statue_main.png');">
+        <h1 style="margin-bottom: 2rem;">Let's <span class="gradient-text">Build</span></h1>
+        <p style="max-width: 600px;">Head to the lab page to build your agentic workspace and watch the AI write its own roadmap.</p>
+        <a href="lab.html" class="cta-button" style="margin-top: 2rem; font-size: 1.1rem; padding: 1rem 3rem;">Open Lab &#8594;</a>
+      </section>
+
+      <!-- Slide 13: Thank You -->
+      <section class="slide slide-gradient-1">
+        <h1>Thank <span class="gradient-text">You</span></h1>
+        <p style="border-bottom: 2rem;">Keep building. Keep leading.</p>
+        <div style="display: flex; gap: 2rem; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+          <img src="assets/WIA-E-Strasbourg.png" alt="WIA-Europe Strasbourg" style="height: 80px; border-radius: 8px; background: rgba(255,255,255,0.1); padding: 10px; border: 1px solid rgba(255,255,255,0.2);">
+          <img src="assets/LOGO_ISU_Darkblue.png" alt="ISU" style="height: 50px; background: white; padding: 8px; border-radius: 8px;">
+        </div>
+        <div style="margin-top: 3rem;">
+          <a href="https://www.wia-europe.org/wia-europe-symposium/" target="_blank" class="secondary-button">WIA-Europe Symposium</a>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="slide-number" id="slideNumber">1 / 12</div>
+    <div class="slide-controls">
+      <button class="slide-btn" id="prevBtn" aria-label="Previous slide">&#8592; Prev</button>
+      <button class="slide-btn" id="nextBtn" aria-label="Next slide">Next &#8594;</button>
+    </div>
+    <div class="slide-nav-hint">Use arrow keys or buttons to navigate</div>
+
+    <script>
+      const slides = document.querySelectorAll('.slide');
+      const slideNumberEl = document.getElementById('slideNumber');
+      const progressBar = document.getElementById('progressBar');
+      let current = 0;
+
+      function showSlide(index) {
+        slides.forEach(s => s.classList.remove('active'));
+        slides[index].classList.add('active');
+        slideNumberEl.textContent = `${index + 1} / ${slides.length}`;
+        progressBar.style.width = `${((index + 1) / slides.length) * 100}%`;
+      }
+
+      document.getElementById('nextBtn').addEventListener('click', () => {
+        if (current < slides.length - 1) { current++; showSlide(current); }
+      });
+
+      document.getElementById('prevBtn').addEventListener('click', () => {
+        if (current > 0) { current--; showSlide(current); }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+          e.preventDefault();
+          if (current < slides.length - 1) { current++; showSlide(current); }
+        }
+        if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          if (current > 0) { current--; showSlide(current); }
+        }
+      });
+
+      showSlide(0);
+    </script>
+  </body>
+</html>

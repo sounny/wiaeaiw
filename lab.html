@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hands-on Lab | AI Workshop: Skills in Motion</title>
+    <meta name="description" content="Follow along with the Gemini CLI hands-on lab. Run your first agentic queries, build multi-step workflows, and generate code autonomously." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <div class="logo"><a href="index.html">AI<span class="highlight">Workshop</span></a></div>
+        <button class="mobile-menu-btn" aria-label="Toggle navigation">
+          <span class="hamburger"></span>
+        </button>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="setup.html">Setup Guide</a></li>
+          <li><a href="presentation.html">Presentation</a></li>
+          <li><a href="lab.html" class="active">Lab</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <div class="breadcrumb"><a href="index.html">Home</a> / Hands-on Lab</div>
+        <div class="module-badge">Interactive Lab</div>
+        <h1>Hands-on <span class="gradient-text">Lab</span></h1>
+        <p class="page-subtitle">Follow along step by step. Each task builds on the previous one, progressing from simple queries to full agentic workflows.</p>
+      </section>
+
+      <div class="lab-content">
+
+        <!-- Task 1: Building the Agentic Workspace -->
+        <div class="lab-task" id="task-1">
+          <div class="step-header" style="margin: -2rem -2rem 2rem; border-radius: 16px 16px 0 0;">
+            <span class="step-badge">Task 1</span>
+            <h2>The Agentic Workspace</h2>
+            <span class="task-time">5 min</span>
+          </div>
+
+          <p>Before asking the AI to "do" things, we must build a <strong>persistent workspace</strong>. This structure allows the AI to understand its role, the project rules, and its memory across different sessions.</p>
+
+          <h3 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-cyan);">&#128193; Create your Project Folder</h3>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">Terminal</span>
+              <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+            </div>
+            <div class="code-content">mkdir my-agentic-app
+cd my-agentic-app
+mkdir .gemini
+touch agents.md
+code .</div>
+          </div>
+
+          <p>Open this folder in VS Code. Notice the <code>agents.md</code> file. This will be the "Brain" of your project.</p>
+
+          <div class="info-callout">
+            <span>&#128161;</span>
+            <div><strong>Persistence:</strong> By putting instructions in <code>agents.md</code>, we ensure that every time we launch the AI in this folder, it automatically adopts the personality and rules we've defined.</div>
+          </div>
+        </div>
+
+        <!-- Task 2: Architecture & Operating Directives -->
+        <div class="lab-task" id="task-2">
+          <div class="step-header" style="margin: -2rem -2rem 2rem; border-radius: 16px 16px 0 0;">
+            <span class="step-badge">Task 2</span>
+            <h2>Operating Directives</h2>
+            <span class="task-time">10 min</span>
+          </div>
+
+          <p>AI agents are most effective when they have a clear "Constitution." Let's define one. Open <code>agents.md</code> and paste the following:</p>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">Markdown (agents.md)</span>
+              <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+            </div>
+            <div class="code-content"># Agent Identity & Directives
+
+## 1. Primary Role
+I am a Senior Web Developer assisting with the WIA-Europe Symposium website.
+
+## 2. Technical Rules
+- Use only Vanilla HTML and Modern CSS (no frameworks).
+- Use vibrant gradients and glassmorphism in designs.
+- Ensure all images have descriptive alt tags.
+
+## 3. Communication Style
+- Be direct, technical, and professional.
+- Use arrow symbols (&#8594;) in call-to-action buttons.</div>
+          </div>
+
+          <h3 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-purple);">&#129302; Testing the Memory</h3>
+          <p>Launch the Gemini CLI and ask it to describe its role. It will read the <code>agents.md</code> file and answer accordingly.</p>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">Gemini Prompt</span>
+              <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+            </div>
+            <div class="code-content">Who are you and what are your rules for this project?</div>
+          </div>
+
+          <div class="success-callout">
+            <span>&#9989;</span>
+            <div><strong>Checkpoint:</strong> The AI should confirm it is a "Senior Web Developer" and list the rules you just wrote in the file. It is now "anchored" to your workspace.</div>
+          </div>
+        </div>
+
+        <!-- Task 3: AI-Driven Architecture -->
+        <div class="lab-task" id="task-3">
+          <div class="step-header" style="margin: -2rem -2rem 2rem; border-radius: 16px 16px 0 0;">
+            <span class="step-badge">Task 3</span>
+            <h2>The AI Writes Its Own Brain</h2>
+            <span class="task-time">15 min</span>
+          </div>
+
+          <p>Instead of us writing the rules, let's have the AI <strong>analyze our project and write its own operating directives</strong>. This ensures the AI always understands the state of the codebase.</p>
+
+          <h3 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-cyan);">&#129504; Generate gemini.md</h3>
+          <p>Ask the AI to create a specialized instruction file for a specific feature.</p>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">Gemini Prompt</span>
+              <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+            </div>
+            <div class="code-content">Analyze my project and create a `gemini.md` file in the root. 
+In this file, define a "Feature Roadmap" for building a landing page that respects the rules in `agents.md`.</div>
+          </div>
+
+          <div class="info-callout">
+            <span>&#128161;</span>
+            <div><strong>Why this works:</strong> By having the AI write <code>.md</code> documentation for itself, we create a feedback loop. The AI documents what it understands, and its next responses are based on that documentation.</div>
+          </div>
+
+          <h3 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-purple);">&#128640; Execute the Roadmap</h3>
+          <p>Now, tell it to follow the roadmap it just wrote:</p>
+          <div class="code-block">
+            <div class="code-content">Based on the roadmap in gemini.md, build the first section of the landing page.</div>
+          </div>
+        </div>
+
+        <!-- Task 4: The Agentic Loop -->
+        <div class="lab-task" id="task-4">
+          <div class="step-header" style="margin: -2rem -2rem 2rem; border-radius: 16px 16px 0 0;">
+            <span class="step-badge">Task 4</span>
+            <h2>Iterating on Every Prompt</h2>
+            <span class="task-time">10 min</span>
+          </div>
+
+          <p>The final step is <strong>context management</strong>. When projects get large, the AI needs to know how to navigate folders. This is the difference between a chatbot and a true agent.</p>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">Gemini Prompt</span>
+              <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+            </div>
+            <div class="code-content">Update `agents.md` to include a "Project Structure" section. 
+List all current files and describe their purpose. 
+Then, add a new rule: "Always check agents.md before proposing any code change."</div>
+          </div>
+
+          <p style="margin-top: 1rem;">Now, try to break a rule. Ask it to "Use Tailwind CSS."</p>
+
+          <div class="warning-callout">
+            <span>&#9888;&#65039;</span>
+            <div><strong>Observe:</strong> If the <code>agents.md</code> is working, the AI should <strong>refuse</strong> or warn you that Tailwind is against the "Vanilla CSS" rule you established in Task 2.</div>
+          </div>
+
+          <div class="success-callout">
+            <span>&#9989;</span>
+            <div><strong>Final Checkpoint:</strong> You have built an agentic environment where the AI follows persistent rules, documents its own progress, and maintains a consistent project architecture.</div>
+          </div>
+        </div>
+
+        <!-- Challenge -->
+        <div class="lab-task" id="challenge" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%); border-color: rgba(168, 85, 247, 0.3);">
+          <div class="step-header" style="margin: -2rem -2rem 2rem; border-radius: 16px 16px 0 0; background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(236, 72, 153, 0.2));">
+            <span class="step-badge" style="background: linear-gradient(135deg, #a855f7, #ec4899);">Challenge</span>
+            <h2>Design Your Own Workflow</h2>
+          </div>
+
+          <p>Now it is your turn. Using what you have learned, design and execute your own agentic workflow. Here are some ideas:</p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+            <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 12px; padding: 1.5rem;">
+              <div style="font-size: 2rem; margin-bottom: 0.5rem;">&#127760;</div>
+              <h3 style="margin-bottom: 0.5rem;">Data Dashboard</h3>
+              <p style="color: var(--text-secondary); font-size: 0.9rem;">Ask the agent to create an interactive data dashboard that visualizes climate or space data.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 1.5rem;">
+              <div style="font-size: 2rem; margin-bottom: 0.5rem;">&#128221;</div>
+              <h3 style="margin-bottom: 0.5rem;">Research Summary</h3>
+              <p style="color: var(--text-secondary); font-size: 0.9rem;">Ask the agent to analyze a research paper (paste text) and generate an executive summary with key takeaways.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(34, 211, 238, 0.3); border-radius: 12px; padding: 1.5rem;">
+              <div style="font-size: 2rem; margin-bottom: 0.5rem;">&#129302;</div>
+              <h3 style="margin-bottom: 0.5rem;">Automation Script</h3>
+              <p style="color: var(--text-secondary); font-size: 0.9rem;">Ask the agent to write a Python script that automates a tedious task in your work (e.g., renaming files, parsing data).</p>
+            </div>
+          </div>
+
+          <div class="info-callout">
+            <span>&#127942;</span>
+            <div><strong>Pro Tip:</strong> The more specific and structured your prompt, the better the result. Frame your request like a project brief: define the goal, the deliverables, and any constraints.</div>
+          </div>
+        </div>
+
+        <!-- Wrap Up -->
+        <div style="max-width: 900px; margin: 0 auto;">
+          <div class="cta-box">
+            <h3>Congratulations!</h3>
+            <p>You have completed the AI Workshop: Skills in Motion. You now understand the agentic paradigm and have hands-on experience directing AI agents.</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem;">
+              <a href="index.html" class="primary-btn">Back to Home</a>
+              <a href="https://www.wia-europe.org/wia-europe-symposium/" target="_blank" class="secondary-button">WIA-Europe Symposium</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container footer-content">
+        <div class="footer-brand">
+          <div class="logo">AI<span class="highlight">Workshop</span></div>
+          <p>&copy; 2026 Made with &#10084;&#65039; by Dr. Sounny</p>
+          <div class="footer-sponsor">
+            <p>Sponsored by</p>
+            <a href="https://www.wia-europe.org/strasbourg-2/" target="_blank">
+              <img src="assets/WIA-E-Strasbourg.png" alt="WIA-Europe Strasbourg Regional Network">
+            </a>
+          </div>
+        </div>
+        <div class="footer-nav">
+          <h4>Workshop</h4>
+          <a href="setup.html">Setup Guide</a>
+          <a href="presentation.html">Presentation</a>
+          <a href="lab.html">Lab</a>
+        </div>
+        <div class="footer-nav">
+          <h4>Resources</h4>
+          <a href="https://www.wia-europe.org/wia-europe-symposium/" target="_blank">WIA-Europe Symposium</a>
+          <a href="https://www.eventbrite.co.uk/e/wia-europe-symposium-2026-skills-in-motion-tickets-1984549074705" target="_blank">Register (Eventbrite)</a>
+          <a href="https://www.isunet.edu" target="_blank">ISU Website</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
