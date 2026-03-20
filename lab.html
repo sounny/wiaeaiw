@@ -36,149 +36,87 @@
 
       <div class="lab-content">
 
-        <!-- Task 1: Building the Agentic Workspace -->
-        <div class="lab-task" id="task-1">
-          <div class="step-header" style="margin: -2rem -2rem 2rem; border-radius: 16px 16px 0 0;">
-            <span class="step-badge">Task 1</span>
-            <h2>The Agentic Workspace</h2>
-            <span class="task-time">5 min</span>
-          </div>
-
-          <p>Before asking the AI to "do" things, we must build a <strong>persistent workspace</strong>. This structure allows the AI to understand its role, the project rules, and its memory across different sessions.</p>
-
-          <h3 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-cyan);">&#128193; Create your Project Folder</h3>
-
-          <div class="code-block">
-            <div class="code-header">
-              <span class="code-lang">Terminal</span>
-              <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
-            </div>
-            <div class="code-content">mkdir my-agentic-app
-cd my-agentic-app
-mkdir .gemini
-touch agents.md
-code .</div>
-          </div>
-
-          <p>Open this folder in VS Code. Notice the <code>agents.md</code> file. This will be the "Brain" of your project.</p>
-
-          <div class="info-callout">
-            <span>&#128161;</span>
-            <div><strong>Persistence:</strong> By putting instructions in <code>agents.md</code>, we ensure that every time we launch the AI in this folder, it automatically adopts the personality and rules we've defined.</div>
-          </div>
-        </div>
-
-        <!-- Task 2: Architecture & Operating Directives -->
-        <div class="lab-task" id="task-2">
-          <div class="step-header" style="margin: -2rem -2rem 2rem; border-radius: 16px 16px 0 0;">
-            <span class="step-badge">Task 2</span>
-            <h2>Operating Directives</h2>
+        <!-- Lab A: Explain & Verify (Safety First) -->
+        <div class="lab-task" id="lab-a">
+          <div class="step-header" style="margin: -2rem -2rem 2rem; border-radius: 16px 16px 0 0; background: rgba(59, 130, 246, 0.1);">
+            <span class="step-badge" style="background: var(--accent-cyan);">Lab A</span>
+            <h2>Explain & Verify</h2>
             <span class="task-time">10 min</span>
           </div>
 
-          <p>AI agents are most effective when they have a clear "Constitution." Let's define one. Open <code>agents.md</code> and paste the following:</p>
+          <p>The first rule of Agentic AI: <strong>Trust, but Verify.</strong> Before letting an AI write code, we use it to explain and audit existing logic. This eliminates the "Black Box" effect and builds technical confidence.</p>
 
-          <div class="code-block">
-            <div class="code-header">
-              <span class="code-lang">Markdown (agents.md)</span>
-              <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
-            </div>
-            <div class="code-content"># Agent Identity & Directives
-
-## 1. Primary Role
-I am a Senior Web Developer assisting with the WIA-Europe Symposium website.
-
-## 2. Technical Rules
-- Use only Vanilla HTML and Modern CSS (no frameworks).
-- Use vibrant gradients and glassmorphism in designs.
-- Ensure all images have descriptive alt tags.
-
-## 3. Communication Style
-- Be direct, technical, and professional.
-- Use arrow symbols (&#8594;) in call-to-action buttons.</div>
-          </div>
-
-          <h3 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-purple);">&#129302; Testing the Memory</h3>
-          <p>Launch the Gemini CLI and ask it to describe its role. It will read the <code>agents.md</code> file and answer accordingly.</p>
+          <h3 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-cyan);">&#128269; Step 1: Human-in-the-Loop Audit</h3>
+          <p>Paste a complex snippet of code into your terminal gemini prompt and ask it to explain it step-by-step.</p>
 
           <div class="code-block">
             <div class="code-header">
               <span class="code-lang">Gemini Prompt</span>
               <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
             </div>
-            <div class="code-content">Who are you and what are your rules for this project?</div>
+            <div class="code-content">Explicate this code chunk and identify potential edge cases:
+[Paste your index.html here]</div>
           </div>
 
-          <div class="success-callout">
-            <span>&#9989;</span>
-            <div><strong>Checkpoint:</strong> The AI should confirm it is a "Senior Web Developer" and list the rules you just wrote in the file. It is now "anchored" to your workspace.</div>
+          <div class="info-callout">
+            <span>&#128161;</span>
+            <div><strong>Pedagogical Goal:</strong> This shift moves the participant from a "consumer" to an "auditor" of AI code, a key skill for technical leadership.</div>
           </div>
         </div>
 
-        <!-- Task 3: AI-Driven Architecture -->
-        <div class="lab-task" id="task-3">
-          <div class="step-header" style="margin: -2rem -2rem 2rem; border-radius: 16px 16px 0 0;">
-            <span class="step-badge">Task 3</span>
-            <h2>The AI Writes Its Own Brain</h2>
+        <!-- Lab B: Automate & Dry Run -->
+        <div class="lab-task" id="lab-b">
+          <div class="step-header" style="margin: -2rem -2rem 2rem; border-radius: 16px 16px 0 0; background: rgba(16, 185, 129, 0.1);">
+            <span class="step-badge" style="background: var(--success-color);">Lab B</span>
+            <h2>Automate & Dry Run</h2>
             <span class="task-time">15 min</span>
           </div>
 
-          <p>Instead of us writing the rules, let's have the AI <strong>analyze our project and write its own operating directives</strong>. This ensures the AI always understands the state of the codebase.</p>
+          <p>Automation doesn't mean giving up control. We will now use the agent to automate a "boring" task (like adding meta tags or renaming files) using a <strong>Dry Run</strong> approach.</p>
 
-          <h3 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-cyan);">&#129504; Generate gemini.md</h3>
-          <p>Ask the AI to create a specialized instruction file for a specific feature.</p>
-
-          <div class="code-block">
-            <div class="code-header">
-              <span class="code-lang">Gemini Prompt</span>
-              <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
-            </div>
-            <div class="code-content">Analyze my project and create a `gemini.md` file in the root. 
-In this file, define a "Feature Roadmap" for building a landing page that respects the rules in `agents.md`.</div>
-          </div>
-
-          <div class="info-callout">
-            <span>&#128161;</span>
-            <div><strong>Why this works:</strong> By having the AI write <code>.md</code> documentation for itself, we create a feedback loop. The AI documents what it understands, and its next responses are based on that documentation.</div>
-          </div>
-
-          <h3 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-purple);">&#128640; Execute the Roadmap</h3>
-          <p>Now, tell it to follow the roadmap it just wrote:</p>
-          <div class="code-block">
-            <div class="code-content">Based on the roadmap in gemini.md, build the first section of the landing page.</div>
-          </div>
-        </div>
-
-        <!-- Task 4: The Agentic Loop -->
-        <div class="lab-task" id="task-4">
-          <div class="step-header" style="margin: -2rem -2rem 2rem; border-radius: 16px 16px 0 0;">
-            <span class="step-badge">Task 4</span>
-            <h2>Iterating on Every Prompt</h2>
-            <span class="task-time">10 min</span>
-          </div>
-
-          <p>The final step is <strong>context management</strong>. When projects get large, the AI needs to know how to navigate folders. This is the difference between a chatbot and a true agent.</p>
+          <h3 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-purple);">&#9881; Step 2: Safe Automation</h3>
+          <p>Draft a prompt that asks the AI to <em>propose</em> a change before applying it.</p>
 
           <div class="code-block">
             <div class="code-header">
               <span class="code-lang">Gemini Prompt</span>
               <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
             </div>
-            <div class="code-content">Update `agents.md` to include a "Project Structure" section. 
-List all current files and describe their purpose. 
-Then, add a new rule: "Always check agents.md before proposing any code change."</div>
-          </div>
-
-          <p style="margin-top: 1rem;">Now, try to break a rule. Ask it to "Use Tailwind CSS."</p>
-
-          <div class="warning-callout">
-            <span>&#9888;&#65039;</span>
-            <div><strong>Observe:</strong> If the <code>agents.md</code> is working, the AI should <strong>refuse</strong> or warn you that Tailwind is against the "Vanilla CSS" rule you established in Task 2.</div>
+            <div class="code-content">Search for all `.html` files in my directory. 
+Propose a single SEO meta description for each file based on its content. 
+DO NOT modify the files yet — just output the proposed text for my review.</div>
           </div>
 
           <div class="success-callout">
             <span>&#9989;</span>
-            <div><strong>Final Checkpoint:</strong> You have built an agentic environment where the AI follows persistent rules, documents its own progress, and maintains a consistent project architecture.</div>
+            <div><strong>Control Point:</strong> Only after you review the output and say "Proceed," should you allow the agent to edit the files. This is <strong>Agentic Accountability</strong> in action.</div>
+          </div>
+        </div>
+
+        <!-- Lab C: Agentic Refactor (The Roadmap) -->
+        <div class="lab-task" id="lab-c">
+          <div class="step-header" style="margin: -2rem -2rem 2rem; border-radius: 16px 16px 0 0; background: rgba(168, 85, 247, 0.1);">
+            <span class="step-badge" style="background: var(--accent-tertiary);">Lab C</span>
+            <h2>Agentic Refactor</h2>
+            <span class="task-time">20 min</span>
+          </div>
+
+          <p>In the final lab, we use the agent to <strong>architect a roadmap</strong> for a complex feature. This demonstrates how AI handles non-linear, multi-step engineering tasks.</p>
+
+          <h3 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-cyan);">&#129504; Step 3: Generating the Brain</h3>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">Gemini Prompt</span>
+              <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+            </div>
+            <div class="code-content">Analyze my `style.css`.
+Create a `responsive_roadmap.md` file that lists 5 key improvements to make this site perfect for mobile devices. 
+For each improvement, explain WHY it is necessary for user experience.</div>
+          </div>
+
+          <div class="warning-callout">
+            <span>&#128640;</span>
+            <div><strong>Autonomous Execution:</strong> Once the roadmap is created, you can tell the AI: "Execute step 1 of the roadmap." It now has a persistent plan to follow.</div>
           </div>
         </div>
 
@@ -221,7 +159,7 @@ Then, add a new rule: "Always check agents.md before proposing any code change."
             <h3>Congratulations!</h3>
             <p>You have completed the AI Workshop: Skills in Motion. You now understand the agentic paradigm and have hands-on experience directing AI agents.</p>
             <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem;">
-              <a href="index.html" class="primary-btn">Back to Home</a>
+              <a href="index.html" class="cta-button">Back to Home</a>
               <a href="https://www.wia-europe.org/wia-europe-symposium/" target="_blank" class="secondary-button">WIA-Europe Symposium</a>
             </div>
           </div>

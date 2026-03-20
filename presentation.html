@@ -4,11 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Presentation | WIA-Europe AI-E Workshop</title>
-    <meta name="description" content="Interactive slide deck for the WIA-Europe AI Workshop exploring the $2 trillion AI economy, gender bias, and agentic AI paradigms." />
+    <meta name="description" content="Interactive slide deck for the WIA-Europe AI Workshop exploring the $4.4 trillion AI economy, gender bias in AI adoption, and the agentic AI paradigm." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
     <style>
       body { overflow: hidden; }
       header { display: none; }
@@ -136,18 +137,47 @@
         box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         border: 1px solid var(--border-color);
         transition: transform 0.3s ease;
+        animation: float 6s ease-in-out infinite;
       }
+      @keyframes float {
+        0%, 100% { transform: translateY(0) rotate(var(--rot)); }
+        50% { transform: translateY(-10px) rotate(calc(var(--rot) + 2deg)); }
+      }
+      .news-collage img:nth-child(1) { --rot: -3deg; animation-delay: 0s; }
+      .news-collage img:nth-child(2) { --rot: 2deg; animation-delay: 1.5s; }
+      .news-collage img:nth-child(3) { --rot: -1deg; animation-delay: 3s; }
       .news-collage img:hover {
         transform: scale(1.1) rotate(0deg) !important;
         z-index: 10;
         border-color: var(--accent-primary);
+        animation-play-state: paused;
+      }
+      .fullscreen-btn {
+        position: absolute;
+        top: 1.5rem;
+        right: 4.5rem;
+        background: rgba(255,255,255,0.1);
+        border: 1px solid var(--border-color);
+        color: var(--text-primary);
+        padding: 0.4rem 1.2rem;
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        z-index: 101;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+      .fullscreen-btn:hover {
+        background: var(--accent-primary);
+        color: white;
+        transform: scale(1.05);
       }
       .animate-grow { transition: width 1.5s ease-out; }
     </style>
   </head>
   <body>
-    <a href="index.html" class="exit-btn">&#8592; Back to Workshop</a>
-    <button class="fullscreen-btn" id="fullscreenBtn">&#9974; Fullscreen</button>
     <div class="progress-bar" id="progressBar"></div>
 
     <div class="presentation-wrapper">
@@ -164,7 +194,7 @@
         <p style="font-size: 0.9rem; margin-top: 1.5rem; color: var(--text-secondary); letter-spacing: 1px; text-transform: uppercase; font-weight: 700;">WIA-Europe Strasbourg Regional Network</p>
         <p style="font-size: 0.85rem; margin-top: 0.5rem; opacity: 0.8;">May 6, 2026 | 13:00 CET</p>
         <div style="display: flex; gap: 2rem; align-items: center; justify-content: center; margin-top: 2rem;">
-          <img src="assets/WIA-E-Strasbourg.png" alt="WIA" style="height: 60px; border-radius: 8px; background: rgba(255,255,255,0.1); padding: 5px;">
+          <img src="assets/Strasbourg_Region.png" alt="WIA Strasbourg" style="height: 60px; border-radius: 8px; background: rgba(255,255,255,0.1); padding: 5px;">
           <img src="assets/LOGO_ISU_Darkblue.png" alt="ISU" style="height: 40px; background: white; padding: 10px; border-radius: 8px;">
         </div>
       </section>
@@ -173,7 +203,7 @@
       <section class="slide slide-gradient-1">
         <h2>Today's <span class="gradient-text">Agenda</span></h2>
         <ul class="slide-list">
-          <li><span class="list-icon">&#128200;</span> <strong>Part 1:</strong> The $2 Trillion AI Economy</li>
+          <li><span class="list-icon">&#128200;</span> <strong>Part 1:</strong> The $4.4 Trillion AI Economy</li>
           <li><span class="list-icon">&#9878;&#65039;</span> <strong>Part 2:</strong> Gender Bias in AI Adoption</li>
           <li><span class="list-icon">&#129302;</span> <strong>Part 3:</strong> The Agentic Paradigm</li>
           <li><span class="list-icon">&#128187;</span> <strong>Part 4:</strong> Hands-on Lab with Gemini CLI</li>
@@ -181,91 +211,104 @@
         </ul>
       </section>
 
-      <!-- Slide 3: The Economic Landscape -->
+      <!-- Slide 3: The Economic Landscape (Aerospace & Value) -->
       <section class="slide slide-gradient-2">
-        <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-primary); margin-bottom: 1rem;">Part 1: The Economic Landscape</p>
+        <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-primary); margin-bottom: 1rem;">Part 1: The AI Economy</p>
         <div class="two-col">
           <div class="two-col-item">
-            <h1 style="font-size: 4rem; margin-bottom: 1rem; color: var(--accent-cyan);">$2.5T</h1>
-            <h3>Global AI Spending by 2026</h3>
-            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 2rem;">Source: Gartner / IDC Forecast 2026</p>
-            <p style="font-size: 1.1rem; line-height: 1.6;">From aerospace to healthcare, AI is the new <strong>economic engine</strong> reshaping every career requirement.</p>
+            <h1 style="font-size: 3rem; margin-bottom: 1rem; color: var(--accent-cyan);">$4.4T</h1>
+            <h3>Annual Value Added by Generative AI</h3>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1.5rem;"><a href="https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/the-economic-potential-of-generative-ai-the-next-productivity-frontier" target="_blank" style="text-decoration: underline; color: var(--accent-cyan);">Source: McKinsey & Company / WEF 2025</a></p>
+            <ul style="list-style: none; padding: 0; text-align: left; font-size: 0.9rem; line-height: 1.6;">
+              <li><span style="color: var(--accent-primary);">⚡</span> <strong>Reskilling Urgency:</strong> Massive upskilling needed by 2030 (WEF).</li>
+              <li><span style="color: var(--accent-primary);">🛰️</span> <strong>A&D Impact:</strong> $65.4B segment by 2034.</li>
+              <li><span style="color: var(--accent-primary);">🏗️</span> <strong>Innovation Gate:</strong> AI literacy is the new inequality multiplier.</li>
+            </ul>
           </div>
           <div class="two-col-item">
-            <div class="news-collage">
-              <img src="assets/news_headline_1.png" style="width: 250px; top: -20px; left: -30px; transform: rotate(-5deg); z-index: 1;">
-              <img src="assets/news_headline_2.png" style="width: 230px; top: 60px; right: -20px; transform: rotate(3deg); z-index: 2;">
-              <img src="assets/news_headline_4.png" style="width: 240px; top: 160px; left: 10px; transform: rotate(-2deg); z-index: 3;">
-              <img src="assets/news_headline_3.png" style="width: 220px; bottom: -10px; right: 0; transform: rotate(4deg); z-index: 4;">
+            <div class="news-collage" id="newsCollage">
+              <!-- Dynamically populated 15 cards spread out -->
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Slide 4: Why It Matters -->
+      <!-- Slide 4: Career Velocity -->
       <section class="slide slide-gradient-1">
-        <h2>Career <span class="gradient-text">Velocity</span></h2>
+        <h2>Career <span class="highlight">Velocity</span></h2>
         <div class="two-col">
           <div class="two-col-item">
-            <h1 style="color: var(--success-color); font-size: 3.5rem;">4.5x</h1>
-            <p><strong>Promotion Probability</strong></p>
-            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin-top: 0.5rem;">Professionals who master AI agents are <strong>4.5x more likely</strong> to be promoted. (Source: July 2025 AI Career Transition Study)</p>
+            <h1 style="color: var(--success-color); font-size: 3rem;">23%</h1>
+            <p><strong>AI Skill Wage Premium</strong></p>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 0.5rem;">Jobs requiring AI skills earn a <strong>23% wage premium</strong>, surpassing all degree premiums except PhD (33%). <a href="https://www.hrdive.com/news/AI-skills-wage-premium-exceeds-education-levels/736255/" target="_blank" style="color: var(--accent-cyan); text-decoration: underline;">Source: HR Dive / LinkedIn 2025</a></p>
+            <div style="margin-top: 1rem; font-size: 0.8rem; line-height: 1.5; text-align: left;">
+              <p style="color: var(--accent-purple); font-weight: 600;">&#128188; A&D AI Roles</p>
+              <p style="color: var(--text-secondary);">GenAI / LLM Engineers in Aerospace: <strong>$400k-$900k+</strong> as mission-critical systems adopt agentic autonomy.</p>
+            </div>
           </div>
-          <div class="two-col-item">
-            <h3 style="color: var(--accent-purple);">&#128161; The New Literacy</h3>
-            <p>Just as spreadsheets redefined finance and CAD redefined engineering, AI literacy is becoming the baseline expectation across all fields.</p>
+          <div class="two-col-item" style="display: flex; flex-direction: column; align-items: center;">
+            <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.5rem;">LinkedIn AI Skills Growth (2022-2025)</p>
+            <div style="width: 100%; max-width: 400px; height: 260px; position: relative;">
+              <canvas id="careerChart"></canvas>
+            </div>
+            <p style="font-size: 0.6rem; color: var(--text-secondary); margin-top: 0.25rem;"><a href="https://economicgraph.linkedin.com/research/work-change-report" target="_blank" style="color: var(--accent-cyan); text-decoration: underline;">Source: LinkedIn Work Change Report 2025</a></p>
           </div>
         </div>
       </section>
 
-      <!-- Slide 5: The Adoption Gap -->
+      <!-- Slide 5: The Adoption Gap & Parity Shift -->
       <section class="slide slide-gradient-3">
         <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-tertiary); margin-bottom: 1rem;">Part 2: The Adoption Gap</p>
         <div class="two-col">
           <div class="two-col-item">
-            <h1 style="color: var(--error-color); font-size: 4rem;">37%</h1>
-            <p><strong>Female AI Adoption vs 50% Male</strong></p>
-            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 2rem;">Source: Survey of Consumer Expectations (SCE), 2025</p>
-            <svg width="400" height="150">
-              <rect x="0" y="20" width="400" height="30" fill="rgba(255,255,255,0.1)" rx="15"></rect>
-              <rect x="0" y="20" width="200" height="30" fill="var(--accent-primary)" rx="15"></rect>
-              <text x="15" y="40" fill="white" font-size="12" font-weight="700">MEN: 50% ADOPTION</text>
-              <rect x="0" y="80" width="400" height="30" fill="rgba(255,255,255,0.1)" rx="15"></rect>
-              <rect x="0" y="80" width="148" height="30" fill="var(--error-color)" rx="15"></rect>
-              <text x="15" y="100" fill="white" font-size="12" font-weight="700">WOMEN: 37% ADOPTION</text>
-            </svg>
+            <div style="display: flex; align-items: baseline; gap: 0.5rem; justify-content: center;">
+              <h1 style="color: var(--error-color); font-size: 3rem; opacity: 0.6;">37%</h1>
+              <span style="font-size: 1.5rem; font-weight: 700;">&#8594;</span>
+              <h1 style="color: var(--success-color); font-size: 4rem;">52%</h1>
+            </div>
+            <p><strong>The Parity Pivot (July 2025)</strong></p>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1rem;"><a href="https://www.nber.org/papers/w33297" target="_blank" style="color: var(--accent-cyan); text-decoration: underline;">Source: OpenAI / NBER Study 2025</a></p>
+            <p style="font-size: 0.85rem; line-height: 1.4; text-align: left; margin-bottom: 1rem;">While early adoption skewed male, classification by feminine names reached <strong>52% by July 2025</strong>. Parity is possible, but leadership and "Power User" gaps remain.</p>
+            <ul style="list-style: none; padding: 0; font-size: 1rem; text-align: left; color: var(--accent-primary);">
+              <li>🏛️ <a href="https://ncses.nsf.gov/pubs/nsb20244" target="_blank" style="color: var(--accent-primary); text-decoration: underline;">STEM Leadership: 12% Women</a></li>
+              <li>🏗️ <a href="https://www.census.gov/library/stories/2021/01/women-making-gains-in-stem-occupations.html" target="_blank" style="color: var(--accent-primary); text-decoration: underline;">STEM Workforce: 28% Women</a></li>
+            </ul>
           </div>
-          <div class="two-col-item" style="text-align: center;">
-            <p style="margin-bottom: 1rem; color: var(--text-secondary);">Who is steering the ship?</p>
-            <img src="assets/ai_leaders_collage.png" style="width: 100%; border-radius: 12px; border: 2px solid var(--border-color); box-shadow: 0 15px 30px rgba(0,0,0,0.5);">
-            <p style="font-size: 0.75rem; margin-top: 0.75rem; color: var(--accent-cyan); font-weight: 700;">ALL-MALE FRONTIER CEO LEADERSHIP</p>
+          <div class="two-col-item" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <p style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Who Builds the Frontier?</p>
+            <div id="labLogos" style="display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; align-items: center;">
+              <!-- Populated by JS -->
+            </div>
+            <p style="margin-top: 1.5rem; font-size: 0.75rem; color: var(--text-secondary); font-style: italic;">Click "Next" to see who leads these companies →</p>
           </div>
         </div>
       </section>
 
-      <!-- Slide 6: Root Causes -->
-      <section class="slide slide-gradient-1">
-        <h2>Where Does the <span class="gradient-text">Gap</span> Come From?</h2>
-        <div class="comparison-row">
-          <div class="comparison-box highlight-bad">
-            <h3 style="color: #ef4444;">&#10060; The Problem</h3>
-            <ul style="list-style: none; padding: 0; margin-top: 1rem; text-align: left;">
-              <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#8226; AI tools marketed in technical jargon</li>
-              <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#8226; Male-dominated developer communities</li>
-              <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#8226; Lack of relatable use cases</li>
-              <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#8226; "Imposter syndrome" amplification</li>
-            </ul>
-          </div>
-          <div class="comparison-box highlight-good">
-            <h3 style="color: #10b981;">&#9989; The Solution</h3>
-            <ul style="list-style: none; padding: 0; margin-top: 1rem; text-align: left;">
-              <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#8226; Hands-on, guided workshops</li>
-              <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#8226; Communities like WIA-Europe</li>
-              <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#8226; Practical, domain-relevant exercises</li>
-              <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#8226; Visible female role models in AI</li>
-            </ul>
-          </div>
+      <!-- Slide 6: Rogers Adoption Curve -->
+      <section class="slide slide-gradient-2" id="rogersSlide">
+        <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-primary); margin-bottom: 0.5rem;">Part 2: Where Are We Now?</p>
+        <h2 style="font-size: 1.5rem; margin-bottom: 0.25rem;">Rogers' <span class="gradient-text">Diffusion of Innovation</span></h2>
+        <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.5rem;">AI adoption mapped to the classic bell curve, with <span style="color: #60a5fa;">male</span> and <span style="color: #f472b6;">female</span> adoption rates superimposed. <a href="https://www.deloitte.com/an/en/issues/digital/gen-ai-adoption-women.html" target="_blank" style="color: var(--accent-cyan); text-decoration: underline;">Source: Deloitte 2025</a></p>
+        <div style="max-width: 800px; width: 100%; margin: 0 auto; position: relative; height: 340px;">
+          <canvas id="rogersChart"></canvas>
         </div>
+        <div style="display: flex; gap: 2rem; justify-content: center; margin-top: 0.5rem; font-size: 0.7rem; color: var(--text-secondary); flex-wrap: wrap;">
+          <span>Innovators 2.5%</span><span>Early Adopters 13.5%</span><span style="font-weight: 700; color: var(--accent-primary);">← We are here (Early Majority)</span><span>Late Majority 34%</span><span>Laggards 16%</span>
+        </div>
+      </section>
+
+      <!-- Slide 7: Interactive Org Tree -->
+      <section class="slide slide-gradient-1" id="orgTreeSlide">
+        <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-tertiary); margin-bottom: 0.5rem;">Part 2: Who Leads AI?</p>
+        <h2 style="font-size: 1.6rem; margin-bottom: 0.25rem;">Frontier Lab <span class="gradient-text">Leadership Tree</span></h2>
+        <p style="font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+          <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; border: 2.5px solid #1e40af; margin-right: 4px; vertical-align: middle;"></span> Male
+          <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; border: 2.5px solid #db2777; margin-left: 12px; margin-right: 4px; vertical-align: middle;"></span> Female
+        </p>
+        <div id="orgTree" style="width: 100%; max-width: 1100px; overflow-x: auto; position: relative; margin: 0 auto;">
+          <svg id="orgTreeSvg" width="1100" height="480" viewBox="0 0 1100 480" style="display: block; margin: 0 auto;"></svg>
+        </div>
+        <p style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--accent-primary);">"Participation is a systems-quality issue, not just a labor issue." — <a href="https://www.unesco.org/en/artificial-intelligence/gender" target="_blank" style="color: var(--accent-cyan); text-decoration: underline;">UNESCO</a></p>
       </section>
 
       <!-- Slide 7: Agentic Paradigm intro -->
@@ -322,32 +365,53 @@
       <section class="slide slide-gradient-3">
         <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-cyan); margin-bottom: 1rem;">Part 4: The Agentic Architecture</p>
         <h2>Building the AI <span class="highlight">Brain</span></h2>
+        <div class="info-callout" style="max-width: 700px; margin: 0 auto 1.5rem; display: flex; gap: 1rem; background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.2); border-radius: 12px; padding: 1rem;">
+          <span style="font-size: 1.5rem;">&#128221;</span>
+          <div style="text-align: left; font-size: 0.8rem; color: var(--text-secondary);">
+            <strong style="color: var(--accent-primary);">What is a .md file?</strong> It stands for <strong>Markdown</strong>, a simple text format that uses symbols like # for headings and * for bullets. Think of it as a Word document that any software can read. AI agents use .md files as their "memory" because they are lightweight, human-readable, and easy for machines to parse.
+          </div>
+        </div>
         <div class="two-col">
           <div class="two-col-item">
             <h3 style="color: var(--accent-primary);">📄 agents.md</h3>
-            <p>The <strong>Constitution</strong>. Persistent rules and directives that define the AI's role, technical constraints, and operating style for the entire project.</p>
+            <p>The <strong>Constitution</strong>. Persistent rules and directives that define the AI's role, constraints, and operating style for the project.</p>
           </div>
           <div class="two-col-item">
             <h3 style="color: var(--accent-secondary);">📑 gemini.md</h3>
-            <p>The <strong>Workspace Context</strong>. Task-specific roadmaps and analysis generated by the AI to maintain state and memory across prompts.</p>
+            <p>The <strong>Workspace Context</strong>. Task-specific roadmaps and analysis the AI generates to maintain state and memory across prompts.</p>
           </div>
         </div>
-        <p style="margin-top: 2rem; font-size: 1.1rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">We don't just prompt; we <strong>architect</strong> persistence.</p>
+        <p style="margin-top: 1.5rem; font-size: 1.1rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">We don't just prompt; we <strong>architect</strong> persistence.</p>
       </section>
 
-      <!-- Slide 11: Gemini CLI -->
+      <!-- Slide 11: Gemini CLI & Safety -->
       <section class="slide slide-gradient-1">
-        <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-tertiary); margin-bottom: 1rem;">Part 5: Hands-on Lab</p>
-        <h1>Meet <span class="gradient-text">Gemini CLI</span></h1>
-        <p style="margin-top: 1.5rem; max-width: 700px;">Google's open-source command-line AI agent. It lives in your terminal, reads your <code>agents.md</code>, and executes your mission.</p>
-        <div class="flow-diagram" style="margin-top: 3rem;">
-          <div class="flow-box" style="border-color: var(--accent-primary);">agents.md</div>
+        <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-tertiary); margin-bottom: 1rem;">Part 5: Lab Workflow</p>
+        <h2>Practical <span class="gradient-text">Power Tools</span></h2>
+        <div class="comparison-row" style="margin-top: 1rem;">
+          <div class="comparison-box" style="padding: 1rem; font-size: 0.85rem; text-align: left;">
+            <h4 style="color: var(--accent-cyan); margin-bottom: 0.5rem;">Lab Flow</h4>
+            <ul style="list-style: none; padding: 0;">
+              <li><strong>Lab A:</strong> Explain & Verify</li>
+              <li><strong>Lab B:</strong> Automate (Dry Run)</li>
+              <li><strong>Lab C:</strong> Agentic Refactor</li>
+            </ul>
+          </div>
+          <div class="comparison-box" style="padding: 1rem; font-size: 0.85rem; text-align: left; border-color: var(--error-color);">
+            <h4 style="color: var(--error-color); margin-bottom: 0.5rem;">Safety Defaults</h4>
+            <ul style="list-style: none; padding: 0;">
+              <li>&#9888; Review before execution</li>
+              <li>&#8635; Prefer diffs/commits</li>
+              <li>&#128274; Local model setups</li>
+            </ul>
+          </div>
+        </div>
+        <div class="flow-diagram" style="margin-top: 1.5rem;">
+          <div class="flow-box" style="border-color: var(--accent-primary);">Prompt</div>
           <span class="flow-arrow">+</span>
-          <div class="flow-box" style="border-color: var(--accent-secondary);">Terminal</div>
-          <span class="flow-arrow">+</span>
-          <div class="flow-box" style="border-color: var(--accent-tertiary);">Gemini CLI</div>
+          <div class="flow-box" style="border-color: var(--success-color);">Review</div>
           <span class="flow-arrow">=</span>
-          <div class="flow-box" style="border-color: var(--success-color); background: rgba(16, 185, 129, 0.15);">&#128640; Action</div>
+          <div class="flow-box" style="border-color: var(--accent-tertiary);">&#128640; Action</div>
         </div>
       </section>
 
@@ -373,8 +437,13 @@
 
     </div>
 
-    <div class="slide-number" id="slideNumber">1 / 12</div>
+    <div class="slide-number" id="slideNumber">1 / 13</div>
     <div class="slide-controls">
+      <button class="fullscreen-btn" id="fs-toggle">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+      Full Screen
+    </button>
+    <button class="exit-btn" onclick="window.location.href='index.html'">&times; Close</button>
       <button class="slide-btn" id="prevBtn" aria-label="Previous slide">&#8592; Prev</button>
       <button class="slide-btn" id="nextBtn" aria-label="Next slide">Next &#8594;</button>
     </div>
@@ -412,17 +481,527 @@
         }
       });
 
-      document.getElementById('fullscreenBtn').addEventListener('click', () => {
+      // Slides already have logic. Removing duplicate listener.
+
+      showSlide(0);
+      const fsToggle = document.getElementById('fs-toggle');
+      fsToggle.addEventListener('click', () => {
         if (!document.fullscreenElement) {
           document.documentElement.requestFullscreen();
-          document.getElementById('fullscreenBtn').textContent = "Exit Fullscreen";
+          fsToggle.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14h6v6M20 10h-6V4M14 10l7-7M10 14l-7 7"/></svg> Exit FS';
         } else {
           document.exitFullscreen();
-          document.getElementById('fullscreenBtn').textContent = "⛶ Fullscreen";
+          fsToggle.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg> Full Screen';
         }
       });
 
-      showSlide(0);
+      // --- News Card Fan + Carousel Modal ---
+      const collage = document.getElementById('newsCollage');
+      const sources = [
+        { img: 'assets/news_headline_1.png', link: 'https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/the-economic-potential-of-generative-ai-the-next-productivity-frontier', title: 'McKinsey: Economic Potential of GenAI' },
+        { img: 'assets/news_headline_2.png', link: 'https://www.weforum.org/agenda/2025/01/future-of-jobs/', title: 'WEF: Future of Jobs 2025' },
+        { img: 'assets/news_headline_3.png', link: 'https://www.reuters.com/technology/artificial-intelligence/', title: 'Reuters: AI Industry News' },
+        { img: 'assets/news_headline_4.png', link: 'https://www.boldbusiness.com/digital/ai-gender-gap-a-serious-problem-that-only-getting-more-serious/', title: 'Bold Business: AI Gender Gap' },
+        { img: 'assets/news_headline_5.png', link: 'https://www.deloitte.com/an/en/issues/digital/gen-ai-adoption-women.html', title: 'Deloitte: Women & GenAI Adoption' }
+      ];
+      let currentModalIndex = 0;
+
+      // Build fanned cards (5 real images, static positions, no animation flicker)
+      sources.forEach((sourceObj, i) => {
+        const img = document.createElement('img');
+        img.src = sourceObj.img;
+        const progress = (i / (sources.length - 1)) - 0.5;
+        const rot = progress * 40;
+        const tx = progress * 260;
+        const ty = Math.abs(progress) * 30;
+        img.style.cssText = `
+          width: 160px; position: absolute; left: 50%; top: 35%;
+          transform-origin: bottom center;
+          transform: translate(-50%, -50%) translate(${tx}px, ${ty}px) rotate(${rot}deg);
+          z-index: ${i + 10}; cursor: pointer;
+          transition: transform 0.3s ease, filter 0.3s, z-index 0s;
+          border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+          border: 2px solid rgba(255,255,255,0.2);
+        `;
+        img.addEventListener('mouseenter', () => {
+          img.style.transform = 'translate(-50%, -50%) translate(0px, -20px) scale(1.3) rotate(0deg)';
+          img.style.zIndex = '500';
+          img.style.filter = 'brightness(1.2)';
+        });
+        img.addEventListener('mouseleave', () => {
+          img.style.transform = `translate(-50%, -50%) translate(${tx}px, ${ty}px) rotate(${rot}deg)`;
+          img.style.zIndex = `${i + 10}`;
+          img.style.filter = '';
+        });
+        img.addEventListener('click', () => openCarousel(i));
+        collage.appendChild(img);
+      });
+
+      function openCarousel(index) {
+        currentModalIndex = index;
+        updateCarousel();
+        document.getElementById('imageModal').style.opacity = '1';
+        document.getElementById('imageModal').style.pointerEvents = 'auto';
+      }
+      function updateCarousel() {
+        const s = sources[currentModalIndex];
+        document.getElementById('modalImage').src = s.img;
+        document.getElementById('modalLink').href = s.link;
+        document.getElementById('modalLink').textContent = s.title + ' \u2197';
+        document.getElementById('modalCounter').textContent = `${currentModalIndex + 1} / ${sources.length}`;
+      }
+      function carouselPrev() {
+        currentModalIndex = (currentModalIndex - 1 + sources.length) % sources.length;
+        updateCarousel();
+      }
+      function carouselNext() {
+        currentModalIndex = (currentModalIndex + 1) % sources.length;
+        updateCarousel();
+      }
+
+      // --- Lab Logos on Slide 5 ---
+      const labLogosEl = document.getElementById('labLogos');
+      const labs = [
+        { name: 'OpenAI', emoji: '🟢', color: '#10b981' },
+        { name: 'Anthropic', emoji: '🔶', color: '#f59e0b' },
+        { name: 'Google DeepMind', emoji: '🔵', color: '#3b82f6' },
+        { name: 'Meta AI', emoji: '🟣', color: '#8b5cf6' },
+        { name: 'xAI', emoji: '⚡', color: '#ef4444' },
+        { name: 'Microsoft', emoji: '🟦', color: '#0ea5e9' }
+      ];
+      labs.forEach(lab => {
+        const el = document.createElement('div');
+        el.style.cssText = `text-align:center; padding:0.75rem 1rem; background:rgba(255,255,255,0.05); border:1px solid ${lab.color}40; border-radius:12px; min-width:100px; transition:all 0.3s; cursor:default;`;
+        el.innerHTML = `<div style="font-size:1.8rem;">${lab.emoji}</div><div style="font-size:0.7rem; margin-top:0.25rem; color:${lab.color}; font-weight:600;">${lab.name}</div>`;
+        el.addEventListener('mouseenter', () => { el.style.transform='translateY(-3px)'; el.style.borderColor=lab.color; el.style.boxShadow=`0 8px 20px ${lab.color}30`; });
+        el.addEventListener('mouseleave', () => { el.style.transform=''; el.style.borderColor=`${lab.color}40`; el.style.boxShadow=''; });
+        labLogosEl.appendChild(el);
+      });
+
+      // --- Rogers Adoption Curve (Chart.js) ---
+      function gaussianBell(x, mean, sigma, amplitude) {
+        return amplitude * Math.exp(-0.5 * Math.pow((x - mean) / sigma, 2));
+      }
+
+      const rogersCtx = document.getElementById('rogersChart');
+      if (rogersCtx) {
+        const labels = [];
+        const generalData = [];
+        const maleData = [];
+        const femaleData = [];
+        for (let i = 0; i <= 100; i++) {
+          labels.push(i);
+          // General population bell curve centered at 50
+          generalData.push(gaussianBell(i, 50, 18, 100));
+          // Male curve: shifted left (earlier adoption), slightly taller
+          maleData.push(gaussianBell(i, 44, 17, 85));
+          // Female curve: shifted right (later adoption), catching up
+          femaleData.push(gaussianBell(i, 52, 16, 78));
+        }
+
+        new Chart(rogersCtx, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: 'General Population',
+                data: generalData,
+                borderColor: 'rgba(148, 163, 184, 0.7)',
+                backgroundColor: 'rgba(148, 163, 184, 0.08)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4,
+                pointRadius: 0
+              },
+              {
+                label: 'Male Adoption',
+                data: maleData,
+                borderColor: '#60a5fa',
+                backgroundColor: 'rgba(96, 165, 250, 0.12)',
+                borderWidth: 2.5,
+                borderDash: [6, 3],
+                fill: true,
+                tension: 0.4,
+                pointRadius: 0
+              },
+              {
+                label: 'Female Adoption',
+                data: femaleData,
+                borderColor: '#f472b6',
+                backgroundColor: 'rgba(244, 114, 182, 0.12)',
+                borderWidth: 2.5,
+                borderDash: [6, 3],
+                fill: true,
+                tension: 0.4,
+                pointRadius: 0
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode: 'index', intersect: false },
+            plugins: {
+              legend: {
+                labels: { color: '#94a3b8', font: { family: 'Inter', size: 11 }, usePointStyle: true, pointStyle: 'line' }
+              },
+              tooltip: {
+                backgroundColor: 'rgba(10, 15, 26, 0.9)',
+                titleColor: '#f8fafc',
+                bodyColor: '#94a3b8',
+                borderColor: 'rgba(56, 189, 248, 0.3)',
+                borderWidth: 1,
+                displayColors: true
+              },
+              annotation: undefined
+            },
+            scales: {
+              x: {
+                display: true,
+                grid: { color: 'rgba(148,163,184,0.08)' },
+                ticks: {
+                  color: '#94a3b8',
+                  font: { size: 9 },
+                  callback: function(val) {
+                    const markers = { 0: 'Innovators\n2.5%', 16: 'Early\nAdopters\n13.5%', 50: 'Early\nMajority\n34%', 84: 'Late\nMajority\n34%', 100: 'Laggards\n16%' };
+                    return markers[val] || '';
+                  },
+                  maxRotation: 0
+                }
+              },
+              y: {
+                display: false
+              }
+            }
+          },
+          plugins: [{
+            id: 'verticalMarker',
+            afterDraw(chart) {
+              const ctx2 = chart.ctx;
+              const xScale = chart.scales.x;
+              // "We are here" marker at position 38 (early majority, leaning left)
+              const markerX = xScale.getPixelForValue(38);
+              const topY = chart.chartArea.top;
+              const bottomY = chart.chartArea.bottom;
+              ctx2.save();
+              ctx2.setLineDash([5, 4]);
+              ctx2.strokeStyle = '#22d3ee';
+              ctx2.lineWidth = 2;
+              ctx2.beginPath();
+              ctx2.moveTo(markerX, topY);
+              ctx2.lineTo(markerX, bottomY);
+              ctx2.stroke();
+              ctx2.restore();
+              // Label
+              ctx2.save();
+              ctx2.fillStyle = '#22d3ee';
+              ctx2.font = 'bold 11px Inter, sans-serif';
+              ctx2.textAlign = 'center';
+              ctx2.fillText('AI in 2025', markerX, topY - 6);
+              ctx2.restore();
+            }
+          }]
+        });
+      }
+
+      // --- SVG Org Tree ---
+      const svgEl = document.getElementById('orgTreeSvg');
+      if (svgEl) {
+        const ns = 'http://www.w3.org/2000/svg';
+        const MALE = '#1e40af';
+        const FEMALE = '#db2777';
+
+        const orgData = [
+          {
+            lab: 'OpenAI', x: 100, color: '#10b981',
+            ceo: { name: 'Sam Altman', role: 'CEO', gender: 'M' },
+            leads: [
+              { name: 'Greg Brockman', role: 'President', gender: 'M' },
+              { name: 'Fidji Simo', role: 'CEO, Apps', gender: 'F' },
+              { name: 'Sarah Friar', role: 'CFO', gender: 'F' }
+            ],
+            safety: [
+              { name: 'Mark Chen', role: 'CRO', gender: 'M' },
+              { name: 'Julia Villagra', role: 'CPO', gender: 'F' }
+            ]
+          },
+          {
+            lab: 'Anthropic', x: 330, color: '#f59e0b',
+            ceo: { name: 'Dario Amodei', role: 'CEO', gender: 'M' },
+            leads: [
+              { name: 'Daniela Amodei', role: 'President', gender: 'F' },
+              { name: 'Mike Krieger', role: 'CPO', gender: 'M' },
+              { name: 'Krishna Rao', role: 'CFO', gender: 'M' }
+            ],
+            safety: [
+              { name: 'Chris Olah', role: 'Safety Lead', gender: 'M' },
+              { name: 'Jan Leike', role: 'Alignment', gender: 'M' }
+            ]
+          },
+          {
+            lab: 'DeepMind', x: 560, color: '#3b82f6',
+            ceo: { name: 'Demis Hassabis', role: 'CEO', gender: 'M' },
+            leads: [
+              { name: 'Josh Woodward', role: 'VP Gemini', gender: 'M' },
+              { name: 'Koray Kavukcuoglu', role: 'VP Research', gender: 'M' },
+              { name: 'Sissie Hsiao', role: 'VP Apps (prev)', gender: 'F' }
+            ],
+            safety: [
+              { name: 'Shane Legg', role: 'Chief AGI', gender: 'M' },
+              { name: 'Victoria Krakovna', role: 'Safety Lead', gender: 'F' }
+            ]
+          },
+          {
+            lab: 'Meta AI', x: 790, color: '#8b5cf6',
+            ceo: { name: 'Alexandr Wang', role: 'Chief AI Officer', gender: 'M' },
+            leads: [
+              { name: 'Clara Shih', role: 'Head Biz AI', gender: 'F' },
+              { name: 'Joelle Pineau', role: 'Head FAIR', gender: 'F' },
+              { name: 'Sue Young', role: 'Head Meta AI', gender: 'F' }
+            ],
+            safety: [
+              { name: 'Shengjia Zhao', role: 'Chief Sci.', gender: 'M' },
+              { name: 'Nicolas Usunier', role: 'Safety', gender: 'M' }
+            ]
+          },
+          {
+            lab: 'xAI', x: 1000, color: '#ef4444',
+            ceo: { name: 'Elon Musk', role: 'CEO', gender: 'M' },
+            leads: [
+              { name: 'I. Babuschkin', role: 'Research (dep)', gender: 'M' },
+              { name: 'Daniel Rowland', role: 'DC Ops', gender: 'M' }
+            ],
+            safety: [
+              { name: 'Jimmy Ba', role: 'Optimization', gender: 'M' }
+            ]
+          }
+        ];
+
+        const ROW_Y = { lab: 30, ceo: 110, leads: 220, safety: 330, adopters: 440 };
+
+        function drawLine(x1, y1, x2, y2, color, dashed) {
+          const line = document.createElementNS(ns, 'line');
+          line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+          line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+          line.setAttribute('stroke', color || 'rgba(148,163,184,0.2)');
+          line.setAttribute('stroke-width', '1.5');
+          if (dashed) line.setAttribute('stroke-dasharray', '4,3');
+          svgEl.appendChild(line);
+        }
+
+        function drawNode(cx, cy, name, role, gender, labColor) {
+          const r = 18;
+          const borderColor = gender === 'F' ? FEMALE : MALE;
+          // Glow
+          const glow = document.createElementNS(ns, 'circle');
+          glow.setAttribute('cx', cx); glow.setAttribute('cy', cy); glow.setAttribute('r', r + 4);
+          glow.setAttribute('fill', 'none'); glow.setAttribute('stroke', borderColor);
+          glow.setAttribute('stroke-width', '1'); glow.setAttribute('opacity', '0.3');
+          svgEl.appendChild(glow);
+          // Circle
+          const circle = document.createElementNS(ns, 'circle');
+          circle.setAttribute('cx', cx); circle.setAttribute('cy', cy); circle.setAttribute('r', r);
+          circle.setAttribute('fill', 'rgba(10,15,26,0.8)');
+          circle.setAttribute('stroke', borderColor);
+          circle.setAttribute('stroke-width', '2.5');
+          circle.style.cursor = 'pointer';
+          circle.style.transition = 'all 0.3s';
+          svgEl.appendChild(circle);
+          // Initials
+          const initials = name.split(' ').map(n => n[0]).join('');
+          const txt = document.createElementNS(ns, 'text');
+          txt.setAttribute('x', cx); txt.setAttribute('y', cy + 4);
+          txt.setAttribute('text-anchor', 'middle');
+          txt.setAttribute('fill', borderColor);
+          txt.setAttribute('font-size', '10'); txt.setAttribute('font-weight', '700');
+          txt.setAttribute('font-family', 'Inter, sans-serif');
+          txt.textContent = initials;
+          svgEl.appendChild(txt);
+          // Name label
+          const label = document.createElementNS(ns, 'text');
+          label.setAttribute('x', cx); label.setAttribute('y', cy + r + 13);
+          label.setAttribute('text-anchor', 'middle');
+          label.setAttribute('fill', '#94a3b8');
+          label.setAttribute('font-size', '7.5'); label.setAttribute('font-family', 'Inter, sans-serif');
+          label.textContent = name;
+          svgEl.appendChild(label);
+          // Role label
+          const roleLabel = document.createElementNS(ns, 'text');
+          roleLabel.setAttribute('x', cx); roleLabel.setAttribute('y', cy + r + 22);
+          roleLabel.setAttribute('text-anchor', 'middle');
+          roleLabel.setAttribute('fill', '#64748b');
+          roleLabel.setAttribute('font-size', '6.5'); roleLabel.setAttribute('font-family', 'Inter, sans-serif');
+          roleLabel.textContent = role;
+          svgEl.appendChild(roleLabel);
+          // Hover
+          circle.addEventListener('mouseenter', () => { circle.setAttribute('r', r + 3); circle.setAttribute('stroke-width', '3.5'); });
+          circle.addEventListener('mouseleave', () => { circle.setAttribute('r', r); circle.setAttribute('stroke-width', '2.5'); });
+        }
+
+        function drawLabLabel(cx, y, name, color) {
+          const rect = document.createElementNS(ns, 'rect');
+          const w = 80, h = 28;
+          rect.setAttribute('x', cx - w / 2); rect.setAttribute('y', y - h / 2);
+          rect.setAttribute('width', w); rect.setAttribute('height', h);
+          rect.setAttribute('rx', 8); rect.setAttribute('fill', color + '20');
+          rect.setAttribute('stroke', color); rect.setAttribute('stroke-width', '1.5');
+          svgEl.appendChild(rect);
+          const txt = document.createElementNS(ns, 'text');
+          txt.setAttribute('x', cx); txt.setAttribute('y', y + 4);
+          txt.setAttribute('text-anchor', 'middle');
+          txt.setAttribute('fill', color);
+          txt.setAttribute('font-size', '10'); txt.setAttribute('font-weight', '700');
+          txt.setAttribute('font-family', 'Inter, sans-serif');
+          txt.textContent = name;
+          svgEl.appendChild(txt);
+        }
+
+        function drawRowLabel(y, text) {
+          const txt = document.createElementNS(ns, 'text');
+          txt.setAttribute('x', 8); txt.setAttribute('y', y + 4);
+          txt.setAttribute('fill', '#475569');
+          txt.setAttribute('font-size', '8'); txt.setAttribute('font-weight', '600');
+          txt.setAttribute('font-family', 'Inter, sans-serif');
+          txt.setAttribute('text-transform', 'uppercase');
+          txt.textContent = text;
+          svgEl.appendChild(txt);
+        }
+
+        // Row labels
+        drawRowLabel(ROW_Y.lab, 'LAB');
+        drawRowLabel(ROW_Y.ceo, 'CEO');
+        drawRowLabel(ROW_Y.leads, 'LEADERSHIP');
+        drawRowLabel(ROW_Y.safety, 'SAFETY / ETHICS');
+        drawRowLabel(ROW_Y.adopters, 'EARLY ADOPTERS');
+
+        orgData.forEach(org => {
+          const cx = org.x;
+          // Lab bubble
+          drawLabLabel(cx, ROW_Y.lab, org.lab, org.color);
+          // Line to CEO
+          drawLine(cx, ROW_Y.lab + 14, cx, ROW_Y.ceo - 18, org.color + '60');
+          // CEO node
+          drawNode(cx, ROW_Y.ceo, org.ceo.name, org.ceo.role, org.ceo.gender, org.color);
+
+          // Leadership nodes (spread horizontally)
+          const leadSpacing = Math.min(60, 160 / Math.max(org.leads.length, 1));
+          const leadStartX = cx - ((org.leads.length - 1) * leadSpacing) / 2;
+          org.leads.forEach((lead, i) => {
+            const lx = leadStartX + i * leadSpacing;
+            drawLine(cx, ROW_Y.ceo + 18, lx, ROW_Y.leads - 18, 'rgba(148,163,184,0.15)');
+            drawNode(lx, ROW_Y.leads, lead.name, lead.role, lead.gender, org.color);
+          });
+
+          // Safety nodes
+          const safeSpacing = Math.min(50, 120 / Math.max(org.safety.length, 1));
+          const safeStartX = cx - ((org.safety.length - 1) * safeSpacing) / 2;
+          org.safety.forEach((s, i) => {
+            const sx = safeStartX + i * safeSpacing;
+            drawLine(cx, ROW_Y.leads + 30, sx, ROW_Y.safety - 18, 'rgba(148,163,184,0.1)', true);
+            drawNode(sx, ROW_Y.safety, s.name, s.role, s.gender, org.color);
+          });
+
+          // Early Adopters connection
+          drawLine(cx, ROW_Y.safety + 30, cx, ROW_Y.adopters - 10, 'rgba(34,211,238,0.15)', true);
+        });
+
+        // Early adopters row
+        const adoptersText = document.createElementNS(ns, 'text');
+        adoptersText.setAttribute('x', 550); adoptersText.setAttribute('y', ROW_Y.adopters + 5);
+        adoptersText.setAttribute('text-anchor', 'middle');
+        adoptersText.setAttribute('fill', '#22d3ee');
+        adoptersText.setAttribute('font-size', '11'); adoptersText.setAttribute('font-weight', '700');
+        adoptersText.setAttribute('font-family', 'Inter, sans-serif');
+        adoptersText.textContent = 'Early Adopters: 81% Male vs 59% Female at work (2025) — who builds it, shapes who uses it first';
+        svgEl.appendChild(adoptersText);
+
+        // Citation link under SVG
+        const sourceLink = document.createElementNS(ns, 'text');
+        sourceLink.setAttribute('x', 550); sourceLink.setAttribute('y', ROW_Y.adopters + 18);
+        sourceLink.setAttribute('text-anchor', 'middle');
+        sourceLink.setAttribute('fill', '#64748b');
+        sourceLink.setAttribute('font-size', '7');
+        sourceLink.setAttribute('font-family', 'Inter, sans-serif');
+        sourceLink.textContent = 'Sources: HumanResourcesOnline 2025, Deloitte Digital Consumer Trends 2025';
+        svgEl.appendChild(sourceLink);
+      }
+
+      // --- Career Velocity Chart ---
+      const careerCtx = document.getElementById('careerChart');
+      if (careerCtx) {
+        new Chart(careerCtx, {
+          type: 'bar',
+          data: {
+            labels: ['AI Skills\nGrowth', 'AI Literacy\nIncrease', 'Job Mentions\n(AI)', 'Hiring\nGrowth', 'Skills Change\nby 2030'],
+            datasets: [{
+              label: 'Growth Multiple / Percentage',
+              data: [2000, 177, 600, 300, 70],
+              backgroundColor: [
+                'rgba(16, 185, 129, 0.7)',
+                'rgba(59, 130, 246, 0.7)',
+                'rgba(168, 85, 247, 0.7)',
+                'rgba(245, 158, 11, 0.7)',
+                'rgba(239, 68, 68, 0.7)'
+              ],
+              borderColor: [
+                '#10b981', '#3b82f6', '#a855f7', '#f59e0b', '#ef4444'
+              ],
+              borderWidth: 1.5,
+              borderRadius: 6
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: 'rgba(10, 15, 26, 0.9)',
+                titleColor: '#f8fafc',
+                bodyColor: '#94a3b8',
+                callbacks: {
+                  label: function(ctx) {
+                    const labels = ['20x since 2016', '+177% since 2023', '6x in past year', '+300% in 8 yrs', '70% of job skills'];
+                    return labels[ctx.dataIndex];
+                  }
+                }
+              }
+            },
+            scales: {
+              x: {
+                grid: { color: 'rgba(148,163,184,0.08)' },
+                ticks: { color: '#94a3b8', font: { size: 9, family: 'Inter' }, maxRotation: 0 }
+              },
+              y: {
+                display: false
+              }
+            }
+          }
+        });
+      }
+
+      function closeModal() {
+        document.getElementById('imageModal').style.opacity = '0';
+        document.getElementById('imageModal').style.pointerEvents = 'none';
+      }
     </script>
+    
+    <div id="imageModal" style="opacity: 0; pointer-events: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 10000; transition: opacity 0.3s; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+      <button onclick="closeModal()" style="position: absolute; top: 20px; right: 30px; font-size: 2rem; background: none; border: none; color: white; cursor: pointer;">&times;</button>
+      <!-- Prev Arrow -->
+      <button onclick="carouselPrev()" style="position: absolute; left: 30px; top: 50%; transform: translateY(-50%); font-size: 2.5rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; cursor: pointer; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: all 0.3s;" onmouseenter="this.style.background='rgba(255,255,255,0.2)'" onmouseleave="this.style.background='rgba(255,255,255,0.1)'">&#8249;</button>
+      <!-- Next Arrow -->
+      <button onclick="carouselNext()" style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); font-size: 2.5rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; cursor: pointer; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: all 0.3s;" onmouseenter="this.style.background='rgba(255,255,255,0.2)'" onmouseleave="this.style.background='rgba(255,255,255,0.1)'">&#8250;</button>
+      <img id="modalImage" src="" style="max-height: 70vh; max-width: 80vw; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); transition: opacity 0.2s;">
+      <p id="modalCounter" style="margin-top: 0.75rem; color: #94a3b8; font-size: 0.8rem; font-family: Inter, sans-serif;">1 / 5</p>
+      <a id="modalLink" href="#" target="_blank" style="margin-top: 0.5rem; padding: 0.7rem 1.5rem; background: var(--accent-gradient); color: white; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 0.85rem;">View Original Source</a>
+    </div>
+
+    <style>
+      .news-collage:hover img:not(:hover) {
+        filter: brightness(0.6) blur(1px);
+      }
+    </style>
   </body>
 </html>
