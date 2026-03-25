@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Typewriter effect for terminal in hero card
   const typewriterElement = document.getElementById('terminal-typewriter');
   if (typewriterElement) {
-    const textToType = "AI for everyone";
+    const textToType = "AI for women";
     let index = 0;
     const typingSpeed = 150; // Slowly
 
