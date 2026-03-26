@@ -200,6 +200,19 @@
       /* === DRAMATIC PULL QUOTE === */
       .pull-quote { font-size: 1.6rem; font-style: italic; color: var(--text-primary); max-width: 700px; line-height: 1.6; border-left: 3px solid; border-image: var(--accent-gradient) 1; padding-left: 1.5rem; margin: 1.5rem auto; text-align: left; }
       .pull-quote cite { display: block; font-size: 0.8rem; font-style: normal; color: var(--text-secondary); margin-top: 0.5rem; }
+      .mindset-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; width: 100%; max-width: 1000px; margin-top: 1.5rem; }
+      .mindset-card { background: rgba(255,255,255,0.06); border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem; text-align: left; }
+      .mindset-card h4 { margin-bottom: 0.5rem; color: var(--accent-primary); font-size: 0.95rem; }
+      .mindset-card p { margin: 0; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5; }
+      .commitment-panel { margin-top: 1.5rem; width: 100%; max-width: 850px; background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.25); border-radius: 14px; padding: 1rem 1.25rem; text-align: left; }
+      .commitment-panel label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); margin-bottom: 0.5rem; }
+      .commitment-controls { display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center; }
+      .commitment-input { flex: 1; min-width: 220px; background: rgba(15,23,42,0.7); border: 1px solid rgba(148,163,184,0.35); border-radius: 10px; color: var(--text-primary); padding: 0.6rem 0.8rem; font-size: 0.85rem; }
+      .commitment-btn { border: 1px solid rgba(56,189,248,0.5); background: rgba(56,189,248,0.18); color: var(--text-primary); border-radius: 999px; padding: 0.55rem 1rem; font-size: 0.8rem; cursor: pointer; }
+      .commitment-output { margin-top: 0.75rem; font-size: 0.85rem; color: var(--accent-cyan); min-height: 1.2rem; }
+      @media (max-width: 900px) {
+        .mindset-grid { grid-template-columns: 1fr; }
+      }
 
       /* === CHAPTER TRANSITION OVERLAY === */
       .chapter-overlay { position: fixed; inset: 0; background: var(--bg-primary); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
@@ -504,10 +517,60 @@
       </section>
 
       <!-- Slide 14: Thank You -->
+      <section class="slide slide-gradient-3">
+        <p class="narrative-bar reveal" style="border-color: rgba(34,211,238,0.35);">Chapter 5: Psychological Lift</p>
+        <h2 class="reveal">From Uncertainty to <span class="gradient-text">Techno-Optimism</span></h2>
+        <p class="reveal" style="max-width: 760px; font-size: 0.95rem; margin-bottom: 0.6rem;">
+          Women in aerospace already solve complex systems under uncertainty. Agentic AI extends that same capability into software, analysis, and decision support.
+          This is not a replacement story, it is a leverage story.
+        </p>
+        <div class="mindset-grid">
+          <div class="mindset-card reveal">
+            <h4>Mastery Experience</h4>
+            <p>By the end of this workshop, you will have directed an AI system through a real workflow. Action builds confidence faster than theory.</p>
+          </div>
+          <div class="mindset-card reveal">
+            <h4>Belonging Signal</h4>
+            <p>AI needs aerospace thinking, mission discipline, and safety-first leadership. Your domain background is a strategic advantage.</p>
+          </div>
+          <div class="mindset-card reveal">
+            <h4>Future Narrative</h4>
+            <p>Hope grows when we can see concrete pathways. Your next step is not to know everything; it is to start one mission this week.</p>
+          </div>
+        </div>
+        <p class="reveal pull-quote" style="font-size: 1rem; margin-top: 1rem;">
+          "Optimism is not waiting for the future to improve. It is building skills that improve the future."
+        </p>
+      </section>
+
+      <section class="slide slide-gradient-1">
+        <p class="narrative-bar reveal">Chapter 5: 7-Day Launch Plan</p>
+        <h2 class="reveal">Your First <span class="highlight">Agentic Mission</span></h2>
+        <p class="reveal" style="max-width: 760px; font-size: 0.95rem; margin-bottom: 0.6rem;">
+          Use implementation intentions: choose one aerospace-relevant task, decide when you will do it, and define success.
+          Small wins compound into career momentum.
+        </p>
+        <ul class="slide-list">
+          <li><span class="list-icon">🛰️</span><strong>Day 1:</strong> Pick one mission, example: summarize satellite anomaly reports.</li>
+          <li><span class="list-icon">🧭</span><strong>Day 2:</strong> Define constraints, accuracy target, traceability, and safety checks.</li>
+          <li><span class="list-icon">💻</span><strong>Day 3:</strong> Run a Gemini CLI workflow and capture before-and-after productivity.</li>
+          <li><span class="list-icon">📈</span><strong>Day 5:</strong> Share outcomes with one peer, manager, or mentor for feedback.</li>
+          <li><span class="list-icon">🚀</span><strong>Day 7:</strong> Commit to the next mission, bigger scope, same disciplined loop.</li>
+        </ul>
+        <div class="commitment-panel reveal">
+          <label for="missionCommitment">Type your mission commitment</label>
+          <div class="commitment-controls">
+            <input id="missionCommitment" class="commitment-input" type="text" placeholder="Example: On Monday at 09:00, I will automate first-pass telemetry triage." />
+            <button class="commitment-btn" id="saveCommitmentBtn" type="button">Save commitment</button>
+          </div>
+          <p class="commitment-output" id="commitmentOutput"></p>
+        </div>
+      </section>
+
       <section class="slide slide-gradient-1">
         <h1 class="reveal">Thank <span class="gradient-text">You</span></h1>
         <p class="reveal pull-quote" style="font-size: 1.2rem; margin-bottom: 1rem;">"The future belongs to those who direct the machines, not those who fear them."</p>
-        <p class="reveal" style="font-size: 1rem;">Keep building. Keep leading. Keep directing.</p>
+        <p class="reveal" style="font-size: 1rem;">Keep building. Keep leading. Keep directing. WIA-Europe women in aerospace are needed at the center of AI leadership.</p>
         <div class="reveal" style="display: flex; gap: 2rem; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
           <img src="assets/wia_europe_strasbourg_logo.png" alt="WIA-Europe Strasbourg" style="height: 120px; border-radius: 8px; background: rgba(255,255,255,0.1); padding: 5px; border: 1px solid rgba(255,255,255,0.2);">
           <img src="assets/LOGO_ISU_Darkblue.png" alt="ISU" style="height: 50px; background: white; padding: 8px; border-radius: 8px;">
@@ -519,7 +582,7 @@
 
     </div>
 
-    <div class="slide-number" id="slideNumber">1 / 14</div>
+    <div class="slide-number" id="slideNumber">1 / 16</div>
     <div class="slide-controls">
       <button class="fullscreen-btn" id="fs-toggle">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
@@ -602,7 +665,7 @@
       })();
 
       // --- CHAPTER TRANSITION OVERLAY ---
-      const chapterMap = { 2: ['I', 'The AI Economy'], 4: ['II', 'The Adoption Gap'], 7: ['III', 'The Agentic Paradigm'], 11: ['IV', 'Lab Workflow'], 12: ['V', 'Your Turn'] };
+      const chapterMap = { 2: ['I', 'The AI Economy'], 4: ['II', 'The Adoption Gap'], 7: ['III', 'The Agentic Paradigm'], 11: ['IV', 'Lab Workflow'], 13: ['V', 'Your Turn'] };
       const origShowSlide = showSlide;
       showSlide = function(index) {
         if (chapterMap[index] && index !== 0) {
@@ -718,7 +781,7 @@
       }
 
       const rogersCtx = document.getElementById('rogersChart');
-      if (rogersCtx) {
+      if (rogersCtx && window.Chart) {
         const labels = [];
         const generalData = [];
         const maleData = [];
@@ -1063,7 +1126,7 @@
 
       // --- Career Velocity Chart ---
       const careerCtx = document.getElementById('careerChart');
-      if (careerCtx) {
+      if (careerCtx && window.Chart) {
         new Chart(careerCtx, {
           type: 'bar',
           data: {
@@ -1118,6 +1181,20 @@
       function closeModal() {
         document.getElementById('imageModal').style.opacity = '0';
         document.getElementById('imageModal').style.pointerEvents = 'none';
+      }
+
+      const commitmentInput = document.getElementById('missionCommitment');
+      const saveCommitmentBtn = document.getElementById('saveCommitmentBtn');
+      const commitmentOutput = document.getElementById('commitmentOutput');
+      if (commitmentInput && saveCommitmentBtn && commitmentOutput) {
+        saveCommitmentBtn.addEventListener('click', () => {
+          const value = commitmentInput.value.trim();
+          if (!value) {
+            commitmentOutput.textContent = 'Please write one concrete mission with a time and context.';
+            return;
+          }
+          commitmentOutput.textContent = `Commitment saved: ${value}`;
+        });
       }
     </script>
     
