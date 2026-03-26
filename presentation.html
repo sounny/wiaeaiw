@@ -15,13 +15,14 @@
       header { display: none; }
       .slide-nav-hint {
         position: fixed;
-        bottom: 5rem;
+        bottom: 1.5rem;
         left: 50%;
         transform: translateX(-50%);
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         color: var(--text-secondary);
-        opacity: 0.5;
+        opacity: 0.6;
         z-index: 100;
+        pointer-events: none;
       }
       .slide-list {
         list-style: none;
@@ -202,7 +203,12 @@
       .animate-grow { transition: width 1.5s ease-out; }
 
       /* === CINEMATIC SLIDE TRANSITIONS === */
-      .slide { opacity: 0; transform: scale(0.97) translateY(12px); transition: opacity 0.6s cubic-bezier(.4,0,.2,1), transform 0.6s cubic-bezier(.4,0,.2,1); }
+      .slide { 
+        opacity: 0; 
+        transform: scale(0.97) translateY(12px); 
+        transition: opacity 0.6s cubic-bezier(.4,0,.2,1), transform 0.6s cubic-bezier(.4,0,.2,1); 
+        padding-bottom: 120px !important;
+      }
       .slide.active { opacity: 1; transform: scale(1) translateY(0); }
 
       /* === AMBIENT PARTICLE CANVAS === */
@@ -288,15 +294,21 @@
         <h1 class="reveal">WIA-Europe <span class="gradient-text">AI-W</span> Workshop</h1>
         <p class="reveal" style="margin-bottom: 0.5rem; font-size: 1.4rem; color: var(--text-primary); font-weight: 300;">AI for Women: Empowering technical agency through agentic workflows.</p>
         <p class="reveal pull-quote" style="margin-top: 1.5rem; font-size: 1.1rem; border-left-width: 2px;">"The question is no longer whether AI will transform your career. The question is: will you direct that transformation, or be directed by it?"</p>
-        <div class="reveal" style="font-size: 1.1rem; color: var(--accent-cyan); display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.5rem; font-family: var(--font-heading); font-weight: 600;">
-          <span>Dr. Moulay Anwar Sounny-Slitine | ISU</span>
-          <span>Sri Varshini Budi, Nina Velimirovic & Vrushali Chittaranjan | WIA-Europe Strasbourg</span>
+        <div class="reveal" style="font-size: 1.1rem; color: var(--accent-cyan); display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem; font-family: var(--font-heading); font-weight: 600;">
+          <span>Venkata Sri Varshini Budi | President, WIA-Europe Strasbourg</span>
+          <span>Nina Velimirovic | Vice-President, WIA-Europe Strasbourg</span>
+          <span>Vrushali Chittaranjan | Committee Member, WIA-Europe Strasbourg</span>
+          <span style="opacity: 0.8; font-size: 0.95rem; margin-top: 0.25rem;">Dr. Moulay Anwar Sounny-Slitine | ISU Faculty Advisor</span>
         </div>
-        <p class="reveal" style="font-size: 0.9rem; margin-top: 1.5rem; color: var(--text-secondary); letter-spacing: 1px; text-transform: uppercase; font-weight: 700;">WIA-Europe Strasbourg Regional Network</p>
-        <p class="reveal" style="font-size: 0.85rem; margin-top: 0.5rem; opacity: 0.8;">May 6, 2026 | 13:00 CET</p>
-        <div class="reveal" style="display: flex; gap: 2rem; align-items: center; justify-content: center; margin-top: 2rem;">
-          <img src="assets/Strasbourg_Region.png" alt="WIA-Europe Strasbourg" style="height: 60px; border-radius: 8px; background: rgba(255,255,255,0.1); padding: 5px;">
-          <img src="assets/LOGO_ISU_Darkblue.png" alt="ISU" style="height: 40px; background: white; padding: 10px; border-radius: 8px;">
+        <p class="reveal" style="font-size: 0.8rem; margin-top: 1rem; color: var(--text-secondary); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700;">WIA-Europe Strasbourg Regional Network</p>
+        <p class="reveal" style="font-size: 0.8rem; margin-top: 1rem; opacity: 0.6; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+          <span style="display: inline-block; width: 15px; height: 1px; background: var(--accent-cyan);"></span>
+          May 6, 2026 | 13:00 CET
+          <span style="display: inline-block; width: 15px; height: 1px; background: var(--accent-cyan);"></span>
+        </p>
+        <div class="reveal" style="display: flex; gap: 2rem; align-items: center; justify-content: center; margin-top: 1.5rem;">
+          <img src="assets/wia_europe_strasbourg_logo.png" alt="WIA-Europe Strasbourg" style="height: 50px; border-radius: 8px; background: rgba(255,255,255,0.1); padding: 5px;">
+          <img src="assets/LOGO_ISU_Darkblue.png" alt="ISU" style="height: 35px; background: white; padding: 8px; border-radius: 8px;">
         </div>
       </section>
 
@@ -600,7 +612,7 @@
           <li><span class="list-icon">📈</span><strong>Day 5:</strong> Share outcomes with one peer, manager, or mentor for feedback.</li>
           <li><span class="list-icon">🚀</span><strong>Day 7:</strong> Commit to the next mission, bigger scope, same disciplined loop.</li>
         </ul>
-        <div class="commitment-panel reveal">
+        <div class="commitment-panel reveal" style="margin-bottom: 2rem;">
           <label for="missionCommitment">Type your mission commitment</label>
           <div class="commitment-controls">
             <input id="missionCommitment" class="commitment-input" type="text" placeholder="Example: On Monday at 09:00, I will automate first-pass telemetry triage." />
@@ -713,14 +725,24 @@
       // --- CHAPTER TRANSITION OVERLAY ---
       const chapterMap = { 2: ['I', 'The AI Economy'], 4: ['II', 'The Adoption Gap'], 7: ['III', 'The Agentic Paradigm'], 11: ['IV', 'Lab Workflow'], 13: ['V', 'Your Turn'] };
       const origShowSlide = showSlide;
+      let isTransitioning = false;
+
       showSlide = function(index) {
-        if (chapterMap[index] && index !== 0) {
+        if (isTransitioning) return;
+        if (chapterMap[index] && index !== current && index !== 0) {
+          isTransitioning = true;
           const overlay = document.getElementById('chapterOverlay');
           document.getElementById('chapterNum').textContent = chapterMap[index][0];
           document.getElementById('chapterTitle').textContent = chapterMap[index][1];
           overlay.classList.add('show');
-          setTimeout(() => { overlay.classList.remove('show'); origShowSlide(index); }, 800);
-        } else { origShowSlide(index); }
+          setTimeout(() => { 
+            overlay.classList.remove('show'); 
+            origShowSlide(index);
+            isTransitioning = false;
+          }, 800);
+        } else { 
+          origShowSlide(index); 
+        }
       };
 
       // --- News Card Fan + Carousel Modal ---
