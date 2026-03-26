@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <circle cx="60" cy="60" r="58" fill="#0a0f1a"/>
+  <g transform="translate(60,60)">
+    <!-- Meta infinity loop -->
+    <path d="M-20,0 C-20,-18 -8,-22 0,-10 C8,-22 20,-18 20,0 C20,18 8,22 0,10 C-8,22 -20,18 -20,0 Z" 
+          fill="none" stroke="url(#metaGrad)" stroke-width="7" stroke-linecap="round"/>
+  </g>
+  <defs>
+    <linearGradient id="metaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0668E1"/>
+      <stop offset="50%" stop-color="#0080FB"/>
+      <stop offset="100%" stop-color="#8B5CF6"/>
+    </linearGradient>
+  </defs>
+</svg>

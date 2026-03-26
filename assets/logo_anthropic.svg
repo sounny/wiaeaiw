@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <circle cx="60" cy="60" r="58" fill="#0a0f1a"/>
+  <g transform="translate(60,60)">
+    <!-- Anthropic's starburst/sunburst mark -->
+    <path d="M-4,-38 L4,-38 L10,32 L-10,32 Z" fill="#d97706"/>
+    <path d="M-4,-38 L4,-38 L10,32 L-10,32 Z" fill="#d97706" transform="rotate(51.4)"/>
+    <path d="M-4,-38 L4,-38 L10,32 L-10,32 Z" fill="#d97706" transform="rotate(102.9)"/>
+    <path d="M-4,-38 L4,-38 L10,32 L-10,32 Z" fill="#d97706" transform="rotate(154.3)"/>
+    <path d="M-4,-38 L4,-38 L10,32 L-10,32 Z" fill="#d97706" transform="rotate(205.7)"/>
+    <path d="M-4,-38 L4,-38 L10,32 L-10,32 Z" fill="#d97706" transform="rotate(257.1)"/>
+    <path d="M-4,-38 L4,-38 L10,32 L-10,32 Z" fill="#d97706" transform="rotate(308.6)"/>
+  </g>
+</svg>

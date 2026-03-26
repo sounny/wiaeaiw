@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <circle cx="60" cy="60" r="58" fill="#0a0f1a"/>
+  <g transform="translate(60,60)">
+    <!-- Google DeepMind stylized diamond/brain -->
+    <polygon points="0,-35 30,0 0,35 -30,0" fill="#4285f4"/>
+    <polygon points="0,-35 30,0 0,0" fill="#669df6" opacity="0.8"/>
+    <polygon points="0,0 30,0 0,35" fill="#1a73e8" opacity="0.9"/>
+    <polygon points="-30,0 0,0 0,-35" fill="#5094ed" opacity="0.7"/>
+    <polygon points="-30,0 0,35 0,0" fill="#1967d2" opacity="0.85"/>
+    <!-- Neural dots -->
+    <circle cx="0" cy="-18" r="3" fill="white" opacity="0.9"/>
+    <circle cx="14" cy="-5" r="2.5" fill="white" opacity="0.7"/>
+    <circle cx="-14" cy="-5" r="2.5" fill="white" opacity="0.7"/>
+    <circle cx="8" cy="12" r="2" fill="white" opacity="0.6"/>
+    <circle cx="-8" cy="12" r="2" fill="white" opacity="0.6"/>
+  </g>
+</svg>

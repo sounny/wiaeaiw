@@ -696,17 +696,17 @@
       // --- Lab Logos on Slide 5 ---
       const labLogosEl = document.getElementById('labLogos');
       const labs = [
-        { name: 'OpenAI', emoji: '🟢', color: '#10b981' },
-        { name: 'Anthropic', emoji: '🔶', color: '#f59e0b' },
-        { name: 'Google DeepMind', emoji: '🔵', color: '#3b82f6' },
-        { name: 'Meta AI', emoji: '🟣', color: '#8b5cf6' },
-        { name: 'xAI', emoji: '⚡', color: '#ef4444' },
-        { name: 'Microsoft', emoji: '🟦', color: '#0ea5e9' }
+        { name: 'OpenAI', logo: 'assets/logo_openai.svg', color: '#10b981' },
+        { name: 'Anthropic', logo: 'assets/logo_anthropic.svg', color: '#f59e0b' },
+        { name: 'Google DeepMind', logo: 'assets/logo_deepmind.svg', color: '#3b82f6' },
+        { name: 'Meta AI', logo: 'assets/logo_meta_ai.svg', color: '#8b5cf6' },
+        { name: 'xAI', logo: 'assets/logo_xai.svg', color: '#ef4444' },
+        { name: 'Microsoft', logo: 'assets/logo_microsoft_ai.svg', color: '#0ea5e9' }
       ];
       labs.forEach(lab => {
         const el = document.createElement('div');
         el.style.cssText = `text-align:center; padding:0.75rem 1rem; background:rgba(255,255,255,0.05); border:1px solid ${lab.color}40; border-radius:12px; min-width:100px; transition:all 0.3s; cursor:default;`;
-        el.innerHTML = `<div style="font-size:1.8rem;">${lab.emoji}</div><div style="font-size:0.7rem; margin-top:0.25rem; color:${lab.color}; font-weight:600;">${lab.name}</div>`;
+        el.innerHTML = `<img src="${lab.logo}" alt="${lab.name}" style="width:48px; height:48px; border-radius:50%; object-fit:cover; border:2px solid ${lab.color}; background:#0a0f1a;"><div style="font-size:0.7rem; margin-top:0.25rem; color:${lab.color}; font-weight:600;">${lab.name}</div>`;
         el.addEventListener('mouseenter', () => { el.style.transform='translateY(-3px)'; el.style.borderColor=lab.color; el.style.boxShadow=`0 8px 20px ${lab.color}30`; });
         el.addEventListener('mouseleave', () => { el.style.transform=''; el.style.borderColor=`${lab.color}40`; el.style.boxShadow=''; });
         labLogosEl.appendChild(el);
