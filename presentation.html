@@ -97,16 +97,22 @@
         background: rgba(255,255,255,0.1);
         border: 1px solid var(--border-color);
         color: var(--text-primary);
-        padding: 0.4rem 1rem;
+        padding: 0.4rem 1.2rem;
         border-radius: 50px;
         cursor: pointer;
         font-size: 0.8rem;
-        z-index: 100;
-        transition: all 0.2s;
+        z-index: 1000;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        backdrop-filter: blur(10px);
       }
       .exit-btn:hover, .fullscreen-btn:hover {
         background: var(--accent-primary);
         border-color: var(--accent-primary);
+        color: white;
+        transform: scale(1.05);
       }
       .fullscreen-btn {
         position: fixed;
@@ -115,12 +121,16 @@
         background: rgba(255,255,255,0.1);
         border: 1px solid var(--border-color);
         color: var(--text-primary);
-        padding: 0.4rem 1rem;
+        padding: 0.4rem 1.2rem;
         border-radius: 50px;
         cursor: pointer;
         font-size: 0.8rem;
-        z-index: 100;
-        transition: all 0.2s;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        backdrop-filter: blur(10px);
       }
       @media (max-width: 768px) {
         .two-col { grid-template-columns: 1fr; gap: 1.5rem; }
@@ -140,9 +150,45 @@
         animation: float 6s ease-in-out infinite;
       }
       @keyframes float {
-        0%, 100% { transform: translateY(0) rotate(var(--rot)); }
-        50% { transform: translateY(-10px) rotate(calc(var(--rot) + 2deg)); }
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
       }
+      .lab-card {
+        animation: lab-float 5s ease-in-out infinite;
+      }
+      .sim-window {
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        overflow: hidden;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      }
+      .window-header {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 0.5rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        border-bottom: 1px solid var(--border-color);
+      }
+      .dot { width: 10px; height: 10px; border-radius: 50%; }
+      .red { background: #ff5f56; }
+      .yellow { background: #ffbd2e; }
+      .green { background: #27c93f; }
+      .chat-ui { padding: 1rem; font-size: 0.8rem; flex: 1; text-align: left; }
+      .msg { margin-bottom: 1rem; padding: 0.75rem; border-radius: 8px; }
+      .msg.user { background: rgba(56, 189, 248, 0.1); align-self: flex-end; max-width: 80%; }
+      .msg.ai { background: rgba(255, 255, 255, 0.05); }
+      .terminal-ui { padding: 1rem; font-family: 'Consolas', 'Courier New', monospace; font-size: 0.8rem; color: #a5f3fc; text-align: left; background: #010409; flex: 1; }
+      .term-line { margin-bottom: 0.4rem; white-space: pre-wrap; }
+      .prompt { color: #22c55e; margin-right: 0.5rem; }
+      .typing { border-right: 2px solid var(--accent-cyan); animation: cursor-blink 1s infinite alternate; }
+      @keyframes cursor-blink { from { border-color: transparent } to { border-color: var(--accent-cyan) } }
       .news-collage img:nth-child(1) { --rot: -3deg; animation-delay: 0s; }
       .news-collage img:nth-child(2) { --rot: 2deg; animation-delay: 1.5s; }
       .news-collage img:nth-child(3) { --rot: -1deg; animation-delay: 3s; }
@@ -152,28 +198,7 @@
         border-color: var(--accent-primary);
         animation-play-state: paused;
       }
-      .fullscreen-btn {
-        position: absolute;
-        top: 1.5rem;
-        right: 4.5rem;
-        background: rgba(255,255,255,0.1);
-        border: 1px solid var(--border-color);
-        color: var(--text-primary);
-        padding: 0.4rem 1.2rem;
-        border-radius: 50px;
-        cursor: pointer;
-        font-size: 0.8rem;
-        z-index: 101;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      }
-      .fullscreen-btn:hover {
-        background: var(--accent-primary);
-        color: white;
-        transform: scale(1.05);
-      }
+      .animate-grow { transition: width 1.5s ease-out; }
       .animate-grow { transition: width 1.5s ease-out; }
 
       /* === CINEMATIC SLIDE TRANSITIONS === */
@@ -265,12 +290,12 @@
         <p class="reveal pull-quote" style="margin-top: 1.5rem; font-size: 1.1rem; border-left-width: 2px;">"The question is no longer whether AI will transform your career. The question is: will you direct that transformation, or be directed by it?"</p>
         <div class="reveal" style="font-size: 1.1rem; color: var(--accent-cyan); display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.5rem; font-family: var(--font-heading); font-weight: 600;">
           <span>Dr. Moulay Anwar Sounny-Slitine | ISU</span>
-          <span>Sri Varshini Budi, Nina Velimirovic &amp; Vrushali Chittaranjan | WIA-Europe Strasbourg</span>
+          <span>Sri Varshini Budi, Nina Velimirovic & Vrushali Chittaranjan | WIA-Europe Strasbourg</span>
         </div>
         <p class="reveal" style="font-size: 0.9rem; margin-top: 1.5rem; color: var(--text-secondary); letter-spacing: 1px; text-transform: uppercase; font-weight: 700;">WIA-Europe Strasbourg Regional Network</p>
         <p class="reveal" style="font-size: 0.85rem; margin-top: 0.5rem; opacity: 0.8;">May 6, 2026 | 13:00 CET</p>
         <div class="reveal" style="display: flex; gap: 2rem; align-items: center; justify-content: center; margin-top: 2rem;">
-          <img src="assets/Strasbourg_Region.png" alt="WIA Strasbourg" style="height: 60px; border-radius: 8px; background: rgba(255,255,255,0.1); padding: 5px;">
+          <img src="assets/Strasbourg_Region.png" alt="WIA-Europe Strasbourg" style="height: 60px; border-radius: 8px; background: rgba(255,255,255,0.1); padding: 5px;">
           <img src="assets/LOGO_ISU_Darkblue.png" alt="ISU" style="height: 40px; background: white; padding: 10px; border-radius: 8px;">
         </div>
       </section>
@@ -356,12 +381,17 @@
               <li>🏗️ <a href="https://www.census.gov/library/stories/2021/01/women-making-gains-in-stem-occupations.html" target="_blank" style="color: var(--accent-primary); text-decoration: underline;">STEM Workforce: 28% Women</a></li>
             </ul>
           </div>
-          <div class="two-col-item" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-            <p style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Who Builds the Frontier?</p>
-            <div id="labLogos" style="display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; align-items: center;">
+          <div class="two-col-item" style="display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;">
+            <!-- Glow background for labs -->
+            <div style="position: absolute; width: 300px; height: 300px; background: radial-gradient(circle, var(--accent-cyan) 0%, transparent 70%); opacity: 0.15; filter: blur(40px); z-index: -1;"></div>
+            
+            <p class="reveal" style="margin-bottom: 2rem; color: var(--text-secondary); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700;">Who Builds the Frontier?</p>
+            
+            <div id="labLogos" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; perspective: 1000px;">
               <!-- Populated by JS -->
             </div>
-            <p style="margin-top: 1.5rem; font-size: 0.75rem; color: var(--text-secondary); font-style: italic;">Click "Next" to see who leads these companies →</p>
+            
+            <p class="reveal" style="margin-top: 2rem; font-size: 0.75rem; color: var(--text-secondary); font-style: italic; opacity: 0.7;">Click "Next" to see who leads these companies →</p>
           </div>
         </div>
       </section>
@@ -410,24 +440,37 @@
         <p class="narrative-bar reveal">Chapter 3: Side by Side</p>
         <h2 class="reveal">The <span class="gradient-text">Agentic</span> Difference</h2>
         <p class="reveal" style="max-width:600px; font-size:0.95rem; margin-bottom:0.5rem;">Think about the last time you used ChatGPT. You typed a question. It gave you text. You copied it somewhere. That is the old world. Here is the new one:</p>
-        <div class="comparison-row">
-          <div class="comparison-box" style="background: rgba(148, 163, 184, 0.1); border: 1px solid var(--border-color);">
-            <h3 style="color: var(--text-secondary);">&#128172; Traditional AI (Chatbot)</h3>
-            <ul style="list-style: none; padding: 0; margin-top: 1rem; text-align: left;">
-              <li style="padding: 0.5rem 0; color: var(--text-secondary);">You ask a question</li>
-              <li style="padding: 0.5rem 0; color: var(--text-secondary);">AI gives a text answer</li>
-              <li style="padding: 0.5rem 0; color: var(--text-secondary);">You copy-paste manually</li>
-              <li style="padding: 0.5rem 0; color: var(--text-secondary);">Single turn interaction</li>
-            </ul>
+        <div style="display: flex; gap: 2rem; width: 100%; max-width: 1000px; margin-top: 2rem; perspective: 1000px;">
+          <!-- Traditional Chat Window -->
+          <div class="sim-window reveal" style="transition-delay: 0.3s; transform: rotateY(-5deg);">
+            <div class="window-header">
+              <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+              <span style="margin-left: auto;">ChatGPT (Legacy Chat)</span>
+            </div>
+            <div class="chat-ui">
+              <div class="msg user">How do I make a chart from these CSV files?</div>
+              <div class="msg ai">
+                To create a chart, you can use Python with Pandas. First, load the data using <code>pd.read_csv()</code>, then use <code>plt.plot()</code> to visualize it. Would you like a code snippet?
+              </div>
+              <div style="font-style: italic; color: var(--text-secondary); opacity: 0.7; margin-top: 1rem;">
+                *You copy-paste the code manually into another file*
+              </div>
+            </div>
           </div>
-          <div class="comparison-box" style="background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3);">
-            <h3 style="color: var(--accent-primary);">&#129302; Agentic AI</h3>
-            <ul style="list-style: none; padding: 0; margin-top: 1rem; text-align: left;">
-              <li style="padding: 0.5rem 0; color: var(--text-secondary);">You define a goal</li>
-              <li style="padding: 0.5rem 0; color: var(--text-secondary);">AI plans a multi-step strategy</li>
-              <li style="padding: 0.5rem 0; color: var(--text-secondary);">AI reads files, writes code, runs tests</li>
-              <li style="padding: 0.5rem 0; color: var(--text-secondary);">Autonomous execution loop</li>
-            </ul>
+
+          <!-- Agentic Console Window -->
+          <div class="sim-window reveal" style="transition-delay: 0.6s; border-color: var(--accent-cyan); transform: rotateY(5deg);">
+            <div class="window-header" style="background: rgba(34, 211, 238, 0.1);">
+              <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+              <span style="margin-left: auto; color: var(--accent-cyan);">Antigravity Agentic CLI</span>
+            </div>
+            <div class="terminal-ui">
+              <div class="term-line"><span class="prompt">$</span>Analyze all CSVs in /data and generate a summary chart.</div>
+              <div class="term-line" style="color: #60a5fa;">[Agent] Reading directory content... Found 18 files.</div>
+              <div class="term-line" style="color: #60a5fa;">[Agent] Extracting trends from 'sales_q1.csv'...</div>
+              <div class="term-line" style="color: #fbd38d;">[Agent] Writing chart_v1.py and running script...</div>
+              <div class="term-line" style="color: #22c55e;">[Agent] DONE: Chart saved to /output/trends.png <span class="typing"></span></div>
+            </div>
           </div>
         </div>
       </section>
@@ -583,12 +626,15 @@
     </div>
 
     <div class="slide-number" id="slideNumber">1 / 16</div>
-    <div class="slide-controls">
-      <button class="fullscreen-btn" id="fs-toggle">
+    <button class="fullscreen-btn" id="fs-toggle">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
       Full Screen
     </button>
-    <button class="exit-btn" onclick="window.location.href='index.html'">&times; Close</button>
+    <button class="exit-btn" onclick="window.location.href='index.html'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Close
+    </button>
+    <div class="slide-controls">
       <button class="slide-btn" id="prevBtn" aria-label="Previous slide">&#8592; Prev</button>
       <button class="slide-btn" id="nextBtn" aria-label="Next slide">Next &#8594;</button>
     </div>
@@ -759,19 +805,54 @@
       // --- Lab Logos on Slide 5 ---
       const labLogosEl = document.getElementById('labLogos');
       const labs = [
-        { name: 'OpenAI', logo: 'assets/logo_openai.svg', color: '#10b981' },
-        { name: 'Anthropic', logo: 'assets/logo_anthropic.svg', color: '#f59e0b' },
-        { name: 'Google DeepMind', logo: 'assets/logo_deepmind.svg', color: '#3b82f6' },
-        { name: 'Meta AI', logo: 'assets/logo_meta_ai.svg', color: '#8b5cf6' },
-        { name: 'xAI', logo: 'assets/logo_xai.svg', color: '#ef4444' },
-        { name: 'Microsoft', logo: 'assets/logo_microsoft_ai.svg', color: '#0ea5e9' }
+        { name: 'OpenAI', logo: 'https://cdn.simpleicons.org/openai/ffffff', color: '#10b981' },
+        { name: 'Anthropic', logo: 'https://cdn.simpleicons.org/anthropic/ffffff', color: '#cc785c' },
+        { name: 'DeepMind', logo: 'https://cdn.simpleicons.org/googledeepmind/ffffff', color: '#4285f4' },
+        { name: 'Meta AI', logo: 'https://cdn.simpleicons.org/meta/ffffff', color: '#0668e1' },
+        { name: 'xAI', logo: 'https://cdn.simpleicons.org/x/ffffff', color: '#ffffff' },
+        { name: 'Microsoft', logo: 'https://cdn.simpleicons.org/microsoft/ffffff', color: '#f25022' }
       ];
-      labs.forEach(lab => {
+      labs.forEach((lab, i) => {
         const el = document.createElement('div');
-        el.style.cssText = `text-align:center; padding:0.75rem 1rem; background:rgba(255,255,255,0.05); border:1px solid ${lab.color}40; border-radius:12px; min-width:100px; transition:all 0.3s; cursor:default;`;
-        el.innerHTML = `<img src="${lab.logo}" alt="${lab.name}" style="width:48px; height:48px; border-radius:50%; object-fit:cover; border:2px solid ${lab.color}; background:#0a0f1a;"><div style="font-size:0.7rem; margin-top:0.25rem; color:${lab.color}; font-weight:600;">${lab.name}</div>`;
-        el.addEventListener('mouseenter', () => { el.style.transform='translateY(-3px)'; el.style.borderColor=lab.color; el.style.boxShadow=`0 8px 20px ${lab.color}30`; });
-        el.addEventListener('mouseleave', () => { el.style.transform=''; el.style.borderColor=`${lab.color}40`; el.style.boxShadow=''; });
+        el.className = 'reveal lab-card';
+        el.style.cssText = `
+          text-align:center; padding:1.25rem 1rem; 
+          background:rgba(255,255,255,0.04); 
+          border:1px solid ${lab.color}40; 
+          border-radius:20px; 
+          min-width:120px; 
+          transition:all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+          cursor:default;
+          animation-delay: ${i * 0.7}s;
+          backdrop-filter: blur(12px);
+          display: flex; flex-direction: column; align-items: center; justify-content: center;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 0 10px rgba(255,255,255,0.05);
+        `;
+        el.style.transitionDelay = `${(i + 5) * 0.15}s`; // Staggered entrance
+        
+        el.innerHTML = `
+          <div style="width:55px; height:55px; display:flex; align-items:center; justify-content:center; background: rgba(10,15,26,0.6); border-radius:14px; padding:10px; border: 1px solid ${lab.color}50; box-shadow: 0 4px 15px ${lab.color}30;">
+            <img src="${lab.logo}" alt="${lab.name}" style="width:100%; height:100%; object-fit:contain; filter: drop-shadow(0 0 5px ${lab.color}40);">
+          </div>
+          <div style="font-size:0.8rem; margin-top:1rem; color:white; font-weight:700; font-family:var(--font-heading); letter-spacing:1px; text-transform:uppercase;">${lab.name}</div>
+        `;
+        
+        el.addEventListener('mouseenter', () => { 
+          el.style.transform='scale(1.15) translateY(-10px) rotate(3deg)'; 
+          el.style.borderColor=lab.color; 
+          el.style.background='rgba(255,255,255,0.08)';
+          el.style.boxShadow=`0 20px 40px ${lab.color}50`;
+          el.style.zIndex = '100';
+          el.style.animationPlayState = 'paused';
+        });
+        el.addEventListener('mouseleave', () => { 
+          el.style.transform=''; 
+          el.style.borderColor=`${lab.color}40`; 
+          el.style.background='rgba(255,255,255,0.04)';
+          el.style.boxShadow='';
+          el.style.zIndex = '1';
+          el.style.animationPlayState = 'running';
+        });
         labLogosEl.appendChild(el);
       });
 
