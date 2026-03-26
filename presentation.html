@@ -175,25 +175,88 @@
         transform: scale(1.05);
       }
       .animate-grow { transition: width 1.5s ease-out; }
+
+      /* === CINEMATIC SLIDE TRANSITIONS === */
+      .slide { opacity: 0; transform: scale(0.97) translateY(12px); transition: opacity 0.6s cubic-bezier(.4,0,.2,1), transform 0.6s cubic-bezier(.4,0,.2,1); }
+      .slide.active { opacity: 1; transform: scale(1) translateY(0); }
+
+      /* === AMBIENT PARTICLE CANVAS === */
+      #particleCanvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+      .slide > * { position: relative; z-index: 2; }
+
+      /* === STAGGERED REVEAL ANIMATIONS === */
+      .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease, transform 0.5s ease; }
+      .slide.active .reveal { opacity: 1; transform: translateY(0); }
+      .slide.active .reveal:nth-child(1) { transition-delay: 0.1s; }
+      .slide.active .reveal:nth-child(2) { transition-delay: 0.25s; }
+      .slide.active .reveal:nth-child(3) { transition-delay: 0.4s; }
+      .slide.active .reveal:nth-child(4) { transition-delay: 0.55s; }
+      .slide.active .reveal:nth-child(5) { transition-delay: 0.7s; }
+      .slide.active .reveal:nth-child(6) { transition-delay: 0.85s; }
+
+      /* === NARRATIVE CONNECTOR BAR === */
+      .narrative-bar { display: inline-block; padding: 0.5rem 1.5rem; background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.2); border-radius: 50px; font-size: 0.8rem; font-weight: 600; color: var(--accent-cyan); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 1.5rem; }
+
+      /* === DRAMATIC PULL QUOTE === */
+      .pull-quote { font-size: 1.6rem; font-style: italic; color: var(--text-primary); max-width: 700px; line-height: 1.6; border-left: 3px solid; border-image: var(--accent-gradient) 1; padding-left: 1.5rem; margin: 1.5rem auto; text-align: left; }
+      .pull-quote cite { display: block; font-size: 0.8rem; font-style: normal; color: var(--text-secondary); margin-top: 0.5rem; }
+
+      /* === CHAPTER TRANSITION OVERLAY === */
+      .chapter-overlay { position: fixed; inset: 0; background: var(--bg-primary); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+      .chapter-overlay.show { opacity: 1; pointer-events: auto; }
+      .chapter-overlay .chapter-number { font-size: 6rem; font-weight: 700; font-family: var(--font-heading); background: var(--accent-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; line-height: 1; }
+      .chapter-overlay .chapter-title { font-size: 1.5rem; color: var(--text-secondary); margin-top: 1rem; font-family: var(--font-heading); }
+
+      /* === SLIDE-LIST ENHANCED === */
+      .slide-list li { opacity: 0; transform: translateX(-20px); transition: all 0.4s ease; }
+      .slide.active .slide-list li { opacity: 1; transform: translateX(0); }
+      .slide.active .slide-list li:nth-child(1) { transition-delay: 0.15s; }
+      .slide.active .slide-list li:nth-child(2) { transition-delay: 0.3s; }
+      .slide.active .slide-list li:nth-child(3) { transition-delay: 0.45s; }
+      .slide.active .slide-list li:nth-child(4) { transition-delay: 0.6s; }
+      .slide.active .slide-list li:nth-child(5) { transition-delay: 0.75s; }
+
+      /* === FLOW-BOX PULSE ON ACTIVE === */
+      .slide.active .flow-box { animation: boxPulse 0.6s ease forwards; opacity: 0; }
+      .slide.active .flow-box:nth-child(1) { animation-delay: 0.1s; }
+      .slide.active .flow-box:nth-child(3) { animation-delay: 0.25s; }
+      .slide.active .flow-box:nth-child(5) { animation-delay: 0.4s; }
+      .slide.active .flow-box:nth-child(7) { animation-delay: 0.55s; }
+      .slide.active .flow-box:nth-child(9) { animation-delay: 0.7s; }
+      @keyframes boxPulse { 0% { opacity:0; transform: scale(0.8); } 60% { transform: scale(1.05); } 100% { opacity:1; transform: scale(1); } }
+
+      /* === COMPARISON BOX ENTRANCE === */
+      .comparison-row .comparison-box { opacity: 0; transform: translateY(20px); transition: all 0.5s ease; }
+      .slide.active .comparison-row .comparison-box:nth-child(1) { opacity:1; transform:translateY(0); transition-delay:0.2s; }
+      .slide.active .comparison-row .comparison-box:nth-child(2) { opacity:1; transform:translateY(0); transition-delay:0.45s; }
+
+      /* === VIGNETTE OVERLAY FOR DEPTH === */
+      .presentation-wrapper::after { content:''; position:fixed; inset:0; pointer-events:none; z-index:1; background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.4) 100%); }
     </style>
   </head>
   <body>
+    <canvas id="particleCanvas"></canvas>
+    <div class="chapter-overlay" id="chapterOverlay">
+      <div class="chapter-number" id="chapterNum"></div>
+      <div class="chapter-title" id="chapterTitle"></div>
+    </div>
     <div class="progress-bar" id="progressBar"></div>
 
     <div class="presentation-wrapper">
 
       <!-- Slide 1: Title -->
       <section class="slide active slide-image-bg" style="background-image: url('assets/hero_statue_ai.png');">
-        <p class="hero-badge" style="margin-bottom: 2rem;">WIA-Europe Symposium 2026</p>
-        <h1>WIA-Europe <span class="gradient-text">AI-W</span> Workshop</h1>
-        <p style="margin-bottom: 2rem;">AI for Women: Empowering technical agency through agentic workflows.</p>
-        <div style="font-size: 1.1rem; color: var(--accent-cyan); display: flex; flex-direction: column; gap: 0.5rem; margin-top: 2rem; font-family: var(--font-heading); font-weight: 600;">
+        <p class="hero-badge reveal" style="margin-bottom: 2rem;">WIA-Europe Symposium 2026</p>
+        <h1 class="reveal">WIA-Europe <span class="gradient-text">AI-W</span> Workshop</h1>
+        <p class="reveal" style="margin-bottom: 0.5rem; font-size: 1.4rem; color: var(--text-primary); font-weight: 300;">AI for Women: Empowering technical agency through agentic workflows.</p>
+        <p class="reveal pull-quote" style="margin-top: 1.5rem; font-size: 1.1rem; border-left-width: 2px;">"The question is no longer whether AI will transform your career. The question is: will you direct that transformation, or be directed by it?"</p>
+        <div class="reveal" style="font-size: 1.1rem; color: var(--accent-cyan); display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.5rem; font-family: var(--font-heading); font-weight: 600;">
           <span>Dr. Moulay Anwar Sounny-Slitine | ISU</span>
-          <span>Sri Varshini Budi & Nina Velimirovic | Leaders, WIA-Europe Strasbourg</span>
+          <span>Sri Varshini Budi &amp; Nina Velimirovic | Leaders, WIA-Europe Strasbourg</span>
         </div>
-        <p style="font-size: 0.9rem; margin-top: 1.5rem; color: var(--text-secondary); letter-spacing: 1px; text-transform: uppercase; font-weight: 700;">WIA-Europe Strasbourg Regional Network</p>
-        <p style="font-size: 0.85rem; margin-top: 0.5rem; opacity: 0.8;">May 6, 2026 | 13:00 CET</p>
-        <div style="display: flex; gap: 2rem; align-items: center; justify-content: center; margin-top: 2rem;">
+        <p class="reveal" style="font-size: 0.9rem; margin-top: 1.5rem; color: var(--text-secondary); letter-spacing: 1px; text-transform: uppercase; font-weight: 700;">WIA-Europe Strasbourg Regional Network</p>
+        <p class="reveal" style="font-size: 0.85rem; margin-top: 0.5rem; opacity: 0.8;">May 6, 2026 | 13:00 CET</p>
+        <div class="reveal" style="display: flex; gap: 2rem; align-items: center; justify-content: center; margin-top: 2rem;">
           <img src="assets/Strasbourg_Region.png" alt="WIA Strasbourg" style="height: 60px; border-radius: 8px; background: rgba(255,255,255,0.1); padding: 5px;">
           <img src="assets/LOGO_ISU_Darkblue.png" alt="ISU" style="height: 40px; background: white; padding: 10px; border-radius: 8px;">
         </div>
@@ -201,24 +264,27 @@
 
       <!-- Slide 2: Agenda -->
       <section class="slide slide-gradient-1">
-        <h2>Today's <span class="gradient-text">Agenda</span></h2>
+        <p class="narrative-bar reveal">Our Journey Today</p>
+        <h2 class="reveal">Today's <span class="gradient-text">Agenda</span></h2>
+        <p class="reveal" style="max-width: 600px; font-size: 1rem; margin-bottom: 1rem;">We will travel through five chapters: from the economic forces reshaping careers, to the gender dynamics shaping who leads, and finally into the hands-on tools that put you in the driver's seat.</p>
         <ul class="slide-list">
-          <li><span class="list-icon">&#128200;</span> <strong>Part 1:</strong> The $4.4 Trillion AI Economy</li>
-          <li><span class="list-icon">&#9878;&#65039;</span> <strong>Part 2:</strong> Gender Bias in AI Adoption</li>
-          <li><span class="list-icon">&#129302;</span> <strong>Part 3:</strong> The Agentic Paradigm</li>
-          <li><span class="list-icon">&#128187;</span> <strong>Part 4:</strong> Hands-on Lab with Gemini CLI</li>
-          <li><span class="list-icon">&#10067;</span> <strong>Part 5:</strong> Q&A and Closing</li>
+          <li><span class="list-icon">&#128200;</span> <strong>Chapter 1:</strong> The $4.4 Trillion AI Economy</li>
+          <li><span class="list-icon">&#9878;&#65039;</span> <strong>Chapter 2:</strong> Gender Bias in AI Adoption</li>
+          <li><span class="list-icon">&#129302;</span> <strong>Chapter 3:</strong> The Agentic Paradigm</li>
+          <li><span class="list-icon">&#128187;</span> <strong>Chapter 4:</strong> Hands-on Lab with Gemini CLI</li>
+          <li><span class="list-icon">&#10067;</span> <strong>Chapter 5:</strong> Q&amp;A and Closing</li>
         </ul>
       </section>
 
       <!-- Slide 3: The Economic Landscape (Aerospace & Value) -->
       <section class="slide slide-gradient-2">
-        <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-primary); margin-bottom: 1rem;">Part 1: The AI Economy</p>
+        <p class="narrative-bar reveal">Chapter 1: The AI Economy</p>
         <div class="two-col">
-          <div class="two-col-item">
+          <div class="two-col-item reveal">
             <h1 style="font-size: 3rem; margin-bottom: 1rem; color: var(--accent-cyan);">$4.4T</h1>
             <h3>Annual Value Added by Generative AI</h3>
-            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1.5rem;"><a href="https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/the-economic-potential-of-generative-ai-the-next-productivity-frontier" target="_blank" style="text-decoration: underline; color: var(--accent-cyan);">Source: McKinsey & Company / WEF 2025</a></p>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">That is not a projection. That is the economic consensus for the value generative AI is adding to the global economy, right now.</p>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1.5rem;"><a href="https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/the-economic-potential-of-generative-ai-the-next-productivity-frontier" target="_blank" style="text-decoration: underline; color: var(--accent-cyan);">Source: McKinsey &amp; Company / WEF 2025</a></p>
             <ul style="list-style: none; padding: 0; text-align: left; font-size: 0.9rem; line-height: 1.6;">
               <li><span style="color: var(--accent-primary);">⚡</span> <strong>Reskilling Urgency:</strong> Massive upskilling needed by 2030 (WEF).</li>
               <li><span style="color: var(--accent-primary);">🛰️</span> <strong>A&D Impact:</strong> $65.4B segment by 2034.</li>
@@ -235,9 +301,11 @@
 
       <!-- Slide 4: Career Velocity -->
       <section class="slide slide-gradient-1">
-        <h2>Career <span class="highlight">Velocity</span></h2>
+        <p class="narrative-bar reveal">Chapter 1: What This Means For You</p>
+        <h2 class="reveal">Career <span class="highlight">Velocity</span></h2>
+        <p class="reveal" style="max-width:600px; font-size:0.95rem; margin-bottom:0.5rem;">The economy is one thing. Your career is another. Here is the personal impact: AI skills are now worth more than most degrees.</p>
         <div class="two-col">
-          <div class="two-col-item">
+          <div class="two-col-item reveal">
             <h1 style="color: var(--success-color); font-size: 3rem;">23%</h1>
             <p><strong>AI Skill Wage Premium</strong></p>
             <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 0.5rem;">Jobs requiring AI skills earn a <strong>23% wage premium</strong>, surpassing all degree premiums except PhD (33%). <a href="https://www.hrdive.com/news/AI-skills-wage-premium-exceeds-education-levels/736255/" target="_blank" style="color: var(--accent-cyan); text-decoration: underline;">Source: HR Dive / LinkedIn 2025</a></p>
@@ -258,7 +326,8 @@
 
       <!-- Slide 5: The Adoption Gap & Parity Shift -->
       <section class="slide slide-gradient-3">
-        <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-tertiary); margin-bottom: 1rem;">Part 2: The Adoption Gap</p>
+        <p class="narrative-bar reveal" style="border-color: rgba(168,85,247,0.3); color: var(--accent-tertiary);">Chapter 2: The Adoption Gap</p>
+        <p class="reveal" style="max-width:650px; font-size:1rem; margin-bottom:1rem;">So the money is there. The careers are there. But who is actually using these tools? Let us look at the adoption data, and a remarkable turning point.</p>
         <div class="two-col">
           <div class="two-col-item">
             <div style="display: flex; align-items: baseline; gap: 0.5rem; justify-content: center;">
@@ -286,9 +355,10 @@
 
       <!-- Slide 6: Rogers Adoption Curve -->
       <section class="slide slide-gradient-2" id="rogersSlide">
-        <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-primary); margin-bottom: 0.5rem;">Part 2: Where Are We Now?</p>
-        <h2 style="font-size: 1.5rem; margin-bottom: 0.25rem;">Rogers' <span class="gradient-text">Diffusion of Innovation</span></h2>
-        <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.5rem;">AI adoption mapped to the classic bell curve, with <span style="color: #60a5fa;">male</span> and <span style="color: #f472b6;">female</span> adoption rates superimposed. <a href="https://www.deloitte.com/an/en/issues/digital/gen-ai-adoption-women.html" target="_blank" style="color: var(--accent-cyan); text-decoration: underline;">Source: Deloitte 2025</a></p>
+        <p class="narrative-bar reveal">Chapter 2: Where Are We Now?</p>
+        <h2 class="reveal" style="font-size: 1.5rem; margin-bottom: 0.25rem;">Rogers' <span class="gradient-text">Diffusion of Innovation</span></h2>
+        <p class="reveal" style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem; max-width: 700px;">Every technology follows a predictable adoption curve. AI is crossing the chasm right now, and the gender gap in adoption is closing faster than anyone predicted.</p>
+        <p class="reveal" style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Adoption mapped with <span style="color: #60a5fa;">male</span> and <span style="color: #f472b6;">female</span> rates superimposed. <a href="https://www.deloitte.com/an/en/issues/digital/gen-ai-adoption-women.html" target="_blank" style="color: var(--accent-cyan); text-decoration: underline;">Source: Deloitte 2025</a></p>
         <div style="max-width: 800px; width: 100%; margin: 0 auto; position: relative; height: 340px;">
           <canvas id="rogersChart"></canvas>
         </div>
@@ -299,28 +369,34 @@
 
       <!-- Slide 7: Interactive Org Tree -->
       <section class="slide slide-gradient-1" id="orgTreeSlide">
-        <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-tertiary); margin-bottom: 0.5rem;">Part 2: Who Leads AI?</p>
-        <h2 style="font-size: 1.6rem; margin-bottom: 0.25rem;">Frontier Lab <span class="gradient-text">Leadership Tree</span></h2>
-        <p style="font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+        <p class="narrative-bar reveal" style="border-color: rgba(168,85,247,0.3); color: var(--accent-tertiary);">Chapter 2: Who Leads AI?</p>
+        <h2 class="reveal" style="font-size: 1.6rem; margin-bottom: 0.25rem;">Frontier Lab <span class="gradient-text">Leadership Tree</span></h2>
+        <p class="reveal" style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.25rem;">Adoption matters, but leadership matters more. Here is who sits at the top of the five companies building the most powerful AI systems on Earth.</p>
+        <p class="reveal" style="font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
           <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; border: 2.5px solid #1e40af; margin-right: 4px; vertical-align: middle;"></span> Male
           <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; border: 2.5px solid #db2777; margin-left: 12px; margin-right: 4px; vertical-align: middle;"></span> Female
         </p>
         <div id="orgTree" style="width: 100%; max-width: 1100px; overflow-x: auto; position: relative; margin: 0 auto;">
           <svg id="orgTreeSvg" width="1100" height="480" viewBox="0 0 1100 480" style="display: block; margin: 0 auto;"></svg>
         </div>
-        <p style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--accent-primary);">"Participation is a systems-quality issue, not just a labor issue." — <a href="https://www.unesco.org/en/artificial-intelligence/gender" target="_blank" style="color: var(--accent-cyan); text-decoration: underline;">UNESCO</a></p>
+        <p class="pull-quote reveal" style="font-size: 0.95rem; margin-top: 0.5rem;">"Participation is a systems-quality issue, not just a labor issue."
+          <cite><a href="https://www.unesco.org/en/artificial-intelligence/gender" target="_blank" style="color: var(--accent-cyan); text-decoration: underline;">UNESCO</a></cite>
+        </p>
       </section>
 
-      <!-- Slide 7: Agentic Paradigm intro -->
+      <!-- Slide 8: Agentic Paradigm intro -->
       <section class="slide slide-gradient-2">
-        <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-primary); margin-bottom: 1rem;">Part 3: The Paradigm Shift</p>
-        <h1>From <span class="gradient-text">Prompter</span> to <span class="gradient-text">Orchestrator</span></h1>
-        <p style="margin-top: 1.5rem;">The most profound shift in AI is not about smarter models. It is about AI that <strong>acts</strong> rather than <strong>answers</strong>.</p>
+        <p class="narrative-bar reveal">Chapter 3: The Paradigm Shift</p>
+        <h1 class="reveal">From <span class="gradient-text">Prompter</span> to <span class="gradient-text">Orchestrator</span></h1>
+        <p class="reveal" style="margin-top: 1.5rem; max-width: 700px;">We have seen the economy. We have seen the gap. Now, the solution: a fundamentally new relationship with AI. Not asking questions, but delegating missions.</p>
+        <p class="reveal pull-quote" style="margin-top: 1.5rem; font-size: 1.2rem;">"The most profound shift in AI is not about smarter models. It is about AI that <strong>acts</strong> rather than <strong>answers</strong>."</p>
       </section>
 
-      <!-- Slide 8: Old vs New -->
+      <!-- Slide 9: Old vs New -->
       <section class="slide slide-gradient-1">
-        <h2>The <span class="gradient-text">Agentic</span> Difference</h2>
+        <p class="narrative-bar reveal">Chapter 3: Side by Side</p>
+        <h2 class="reveal">The <span class="gradient-text">Agentic</span> Difference</h2>
+        <p class="reveal" style="max-width:600px; font-size:0.95rem; margin-bottom:0.5rem;">Think about the last time you used ChatGPT. You typed a question. It gave you text. You copied it somewhere. That is the old world. Here is the new one:</p>
         <div class="comparison-row">
           <div class="comparison-box" style="background: rgba(148, 163, 184, 0.1); border: 1px solid var(--border-color);">
             <h3 style="color: var(--text-secondary);">&#128172; Traditional AI (Chatbot)</h3>
@@ -343,9 +419,11 @@
         </div>
       </section>
 
-      <!-- Slide 9: Agentic Flow -->
+      <!-- Slide 10: Agentic Flow -->
       <section class="slide slide-gradient-2">
-        <h2>The Agentic <span class="gradient-text">Workflow</span></h2>
+        <p class="narrative-bar reveal">Chapter 3: The Loop</p>
+        <h2 class="reveal">The Agentic <span class="gradient-text">Workflow</span></h2>
+        <p class="reveal" style="max-width: 600px; font-size: 0.95rem; margin-bottom: 0.5rem;">An agentic AI does not just answer. It enters a continuous loop: observe, think, act, reflect, and repeat, until the mission is complete.</p>
         <div class="flow-diagram">
           <div class="flow-box" style="border-color: var(--accent-primary);">&#127919; Goal</div>
           <span class="flow-arrow">&#8594;</span>
@@ -358,13 +436,14 @@
           <div class="flow-box" style="border-color: var(--warning-color);">&#128269; Reflect</div>
           <span class="flow-arrow">&#8635;</span>
         </div>
-        <p style="margin-top: 2rem; max-width: 700px;">The agent cycles through observe, plan, act, and reflect until the goal is achieved. You are the director. The AI is the team.</p>
+        <p class="reveal pull-quote" style="margin-top: 1.5rem; font-size: 1.1rem;">"You are the director. The AI is the team."</p>
       </section>
 
-      <!-- Slide 10: Agentic Architecture -->
+      <!-- Slide 11: Agentic Architecture -->
       <section class="slide slide-gradient-3">
-        <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-cyan); margin-bottom: 1rem;">Part 4: The Agentic Architecture</p>
-        <h2>Building the AI <span class="highlight">Brain</span></h2>
+        <p class="narrative-bar reveal" style="border-color: rgba(34,211,238,0.3);">Chapter 3: The Architecture</p>
+        <h2 class="reveal">Building the AI <span class="highlight">Brain</span></h2>
+        <p class="reveal" style="max-width:600px; font-size:0.95rem; margin-bottom:0.5rem;">Here is the secret: an agentic AI is only as good as the memory you give it. Two simple files turn a generic chatbot into your personal, persistent technical partner.</p>
         <div class="info-callout" style="max-width: 700px; margin: 0 auto 1.5rem; display: flex; gap: 1rem; background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.2); border-radius: 12px; padding: 1rem;">
           <span style="font-size: 1.5rem;">&#128221;</span>
           <div style="text-align: left; font-size: 0.8rem; color: var(--text-secondary);">
@@ -384,10 +463,11 @@
         <p style="margin-top: 1.5rem; font-size: 1.1rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">We don't just prompt; we <strong>architect</strong> persistence.</p>
       </section>
 
-      <!-- Slide 11: Gemini CLI & Safety -->
+      <!-- Slide 12: Gemini CLI & Safety -->
       <section class="slide slide-gradient-1">
-        <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-tertiary); margin-bottom: 1rem;">Part 5: Lab Workflow</p>
-        <h2>Practical <span class="gradient-text">Power Tools</span></h2>
+        <p class="narrative-bar reveal" style="border-color: rgba(168,85,247,0.3); color: var(--accent-tertiary);">Chapter 4: Lab Workflow</p>
+        <h2 class="reveal">Practical <span class="gradient-text">Power Tools</span></h2>
+        <p class="reveal" style="max-width:600px; font-size:0.95rem; margin-bottom:0.5rem;">Theory is done. Now we build. Here is the safety-first workflow you will follow in the lab, and the golden rule: always review before execution.</p>
         <div class="comparison-row" style="margin-top: 1rem;">
           <div class="comparison-box" style="padding: 1rem; font-size: 0.85rem; text-align: left;">
             <h4 style="color: var(--accent-cyan); margin-bottom: 0.5rem;">Lab Flow</h4>
@@ -415,29 +495,31 @@
         </div>
       </section>
 
-      <!-- Slide 12: Let's Go -->
+      <!-- Slide 13: Let's Go -->
       <section class="slide slide-image-bg" style="background-image: url('assets/hero_statue_main.png');">
-        <h1 style="margin-bottom: 2rem;">Let's <span class="gradient-text">Build</span></h1>
-        <p style="max-width: 600px;">Head over to the Setup Guide to prepare your workspace for the technical live-build.</p>
-        <a href="setup.html" class="cta-button" style="margin-top: 2rem; font-size: 1.1rem; padding: 1rem 3rem;">Setup Guide &#8594;</a>
+        <p class="narrative-bar reveal">Chapter 4: Your Turn</p>
+        <h1 class="reveal" style="margin-bottom: 1rem;">Let's <span class="gradient-text">Build</span></h1>
+        <p class="reveal" style="max-width: 600px; font-size: 1.1rem;">You have the context. You have the tools. Now it is time to open your terminal and direct your first AI agent.</p>
+        <a href="setup.html" class="cta-button reveal" style="margin-top: 2rem; font-size: 1.1rem; padding: 1rem 3rem;">Setup Guide &#8594;</a>
       </section>
 
-      <!-- Slide 13: Thank You -->
+      <!-- Slide 14: Thank You -->
       <section class="slide slide-gradient-1">
-        <h1>Thank <span class="gradient-text">You</span></h1>
-        <p style="border-bottom: 2rem;">Keep building. Keep leading.</p>
-        <div style="display: flex; gap: 2rem; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+        <h1 class="reveal">Thank <span class="gradient-text">You</span></h1>
+        <p class="reveal pull-quote" style="font-size: 1.2rem; margin-bottom: 1rem;">"The future belongs to those who direct the machines, not those who fear them."</p>
+        <p class="reveal" style="font-size: 1rem;">Keep building. Keep leading. Keep directing.</p>
+        <div class="reveal" style="display: flex; gap: 2rem; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
           <img src="assets/wia_europe_strasbourg_logo.png" alt="WIA-Europe Strasbourg" style="height: 120px; border-radius: 8px; background: rgba(255,255,255,0.1); padding: 5px; border: 1px solid rgba(255,255,255,0.2);">
           <img src="assets/LOGO_ISU_Darkblue.png" alt="ISU" style="height: 50px; background: white; padding: 8px; border-radius: 8px;">
         </div>
-        <div style="margin-top: 3rem;">
+        <div class="reveal" style="margin-top: 3rem;">
           <a href="https://www.wia-europe.org/wia-europe-symposium/" target="_blank" class="secondary-button">WIA-Europe Symposium</a>
         </div>
       </section>
 
     </div>
 
-    <div class="slide-number" id="slideNumber">1 / 13</div>
+    <div class="slide-number" id="slideNumber">1 / 14</div>
     <div class="slide-controls">
       <button class="fullscreen-btn" id="fs-toggle">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
@@ -494,6 +576,43 @@
           fsToggle.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg> Full Screen';
         }
       });
+
+      // --- AMBIENT PARTICLE SYSTEM ---
+      (function() {
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        resize(); window.addEventListener('resize', resize);
+        for (let i = 0; i < 60; i++) {
+          particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 1.5 + 0.5, dx: (Math.random() - 0.5) * 0.3, dy: (Math.random() - 0.5) * 0.2, o: Math.random() * 0.3 + 0.1 });
+        }
+        function draw() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          particles.forEach(p => {
+            ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(56, 189, 248, ${p.o})`; ctx.fill();
+            p.x += p.dx; p.y += p.dy;
+            if (p.x < 0) p.x = canvas.width; if (p.x > canvas.width) p.x = 0;
+            if (p.y < 0) p.y = canvas.height; if (p.y > canvas.height) p.y = 0;
+          });
+          requestAnimationFrame(draw);
+        }
+        draw();
+      })();
+
+      // --- CHAPTER TRANSITION OVERLAY ---
+      const chapterMap = { 2: ['I', 'The AI Economy'], 4: ['II', 'The Adoption Gap'], 7: ['III', 'The Agentic Paradigm'], 11: ['IV', 'Lab Workflow'], 12: ['V', 'Your Turn'] };
+      const origShowSlide = showSlide;
+      showSlide = function(index) {
+        if (chapterMap[index] && index !== 0) {
+          const overlay = document.getElementById('chapterOverlay');
+          document.getElementById('chapterNum').textContent = chapterMap[index][0];
+          document.getElementById('chapterTitle').textContent = chapterMap[index][1];
+          overlay.classList.add('show');
+          setTimeout(() => { overlay.classList.remove('show'); origShowSlide(index); }, 800);
+        } else { origShowSlide(index); }
+      };
 
       // --- News Card Fan + Carousel Modal ---
       const collage = document.getElementById('newsCollage');
