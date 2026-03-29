@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hands-on Lab | WIA-Europe AI-W Workshop</title>
     <meta name="description" content="Follow along with the Gemini CLI hands-on lab. Run your first agentic queries, build multi-step workflows, and generate code autonomously." />
+    <meta property="og:title" content="Hands-on Lab | WIA-Europe AI-W Workshop" />
+    <meta property="og:description" content="Step-by-step agentic AI lab exercises for the WIA-Europe Symposium 2026." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
@@ -31,134 +33,591 @@
         <div class="breadcrumb"><a href="index.html">Home</a> / <a href="presentation.html">Presentation</a> / <a href="setup.html">Setup Guide</a> / Lab</div>
         <div class="module-badge">Interactive Lab</div>
         <h1>Hands-on <span class="gradient-text">Lab</span></h1>
-        <p class="page-subtitle">Follow along step by step. Each task builds on the previous one, progressing from simple queries to full agentic workflows.</p>
+        <p class="page-subtitle">Follow along step by step. Each task builds on the previous one, progressing from simple queries to autonomous, multi-step agentic workflows. No prior AI experience required.</p>
       </section>
 
       <div class="lab-content">
 
-        <!-- Lab A: Explain & Verify (Safety First) -->
-        <div class="lab-task" id="lab-a">
-          <div class="step-header" style="margin: -2rem -2rem 2rem; border-radius: 16px 16px 0 0; background: rgba(59, 130, 246, 0.1);">
-            <span class="step-badge" style="background: var(--accent-cyan);">Lab A</span>
-            <h2>Explain & Verify</h2>
-            <span class="task-time">10 min</span>
+        <!-- Progress Tracker -->
+        <nav class="lab-progress" aria-label="Lab progress">
+          <a href="#prereqs" class="progress-step">
+            <div class="progress-dot">0</div>
+            <span class="progress-label">Setup</span>
+          </a>
+          <a href="#lab-a" class="progress-step">
+            <div class="progress-dot">A</div>
+            <span class="progress-label">Explain</span>
+          </a>
+          <a href="#lab-b" class="progress-step">
+            <div class="progress-dot">B</div>
+            <span class="progress-label">Automate</span>
+          </a>
+          <a href="#lab-c" class="progress-step">
+            <div class="progress-dot">C</div>
+            <span class="progress-label">Refactor</span>
+          </a>
+          <a href="#challenge" class="progress-step">
+            <div class="progress-dot" style="background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(236,72,153,0.2)); border-color: rgba(168,85,247,0.4);">&#9733;</div>
+            <span class="progress-label">Challenge</span>
+          </a>
+        </nav>
+
+        <!-- ============================================ -->
+        <!-- PREREQS: Before You Begin                    -->
+        <!-- ============================================ -->
+        <div class="lab-task" id="prereqs">
+          <div class="step-header" style="margin: -2.5rem -2.5rem 2rem; border-radius: 20px 20px 0 0; background: rgba(34, 211, 238, 0.1);">
+            <span class="step-badge" style="background: var(--accent-cyan);">Step 0</span>
+            <h2>Before You Begin</h2>
+            <span class="task-time">2 min</span>
           </div>
 
-          <p>The first rule of Agentic AI: <strong>Trust, but Verify.</strong> Before letting an AI write code, we use it to explain and audit existing logic. This eliminates the "Black Box" effect and builds technical confidence.</p>
+          <p>Before we start, let's make sure your environment is ready. Check off each item below. If anything is missing, visit the <a href="setup.html" class="text-link">Setup Guide</a> first.</p>
 
-          <h3 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-cyan);">&#128269; Step 1: Human-in-the-Loop Audit</h3>
-          <p>Paste a complex snippet of code into your terminal gemini prompt and ask it to explain it step-by-step.</p>
-
-          <div class="code-block">
-            <div class="code-header">
-              <span class="code-lang">Gemini Prompt</span>
-              <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
-            </div>
-            <div class="code-content">Explicate this code chunk and identify potential edge cases:
-[Paste your index.html here]</div>
-          </div>
+          <ul class="prereq-checklist" id="prereqList">
+            <li onclick="toggleCheck(this)">
+              <input type="checkbox" /> <strong>VS Code</strong> is installed and open
+            </li>
+            <li onclick="toggleCheck(this)">
+              <input type="checkbox" /> <strong>Node.js</strong> (v18+) is installed: run <code style="color: var(--accent-cyan);">node --version</code> to verify
+            </li>
+            <li onclick="toggleCheck(this)">
+              <input type="checkbox" /> <strong>Gemini CLI</strong> is installed: run <code style="color: var(--accent-cyan);">gemini --version</code> to verify
+            </li>
+            <li onclick="toggleCheck(this)">
+              <input type="checkbox" /> You have a <strong>Google account</strong> signed in (Gemini CLI will prompt you on first run)
+            </li>
+            <li onclick="toggleCheck(this)">
+              <input type="checkbox" /> You created a <strong>practice folder</strong> to work in (we will use <code style="color: var(--accent-cyan);">~/ai-workshop</code>)
+            </li>
+          </ul>
 
           <div class="info-callout">
             <span>&#128161;</span>
-            <div><strong>Pedagogical Goal:</strong> This shift moves the participant from a "consumer" to an "auditor" of AI code, a key skill for technical leadership.</div>
-          </div>
-        </div>
-
-        <!-- Lab B: Automate & Dry Run -->
-        <div class="lab-task" id="lab-b">
-          <div class="step-header" style="margin: -2rem -2rem 2rem; border-radius: 16px 16px 0 0; background: rgba(16, 185, 129, 0.1);">
-            <span class="step-badge" style="background: var(--success-color);">Lab B</span>
-            <h2>Automate & Dry Run</h2>
-            <span class="task-time">15 min</span>
+            <div><strong>How to open a terminal in VS Code:</strong> Press <code style="color: var(--accent-cyan);">Ctrl + `</code> (backtick) on Windows/Linux, or <code style="color: var(--accent-cyan);">Cmd + `</code> on Mac. The terminal panel opens at the bottom of the editor.</div>
           </div>
 
-          <p>Automation doesn't mean giving up control. We will now use the agent to automate a "boring" task (like adding meta tags or renaming files) using a <strong>Dry Run</strong> approach.</p>
-
-          <h3 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-purple);">&#9881; Step 2: Safe Automation</h3>
-          <p>Draft a prompt that asks the AI to <em>propose</em> a change before applying it.</p>
+          <h3 style="margin-top: 2rem; color: var(--accent-cyan);">Create Your Practice Folder</h3>
+          <p>Open your VS Code terminal and run these commands to create and navigate to your workshop folder:</p>
 
           <div class="code-block">
             <div class="code-header">
-              <span class="code-lang">Gemini Prompt</span>
+              <span class="code-lang">Terminal</span>
               <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
             </div>
-            <div class="code-content">Search for all `.html` files in my directory. 
-Propose a single SEO meta description for each file based on its content. 
-DO NOT modify the files yet — just output the proposed text for my review.</div>
+            <div class="code-content">mkdir ai-workshop
+cd ai-workshop</div>
           </div>
 
-          <div class="success-callout">
-            <span>&#9989;</span>
-            <div><strong>Control Point:</strong> Only after you review the output and say "Proceed," should you allow the agent to edit the files. This is <strong>Agentic Accountability</strong> in action.</div>
-          </div>
-        </div>
+          <h3 style="margin-top: 2rem; color: var(--accent-cyan);">Launch Gemini CLI</h3>
+          <p>Type <code style="color: var(--accent-cyan);">gemini</code> and press Enter. The first time, it will ask you to sign in with your Google account.</p>
 
-        <!-- Lab C: Agentic Refactor (The Roadmap) -->
-        <div class="lab-task" id="lab-c">
-          <div class="step-header" style="margin: -2rem -2rem 2rem; border-radius: 16px 16px 0 0; background: rgba(168, 85, 247, 0.1);">
-            <span class="step-badge" style="background: var(--accent-tertiary);">Lab C</span>
-            <h2>Agentic Refactor</h2>
-            <span class="task-time">20 min</span>
-          </div>
-
-          <p>In the final lab, we use the agent to <strong>architect a roadmap</strong> for a complex feature. This demonstrates how AI handles non-linear, multi-step engineering tasks.</p>
-
-          <h3 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--accent-cyan);">&#129504; Step 3: Generating the Brain</h3>
           <div class="code-block">
             <div class="code-header">
-              <span class="code-lang">Gemini Prompt</span>
+              <span class="code-lang">Terminal</span>
               <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
             </div>
-            <div class="code-content">Analyze my `style.css`.
-Create a `responsive_roadmap.md` file that lists 5 key improvements to make this site perfect for mobile devices. 
-For each improvement, explain WHY it is necessary for user experience.</div>
+            <div class="code-content">gemini</div>
+          </div>
+
+          <div class="expected-output">
+            <div class="expected-output-header">
+              <span>&#9989;</span> What You Should See
+            </div>
+            <pre>Welcome to Gemini CLI!
+
+You are now chatting with Gemini.
+
+Type your message and press Enter to send.
+Press Ctrl+C to exit.
+
+></pre>
           </div>
 
           <div class="warning-callout">
-            <span>&#128640;</span>
-            <div><strong>Autonomous Execution:</strong> Once the roadmap is created, you can tell the AI: "Execute step 1 of the roadmap." It now has a persistent plan to follow.</div>
+            <span>&#9888;</span>
+            <div><strong>Trouble?</strong> If you see "command not found," Gemini CLI is not installed. Go back to the <a href="setup.html" class="text-link">Setup Guide</a> and follow the installation steps. If authentication fails, make sure you are signed into Google in your browser.</div>
           </div>
         </div>
 
-        <!-- Challenge -->
-        <div class="lab-task" id="challenge" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%); border-color: rgba(168, 85, 247, 0.3);">
-          <div class="step-header" style="margin: -2rem -2rem 2rem; border-radius: 16px 16px 0 0; background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(236, 72, 153, 0.2));">
+        <!-- ============================================ -->
+        <!-- LAB A: Explain & Verify                      -->
+        <!-- ============================================ -->
+        <div class="lab-task" id="lab-a">
+          <div class="step-header" style="margin: -2.5rem -2.5rem 2rem; border-radius: 20px 20px 0 0; background: rgba(59, 130, 246, 0.1);">
+            <span class="step-badge" style="background: var(--accent-primary);">Lab A</span>
+            <h2>Explain &amp; Verify</h2>
+            <span class="task-time">10 min</span>
+          </div>
+
+          <p>The first rule of the Agentic Paradigm: <strong>Trust, but Verify.</strong> Before letting an AI write or modify anything, we use it to <em>explain existing work</em>. This builds your instinct for what good AI output looks like, and it is the safest way to start.</p>
+
+          <div class="info-callout">
+            <span>&#127919;</span>
+            <div><strong>Learning Goal:</strong> Shift from "AI consumer" to "AI auditor." You will learn to evaluate AI explanations for accuracy and completeness before granting it more autonomy.</div>
+          </div>
+
+          <!-- Sub-step A.1 -->
+          <div class="sub-step">
+            <div class="sub-step-number">1</div>
+            <div class="sub-step-content">
+              <h4>Ask Gemini to Explain Something</h4>
+              <p>Let's start with the simplest possible interaction. Type this exact prompt at the <code style="color: var(--accent-cyan);">></code> cursor. This is a "knowledge query," meaning you are asking the AI to retrieve and synthesize information.</p>
+
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-lang">Gemini Prompt</span>
+                  <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+                </div>
+                <div class="code-content">Explain what "agentic AI" means in simple terms. Give me 3 concrete examples of agentic behavior versus regular prompting.</div>
+              </div>
+
+              <div class="expected-output">
+                <div class="expected-output-header">
+                  <span>&#9989;</span> What You Should See
+                </div>
+                <pre>Gemini should produce a structured response with:
+  1. A clear definition of agentic AI
+  2. Three comparison examples (e.g., "Regular: 'Write me an email' vs Agentic: 'Draft a follow-up email based on my last 3 conversations with this contact'")
+  3. An emphasis on autonomy, tool use, and chained reasoning</pre>
+              </div>
+
+              <p style="margin-top: 1rem;"><strong>Read the output carefully.</strong> Does the explanation make sense? Is anything missing or inaccurate? This is the core skill: evaluating AI output with a critical eye.</p>
+            </div>
+          </div>
+
+          <!-- Sub-step A.2 -->
+          <div class="sub-step">
+            <div class="sub-step-number">2</div>
+            <div class="sub-step-content">
+              <h4>Audit Real Code</h4>
+              <p>Now let's make it practical. We will ask Gemini to analyze a real HTML file. First, create a small test file for the AI to examine:</p>
+
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-lang">Gemini Prompt</span>
+                  <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+                </div>
+                <div class="code-content">Create a file called "test-page.html" with a simple webpage that has a heading, a paragraph, and a button. Use basic inline CSS for dark mode styling.</div>
+              </div>
+
+              <div class="success-callout">
+                <span>&#9989;</span>
+                <div><strong>What just happened:</strong> Gemini did not just "answer a question." It <em>created a file on your computer</em>. Open your file explorer or VS Code sidebar. You should see <code>test-page.html</code> in your <code>ai-workshop</code> folder. This is the difference between chatting and doing.</div>
+              </div>
+
+              <p>Now ask Gemini to audit its own work:</p>
+
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-lang">Gemini Prompt</span>
+                  <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+                </div>
+                <div class="code-content">Read the file test-page.html and give me a code review. Check for:
+1. Accessibility issues (ARIA labels, alt text, semantic HTML)
+2. Any missing meta tags
+3. Mobile responsiveness problems
+List each issue with a severity rating: low, medium, or high.</div>
+              </div>
+
+              <div class="expected-output">
+                <div class="expected-output-header">
+                  <span>&#9989;</span> What You Should See
+                </div>
+                <pre>Gemini should return a structured review like:
+
+  Issue 1 (Medium): Missing viewport meta tag
+    - The page won't render correctly on mobile devices.
+    - Fix: Add &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+
+  Issue 2 (Low): Button lacks aria-label
+    - Screen readers won't know what the button does.
+    ...
+
+This is a "Human-in-the-Loop" audit: the AI identifies issues, you decide what to fix.</pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-step A.3 -->
+          <div class="sub-step">
+            <div class="sub-step-number">3</div>
+            <div class="sub-step-content">
+              <h4>Verify and Correct</h4>
+              <p>Now verify the AI's claims yourself. Open <code>test-page.html</code> in your browser (right-click the file in VS Code and select "Open with Live Server" or just double-click the file). Then ask Gemini to fix the issues it found:</p>
+
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-lang">Gemini Prompt</span>
+                  <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+                </div>
+                <div class="code-content">Fix all the issues you identified in test-page.html. Apply the changes directly to the file.</div>
+              </div>
+
+              <div class="info-callout">
+                <span>&#128161;</span>
+                <div><strong>Key Takeaway:</strong> You did not write any code. You directed the AI to: (1) create, (2) audit, and (3) fix. That three-step loop, <strong>Generate, Audit, Approve,</strong> is the foundation of agentic accountability.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- LAB B: Automate & Dry Run                    -->
+        <!-- ============================================ -->
+        <div class="lab-task" id="lab-b">
+          <div class="step-header" style="margin: -2.5rem -2.5rem 2rem; border-radius: 20px 20px 0 0; background: rgba(16, 185, 129, 0.1);">
+            <span class="step-badge" style="background: var(--success-color);">Lab B</span>
+            <h2>Automate &amp; Dry Run</h2>
+            <span class="task-time">15 min</span>
+          </div>
+
+          <p>Now we level up. Automation does not mean giving up control. It means <strong>delegating the boring parts</strong> so you can focus on decisions. The key technique is the <strong>Dry Run</strong>: ask the AI to <em>propose</em> changes before you approve them.</p>
+
+          <div class="info-callout">
+            <span>&#127919;</span>
+            <div><strong>Learning Goal:</strong> Master the "Propose, then Apply" workflow. This is how professionals use AI in production: the AI suggests, the human approves.</div>
+          </div>
+
+          <!-- Sub-step B.1 -->
+          <div class="sub-step">
+            <div class="sub-step-number">1</div>
+            <div class="sub-step-content">
+              <h4>Create Multiple Test Files</h4>
+              <p>To practice automation, we need a few files to work with. Ask Gemini to scaffold a small project:</p>
+
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-lang">Gemini Prompt</span>
+                  <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+                </div>
+                <div class="code-content">Create a small website project with the following files:
+1. index.html - A homepage with the title "My Portfolio"
+2. about.html - An about page with a short bio
+3. contact.html - A contact page with a simple form
+4. style.css - Shared stylesheet with dark mode colors
+
+Each HTML file should link to style.css and have basic content. Use semantic HTML5 elements (header, main, footer).</div>
+              </div>
+
+              <p>Wait for Gemini to finish. Check your file explorer. You should now see 4 new files in your folder.</p>
+            </div>
+          </div>
+
+          <!-- Sub-step B.2 -->
+          <div class="sub-step">
+            <div class="sub-step-number">2</div>
+            <div class="sub-step-content">
+              <h4>The Dry Run: Propose Without Changing</h4>
+              <p>Here is the critical technique. We will ask Gemini to <em>analyze all the HTML files and suggest improvements</em>, but we will explicitly tell it <strong>not to modify anything yet</strong>:</p>
+
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-lang">Gemini Prompt</span>
+                  <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+                </div>
+                <div class="code-content">Analyze all the .html files in this directory. For each file, propose:
+1. An SEO-optimized meta description (max 155 characters)
+2. An Open Graph title and description for social sharing
+3. Any missing accessibility attributes
+
+IMPORTANT: DO NOT modify any files yet. Just show me the proposed changes in a table format so I can review them first.</div>
+              </div>
+
+              <div class="expected-output">
+                <div class="expected-output-header">
+                  <span>&#9989;</span> What You Should See
+                </div>
+                <pre>Gemini should output a review table like:
+
+| File         | Meta Description              | OG Title       | Issues Found  |
+|--------------|-------------------------------|----------------|---------------|
+| index.html   | "Personal portfolio of..."    | "My Portfolio"  | Missing lang  |
+| about.html   | "Learn about my background.." | "About Me"      | No alt on img |
+| contact.html | "Get in touch via this..."    | "Contact"       | Form missing  |
+|              |                               |                 | action attr   |
+
+No files were modified. You are in full control.</pre>
+              </div>
+
+              <div class="warning-callout">
+                <span>&#128274;</span>
+                <div><strong>Why "DO NOT modify" matters:</strong> Without this instruction, the AI might apply changes immediately. In production, this protects you from unintended edits to critical files. Always preview before approving.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-step B.3 -->
+          <div class="sub-step">
+            <div class="sub-step-number">3</div>
+            <div class="sub-step-content">
+              <h4>Approve and Apply</h4>
+              <p>After reviewing the proposals, pick the changes you want and tell Gemini to proceed. You can approve everything, or be selective:</p>
+
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-lang">Gemini Prompt (approve all)</span>
+                  <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+                </div>
+                <div class="code-content">The proposed changes look good. Please apply all the meta descriptions and Open Graph tags to each file now.</div>
+              </div>
+
+              <p><strong>Or, be selective:</strong></p>
+
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-lang">Gemini Prompt (selective)</span>
+                  <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+                </div>
+                <div class="code-content">Only apply the meta descriptions to index.html and about.html. Skip contact.html for now. Also fix the accessibility issues you found.</div>
+              </div>
+
+              <div class="success-callout">
+                <span>&#9989;</span>
+                <div><strong>Agentic Accountability in Action:</strong> You just completed the full cycle: <strong>Analyze &rarr; Propose &rarr; Review &rarr; Approve &rarr; Execute.</strong> This is not just "asking AI a question." You directed a multi-step workflow where the AI did the work and you made the decisions.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-step B.4 -->
+          <div class="sub-step">
+            <div class="sub-step-number">4</div>
+            <div class="sub-step-content">
+              <h4>Verify the Changes</h4>
+              <p>Always verify. Ask Gemini to confirm what it changed:</p>
+
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-lang">Gemini Prompt</span>
+                  <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+                </div>
+                <div class="code-content">Show me a summary of all the changes you just made. For each file, show the lines you added or modified.</div>
+              </div>
+
+              <p>Open the files in VS Code and compare. Does the output match what Gemini claimed? Building this "trust but verify" habit is essential for professional AI use.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- LAB C: Agentic Refactor                      -->
+        <!-- ============================================ -->
+        <div class="lab-task" id="lab-c">
+          <div class="step-header" style="margin: -2.5rem -2.5rem 2rem; border-radius: 20px 20px 0 0; background: rgba(168, 85, 247, 0.1);">
+            <span class="step-badge" style="background: var(--accent-tertiary);">Lab C</span>
+            <h2>Agentic Refactor</h2>
+            <span class="task-time">15 min</span>
+          </div>
+
+          <p>This is where it gets powerful. Instead of giving the AI one instruction at a time, we will ask it to <strong>create a plan</strong> and then <strong>execute that plan step by step</strong>. This is the heart of "agentic" behavior: the AI maintains context across multiple actions, like a colleague following a project brief.</p>
+
+          <div class="info-callout">
+            <span>&#127919;</span>
+            <div><strong>Learning Goal:</strong> Move from single-task prompting to multi-step orchestration. You will give the AI a complex goal and let it break it down into an execution plan.</div>
+          </div>
+
+          <!-- Sub-step C.1 -->
+          <div class="sub-step">
+            <div class="sub-step-number">1</div>
+            <div class="sub-step-content">
+              <h4>Generate a Roadmap</h4>
+              <p>Ask Gemini to analyze your project and create a structured improvement plan. This is like giving a junior engineer a design review assignment:</p>
+
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-lang">Gemini Prompt</span>
+                  <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+                </div>
+                <div class="code-content">Analyze all the files in this project directory. Create a file called "improvement-roadmap.md" that contains:
+
+1. A summary of the current project state (what files exist, what they do)
+2. Five specific improvements ranked by impact, covering:
+   - Mobile responsiveness
+   - Performance optimization
+   - Accessibility compliance
+   - Visual design enhancements
+   - Code organization
+
+For each improvement, include:
+- WHY it matters (user experience impact)
+- WHAT to change (specific files and lines)
+- HOW LONG it would take (estimate in minutes)
+
+Save the roadmap as a markdown file. Do NOT implement the changes yet.</div>
+              </div>
+
+              <div class="expected-output">
+                <div class="expected-output-header">
+                  <span>&#9989;</span> What You Should See
+                </div>
+                <pre>Gemini creates "improvement-roadmap.md" in your folder.
+Open it in VS Code. You should see a structured document like:
+
+  # Project Improvement Roadmap
+  ## Current State
+  - 3 HTML files, 1 CSS file
+  - Dark mode styling, basic semantic structure...
+
+  ## Improvement 1: Add Viewport Meta Tag (HIGH IMPACT)
+  **Why:** Without it, mobile users see a desktop-sized page...
+  **What:** Add to index.html, about.html, contact.html
+  **Time:** 2 minutes
+
+  ## Improvement 2: ...
+
+This is now a persistent "brain" that the AI can follow.</pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-step C.2 -->
+          <div class="sub-step">
+            <div class="sub-step-number">2</div>
+            <div class="sub-step-content">
+              <h4>Execute the Roadmap Step-by-Step</h4>
+              <p>Now comes the agentic part. Instead of manually implementing each improvement, you tell the AI to follow its own plan:</p>
+
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-lang">Gemini Prompt</span>
+                  <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+                </div>
+                <div class="code-content">Read improvement-roadmap.md. Execute Improvement 1 now. After completing it, tell me exactly what you changed.</div>
+              </div>
+
+              <p>After it completes, continue with the next one:</p>
+
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-lang">Gemini Prompt</span>
+                  <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+                </div>
+                <div class="code-content">Good. Now execute Improvement 2 from the roadmap.</div>
+              </div>
+
+              <div class="warning-callout">
+                <span>&#128640;</span>
+                <div><strong>Why this is "agentic":</strong> Gemini remembers the roadmap, the project context, and your previous instructions. It chains actions together across a persistent session. You are directing; it is executing. This is the <strong>Prompter-to-Orchestrator</strong> shift.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-step C.3 -->
+          <div class="sub-step">
+            <div class="sub-step-number">3</div>
+            <div class="sub-step-content">
+              <h4>Ask for a Summary Report</h4>
+              <p>After completing a few improvements, ask the AI to document its work. This creates an audit trail:</p>
+
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-lang">Gemini Prompt</span>
+                  <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+                </div>
+                <div class="code-content">Create a file called "changelog.md" that documents everything you changed in this session. Include:
+- Which improvements from the roadmap were completed
+- Specific files and lines modified
+- Before/after comparisons where applicable
+- Any improvements that were skipped and why</div>
+              </div>
+
+              <div class="success-callout">
+                <span>&#127942;</span>
+                <div><strong>Congratulations!</strong> You just completed a full agentic workflow: <strong>Plan &rarr; Execute &rarr; Document.</strong> The AI did not just "answer questions." It read files, analyzed code, created a strategy, executed changes across multiple files, and produced documentation, all directed by you.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- CHALLENGE: Design Your Own Workflow          -->
+        <!-- ============================================ -->
+        <div class="lab-task" id="challenge" style="border-color: rgba(168, 85, 247, 0.3);">
+          <div class="step-header" style="margin: -2.5rem -2.5rem 2rem; border-radius: 20px 20px 0 0; background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.15));">
             <span class="step-badge" style="background: linear-gradient(135deg, #a855f7, #ec4899);">Challenge</span>
             <h2>Design Your Own Workflow</h2>
           </div>
 
-          <p>Now it is your turn. Using what you have learned, design and execute your own agentic workflow. Here are some ideas:</p>
+          <p>Now it is your turn. Using the three patterns you just mastered (Explain, Automate, Refactor), design and execute your own agentic workflow on a topic that matters to you. Here are some ideas to get you started:</p>
 
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
-            <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 12px; padding: 1.5rem;">
-              <div style="font-size: 2rem; margin-bottom: 0.5rem;">&#127760;</div>
-              <h3 style="margin-bottom: 0.5rem;">Data Dashboard</h3>
-              <p style="color: var(--text-secondary); font-size: 0.9rem;">Ask the agent to create an interactive data dashboard that visualizes climate or space data.</p>
+          <div class="challenge-grid">
+            <div class="challenge-card">
+              <div class="icon">&#127760;</div>
+              <h3>Data Dashboard</h3>
+              <p>Ask the agent to create an interactive HTML dashboard that visualizes climate data, satellite telemetry, or any dataset you choose.</p>
+              <div class="code-block" style="margin-top: 1rem;">
+                <div class="code-header">
+                  <span class="code-lang">Starter Prompt</span>
+                  <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+                </div>
+                <div class="code-content">Create an interactive HTML dashboard that visualizes global temperature anomaly data from 1950 to 2025. Use Chart.js for the charts. Include a line chart and a bar chart with smooth animations.</div>
+              </div>
             </div>
-            <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 1.5rem;">
-              <div style="font-size: 2rem; margin-bottom: 0.5rem;">&#128221;</div>
-              <h3 style="margin-bottom: 0.5rem;">Research Summary</h3>
-              <p style="color: var(--text-secondary); font-size: 0.9rem;">Ask the agent to analyze a research paper (paste text) and generate an executive summary with key takeaways.</p>
+            <div class="challenge-card">
+              <div class="icon">&#128221;</div>
+              <h3>Research Summarizer</h3>
+              <p>Paste in a section of a research paper and have the agent produce an executive summary, key findings, and a limitations analysis.</p>
+              <div class="code-block" style="margin-top: 1rem;">
+                <div class="code-header">
+                  <span class="code-lang">Starter Prompt</span>
+                  <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+                </div>
+                <div class="code-content">I am going to paste a section of a research paper. Please:
+1. Write a 3-sentence executive summary
+2. List 5 key findings as bullet points
+3. Identify 3 limitations or biases
+4. Suggest 2 follow-up research questions
+
+Here is the text:
+[Paste your text here]</div>
+              </div>
             </div>
-            <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(34, 211, 238, 0.3); border-radius: 12px; padding: 1.5rem;">
-              <div style="font-size: 2rem; margin-bottom: 0.5rem;">&#129302;</div>
-              <h3 style="margin-bottom: 0.5rem;">Automation Script</h3>
-              <p style="color: var(--text-secondary); font-size: 0.9rem;">Ask the agent to write a Python script that automates a tedious task in your work (e.g., renaming files, parsing data).</p>
+            <div class="challenge-card">
+              <div class="icon">&#129302;</div>
+              <h3>Automation Script</h3>
+              <p>Describe a tedious task from your actual work (renaming files, formatting reports, parsing data) and have the agent write a script to automate it.</p>
+              <div class="code-block" style="margin-top: 1rem;">
+                <div class="code-header">
+                  <span class="code-lang">Starter Prompt</span>
+                  <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+                </div>
+                <div class="code-content">Write a Python script that reads all CSV files in a folder, combines them into one spreadsheet, adds a "source_file" column to track which file each row came from, and saves the result as "combined_data.csv".</div>
+              </div>
             </div>
           </div>
 
           <div class="info-callout">
             <span>&#127942;</span>
-            <div><strong>Pro Tip:</strong> The more specific and structured your prompt, the better the result. Frame your request like a project brief: define the goal, the deliverables, and any constraints.</div>
+            <div><strong>Pro Tip:</strong> The more specific and structured your prompt, the better the result. Frame your request like a project brief: define the <strong>goal</strong>, the <strong>deliverables</strong>, the <strong>constraints</strong>, and the <strong>format</strong> of the output you want.</div>
+          </div>
+
+          <div class="info-callout" style="border-color: rgba(168, 85, 247, 0.3); background: rgba(168, 85, 247, 0.06);">
+            <span>&#129504;</span>
+            <div><strong>The Agentic Checklist:</strong> Before you submit your prompt, make sure it follows the pattern:
+              <br/>1. <strong>Context:</strong> What does the AI need to know?
+              <br/>2. <strong>Task:</strong> What should it do?
+              <br/>3. <strong>Constraints:</strong> What are the boundaries? (e.g., "do not modify existing files")
+              <br/>4. <strong>Output Format:</strong> How should the result look?
+            </div>
           </div>
         </div>
 
-        <!-- Wrap Up -->
+        <!-- ============================================ -->
+        <!-- WRAP UP                                      -->
+        <!-- ============================================ -->
         <div style="max-width: 900px; margin: 0 auto;">
           <div class="cta-box">
-            <h3>Congratulations!</h3>
-            <p>You have completed the AI Workshop: Skills in Motion. You now understand the agentic paradigm and have hands-on experience directing AI agents.</p>
-            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem;">
+            <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-cyan); margin-bottom: 1rem; font-weight: 700;">Workshop Complete</p>
+            <h3>Congratulations! &#127881;</h3>
+            <p>You have completed the WIA-Europe AI-W Workshop: Skills in Motion. Here is what you accomplished today:</p>
+            <ul style="text-align: left; max-width: 500px; margin: 1.5rem auto; list-style: none; padding: 0;">
+              <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#9989; <strong>Lab A:</strong> Used AI to explain and audit code (Human-in-the-Loop)</li>
+              <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#9989; <strong>Lab B:</strong> Automated repetitive tasks with a Dry Run workflow</li>
+              <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#9989; <strong>Lab C:</strong> Orchestrated a multi-step refactoring roadmap</li>
+              <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#9733; <strong>Challenge:</strong> Designed your own agentic workflow</li>
+            </ul>
+            <p style="margin-bottom: 1.5rem;">You are no longer just a "prompter." You are a <strong>director</strong> of AI systems. Take this skill into your career, your research, and your teams.</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
               <a href="index.html" class="cta-button">Back to Home</a>
               <a href="https://www.wia-europe.org/wia-europe-symposium/" target="_blank" class="secondary-button">WIA-Europe Symposium</a>
             </div>
@@ -167,16 +626,25 @@ For each improvement, explain WHY it is necessary for user experience.</div>
       </div>
     </main>
 
+    <!-- RETURN TO PRESENTATION CTA -->
+    <section style="padding: 3rem 1.5rem; text-align: center; background: linear-gradient(135deg, rgba(56, 189, 248, 0.08), rgba(168, 85, 247, 0.08)); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+      <p style="font-size: 0.85rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.75rem;">Lab Complete</p>
+      <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem;">Ready for the <span class="highlight">Conclusions</span>?</h2>
+      <p style="font-size: 1rem; color: var(--text-secondary); max-width: 500px; margin: 0 auto 1.5rem;">Return to the presentation for the final wrap-up, your 7-Day Launch Plan, and key takeaways.</p>
+      <a href="presentation.html#slide14" class="cta-button" style="font-size: 1.1rem; padding: 1rem 2.5rem; display: inline-flex; align-items: center; gap: 0.5rem;">
+        &#127902; Return to Presentation: Conclusions
+      </a>
+    </section>
     <footer>
       <div class="container footer-content">
         <div class="footer-brand">
           <div class="logo">WIA-Europe <span class="highlight">AI-W</span></div>
-          <p>&copy; 2026 Made with &#10084;&#65039; by Dr. Sounny</p>
+          <p>&copy; 2026 WIA-Europe Strasbourg Regional Network &amp; ISU</p>
           <div class="footer-sponsor">
             <p>Sponsored by</p>
             <div style="display: flex; gap: 1rem; align-items: center; margin-top: 0.5rem;">
               <a href="https://www.wia-europe.org/strasbourg-2/" target="_blank">
-                                <img src="assets/wia_europe_strasbourg_logo.png" alt="WIA-Europe Strasbourg" style="height: 40px; border-radius: 4px;">
+                <img src="assets/wia_europe_strasbourg_logo.png" alt="WIA-Europe Strasbourg" style="height: 40px; border-radius: 4px;">
               </a>
               <a href="https://www.isunet.edu" target="_blank">
                 <img src="assets/LOGO_ISU_Darkblue.png" alt="ISU" style="height: 30px; background: white; padding: 4px; border-radius: 4px;">
@@ -200,5 +668,27 @@ For each improvement, explain WHY it is necessary for user experience.</div>
     </footer>
 
     <script src="script.js"></script>
+    <script>
+      // Copy-to-clipboard for code blocks
+      function copyCode(btn) {
+        const codeContent = btn.closest('.code-block').querySelector('.code-content');
+        const text = codeContent.textContent;
+        navigator.clipboard.writeText(text).then(() => {
+          btn.textContent = 'Copied!';
+          btn.classList.add('copied');
+          setTimeout(() => {
+            btn.textContent = 'Copy';
+            btn.classList.remove('copied');
+          }, 2000);
+        });
+      }
+
+      // Prerequisite checklist toggle
+      function toggleCheck(li) {
+        const cb = li.querySelector('input[type="checkbox"]');
+        cb.checked = !cb.checked;
+        li.classList.toggle('checked', cb.checked);
+      }
+    </script>
   </body>
 </html>

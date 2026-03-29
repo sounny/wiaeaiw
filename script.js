@@ -133,30 +133,50 @@ document.addEventListener("DOMContentLoaded", () => {
     statNumbers.forEach(stat => statObserver.observe(stat));
   }
 
-  // Typewriter effect for terminal in hero card
+  // Typewriter effect for terminal in hero card (multi-phrase)
   const typewriterElement = document.getElementById('terminal-typewriter');
   if (typewriterElement) {
-    const textToType = "AI for women";
-    let index = 0;
-    const typingSpeed = 150; // Slowly
+    const phrases = [
+      "AI for Women in Aerospace",
+      "From Prompter to Orchestrator",
+      "Direct. Don't just ask.",
+      "Build agentic workflows",
+      "Skills in Motion, 2026"
+    ];
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typeSpeed = 80;
+    const deleteSpeed = 40;
+    const pauseEnd = 2500;
+    const pauseStart = 400;
 
-    function typeChar() {
-      if (index < textToType.length) {
-        typewriterElement.textContent += textToType.charAt(index);
-        index++;
-        setTimeout(typeChar, typingSpeed);
+    function type() {
+      const currentPhrase = phrases[phraseIndex];
+
+      if (!isDeleting) {
+        typewriterElement.textContent = currentPhrase.substring(0, charIndex + 1);
+        charIndex++;
+        if (charIndex === currentPhrase.length) {
+          isDeleting = true;
+          setTimeout(type, pauseEnd);
+          return;
+        }
+        setTimeout(type, typeSpeed);
       } else {
-        // Pause at the end before restarting
-        setTimeout(() => {
-          typewriterElement.textContent = "";
-          index = 0;
-          typeChar();
-        }, 3000);
+        typewriterElement.textContent = currentPhrase.substring(0, charIndex - 1);
+        charIndex--;
+        if (charIndex === 0) {
+          isDeleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          setTimeout(type, pauseStart);
+          return;
+        }
+        setTimeout(type, deleteSpeed);
       }
     }
 
-    // Start typing after a short initial delay
-    setTimeout(typeChar, 1000);
+    setTimeout(type, 1000);
   }
 });
 
