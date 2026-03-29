@@ -206,7 +206,7 @@
         opacity: 0; 
         transform: scale(0.96) translateX(40px); 
         transition: opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1); 
-        padding-bottom: 60px !important;
+        padding-bottom: 100px !important;
         will-change: opacity, transform;
       }
       .slide.active { opacity: 1; transform: scale(1) translateX(0); }
@@ -496,7 +496,7 @@
 
       <!-- Slide 7: Interactive Org Tree -->
       <section class="slide slide-gradient-1" id="orgTreeSlide">
-        <p class="narrative-bar reveal" style="border-color: rgba(168,85,247,0.3); color: var(--accent-tertiary);">Chapter 2: Who Leads AI?</p>
+        <p class="narrative-bar reveal" style="border-color: rgba(168,85,247,0.3); color: var(--accent-tertiary);">Chapter 2: Participation Paradox</p>
         <h2 class="reveal" style="font-size: 1.6rem; margin-bottom: 0.25rem;">Frontier Lab <span class="gradient-text">Leadership Tree</span></h2>
         <p class="reveal" style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.25rem;">Adoption matters, but leadership matters more. Here is who sits at the top of the five companies building the most powerful AI systems on Earth.</p>
         <p class="reveal" style="font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
@@ -504,9 +504,17 @@
           <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; border: 2.5px solid #db2777; margin-left: 12px; margin-right: 4px; vertical-align: middle;"></span> Female
         </p>
         <div id="orgTree" style="width: 100%; max-width: 1100px; overflow-x: auto; position: relative; margin: 0 auto;">
-          <svg id="orgTreeSvg" width="1100" height="480" viewBox="0 0 1100 480" style="display: block; margin: 0 auto;"></svg>
+          <svg id="orgTreeSvg" width="1100" height="420" viewBox="0 0 1100 420" style="display: block; margin: 0 auto;"></svg>
         </div>
-        <p class="pull-quote reveal" style="font-size: 0.95rem; margin-top: 0.5rem;">"Participation is a systems-quality issue, not just a labor issue."
+        <div class="reveal" style="margin-top: 1rem; padding: 0.75rem 1.25rem; background: rgba(34, 211, 238, 0.05); border: 1px solid rgba(34, 211, 238, 0.15); border-radius: 12px; max-width: 800px; margin: 1rem auto 0;">
+          <p style="font-size: 0.9rem; color: var(--accent-cyan); font-weight: 600; text-align: center; margin: 0;">
+            The Leadership Reality: 81% Male vs 59% Female at work — who builds the technology, determines who it serves first.
+          </p>
+          <p style="font-size: 0.65rem; color: var(--text-secondary); text-align: center; margin-top: 0.4rem; opacity: 0.7;">
+            Sources: HumanResourcesOnline 2025, Deloitte Digital Consumer Trends 2025
+          </p>
+        </div>
+        <p class="pull-quote reveal" style="font-size: 0.95rem; margin-top: 1.5rem;">"Participation is a systems-quality issue, not just a labor issue."
           <cite><a href="https://www.unesco.org/en/artificial-intelligence/gender" target="_blank" style="color: var(--accent-cyan); text-decoration: underline;">UNESCO</a></cite>
         </p>
       </section>
@@ -1004,12 +1012,12 @@
       const labLogosEl = document.getElementById('labLogos');
       // Using local asset files for reliable rendering
       const labs = [
-        { name: 'OpenAI', logo: 'assets/logo_openai.png', color: '#10b981' },
-        { name: 'Anthropic', logo: 'assets/logo_anthropic.png', color: '#cc785c' },
-        { name: 'DeepMind', logo: 'assets/logo_deepmind.png', color: '#4285f4' },
-        { name: 'Meta AI', logo: 'assets/logo_meta_ai.png', color: '#0668e1' },
-        { name: 'xAI', logo: 'assets/logo_xai.png', color: '#ffffff' },
-        { name: 'Microsoft', logo: 'assets/logo_microsoft_ai.png', color: '#f25022' }
+        { name: 'OpenAI', logo: 'assets/logo_openai.svg', color: '#10b981' },
+        { name: 'Anthropic', logo: 'assets/logo_anthropic.svg', color: '#cc785c' },
+        { name: 'DeepMind', logo: 'assets/logo_deepmind.svg', color: '#4285f4' },
+        { name: 'Meta AI', logo: 'assets/logo_meta_ai.svg', color: '#0668e1' },
+        { name: 'xAI', logo: 'assets/logo_xai.svg', color: '#ffffff' },
+        { name: 'Microsoft', logo: 'assets/logo_microsoft_ai.svg', color: '#f25022' }
       ];
       labs.forEach((lab, i) => {
         const el = document.createElement('div');
@@ -1387,7 +1395,6 @@
         drawRowLabel(ROW_Y.ceo, 'CEO');
         drawRowLabel(ROW_Y.leads, 'LEADERSHIP');
         drawRowLabel(ROW_Y.safety, 'SAFETY / ETHICS');
-        drawRowLabel(ROW_Y.adopters, 'EARLY ADOPTERS');
 
         orgData.forEach(org => {
           const cx = org.x;
@@ -1398,8 +1405,8 @@
           // CEO node (with photo if available)
           drawNode(cx, ROW_Y.ceo, org.ceo.name, org.ceo.role, org.ceo.gender, org.color, org.ceo.photo);
 
-          // Leadership nodes (spread horizontally)
-          const leadSpacing = Math.min(60, 160 / Math.max(org.leads.length, 1));
+          // Leadership nodes (spread horizontally with more spacing)
+          const leadSpacing = Math.min(65, 200 / Math.max(org.leads.length, 1));
           const leadStartX = cx - ((org.leads.length - 1) * leadSpacing) / 2;
           org.leads.forEach((lead, i) => {
             const lx = leadStartX + i * leadSpacing;
@@ -1408,37 +1415,14 @@
           });
 
           // Safety nodes
-          const safeSpacing = Math.min(50, 120 / Math.max(org.safety.length, 1));
+          const safeSpacing = Math.min(55, 140 / Math.max(org.safety.length, 1));
           const safeStartX = cx - ((org.safety.length - 1) * safeSpacing) / 2;
           org.safety.forEach((s, i) => {
             const sx = safeStartX + i * safeSpacing;
             drawLine(cx, ROW_Y.leads + 30, sx, ROW_Y.safety - 18, 'rgba(148,163,184,0.1)', true);
             drawNode(sx, ROW_Y.safety, s.name, s.role, s.gender, org.color);
           });
-
-          // Early Adopters connection
-          drawLine(cx, ROW_Y.safety + 30, cx, ROW_Y.adopters - 10, 'rgba(34,211,238,0.15)', true);
         });
-
-        // Early adopters row
-        const adoptersText = document.createElementNS(ns, 'text');
-        adoptersText.setAttribute('x', 550); adoptersText.setAttribute('y', ROW_Y.adopters + 5);
-        adoptersText.setAttribute('text-anchor', 'middle');
-        adoptersText.setAttribute('fill', '#22d3ee');
-        adoptersText.setAttribute('font-size', '11'); adoptersText.setAttribute('font-weight', '700');
-        adoptersText.setAttribute('font-family', 'Inter, sans-serif');
-        adoptersText.textContent = 'Early Adopters: 81% Male vs 59% Female at work (2025) — who builds it, shapes who uses it first';
-        svgEl.appendChild(adoptersText);
-
-        // Citation link under SVG
-        const sourceLink = document.createElementNS(ns, 'text');
-        sourceLink.setAttribute('x', 550); sourceLink.setAttribute('y', ROW_Y.adopters + 18);
-        sourceLink.setAttribute('text-anchor', 'middle');
-        sourceLink.setAttribute('fill', '#64748b');
-        sourceLink.setAttribute('font-size', '7');
-        sourceLink.setAttribute('font-family', 'Inter, sans-serif');
-        sourceLink.textContent = 'Sources: HumanResourcesOnline 2025, Deloitte Digital Consumer Trends 2025';
-        svgEl.appendChild(sourceLink);
       }
 
       // --- Career Velocity Chart ---
