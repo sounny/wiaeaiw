@@ -10,12 +10,17 @@
     <meta property="og:type" content="website" />
     <meta property="og:image" content="assets/hero_statue_ai.png" />
     <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="apple-touch-icon" href="assets/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <!-- Accessibility: Skip to Content -->
+    <a href="#main-content" class="skip-to-content">Skip to Content</a>
+
     <header>
       <nav class="navbar">
         <div class="logo"><a href="index.html">WIA-Europe <span class="highlight">AI-W</span></a></div>
@@ -31,10 +36,17 @@
       </nav>
     </header>
 
-    <main>
+    <main id="main-content">
       <!-- Hero Section -->
       <section id="hero" class="hero-section">
+        <!-- Particle Canvas Background -->
+        <canvas class="hero-particles" id="heroParticles"></canvas>
         <div class="hero-content">
+          <!-- Live Event Status Badge -->
+          <div class="event-status pre-event animate-in" id="eventStatus">
+            <span class="status-dot"></span>
+            <span id="eventStatusText">Pre-Event</span>
+          </div>
           <p class="hero-badge animate-in">WIA-Europe Strasbourg Regional Network Presents</p>
           <h1 class="animate-in delay-1">WIA-Europe <span class="gradient-text">AI-W</span> Workshop</h1>
           <p class="animate-in delay-2">AI for Women: Empowering the next generation of aerospace leaders with autonomous AI workflows and technical agency.</p>
@@ -91,6 +103,38 @@
             <div class="stat-number">May 6</div>
             <div class="stat-label">13:00 CET</div>
           </div>
+        </div>
+      </section>
+
+      <!-- Countdown Timer -->
+      <section class="countdown-section" id="countdown">
+        <div class="countdown-wrapper" id="countdownWrapper">
+          <div class="countdown-label">Workshop Begins In</div>
+          <div class="countdown-digits" id="countdownDigits">
+            <div class="countdown-unit">
+              <div class="countdown-number" id="cd-days">--</div>
+              <div class="countdown-text">Days</div>
+            </div>
+            <div class="countdown-separator">:</div>
+            <div class="countdown-unit">
+              <div class="countdown-number" id="cd-hours">--</div>
+              <div class="countdown-text">Hours</div>
+            </div>
+            <div class="countdown-separator">:</div>
+            <div class="countdown-unit">
+              <div class="countdown-number" id="cd-mins">--</div>
+              <div class="countdown-text">Minutes</div>
+            </div>
+            <div class="countdown-separator">:</div>
+            <div class="countdown-unit">
+              <div class="countdown-number" id="cd-secs">--</div>
+              <div class="countdown-text">Seconds</div>
+            </div>
+          </div>
+        </div>
+        <div class="countdown-event-passed" id="eventPassed">
+          <h3>&#127881; Workshop Complete!</h3>
+          <p>Thank you for attending. Explore the lab materials and presentation slides above to continue learning.</p>
         </div>
       </section>
 
@@ -359,6 +403,130 @@
       </div>
     </footer>
 
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+      &#8593;
+    </button>
+
     <script src="script.js"></script>
+    <script>
+    // === COUNTDOWN TIMER ===
+    (function() {
+      // May 6, 2026 at 13:00 CET (UTC+2)
+      const eventDate = new Date('2026-05-06T11:00:00Z'); // 13:00 CET = 11:00 UTC
+      const eventEnd = new Date('2026-05-06T12:00:00Z');   // 14:00 CET = 12:00 UTC
+      const statusEl = document.getElementById('eventStatus');
+      const statusText = document.getElementById('eventStatusText');
+
+      function updateCountdown() {
+        const now = new Date();
+        const diff = eventDate - now;
+        const diffEnd = eventEnd - now;
+
+        // Update event status badge
+        if (diff > 0) {
+          statusEl.className = 'event-status pre-event animate-in';
+          statusText.textContent = 'Pre-Event';
+        } else if (diffEnd > 0) {
+          statusEl.className = 'event-status live animate-in';
+          statusText.textContent = 'Live Now';
+        } else {
+          statusEl.className = 'event-status completed animate-in';
+          statusText.textContent = 'Completed';
+        }
+
+        if (diff <= 0) {
+          document.getElementById('countdownWrapper').style.display = 'none';
+          document.getElementById('eventPassed').style.display = 'block';
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+        document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
+        document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+      }
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    })();
+
+    // === HERO PARTICLE SYSTEM ===
+    (function() {
+      const canvas = document.getElementById('heroParticles');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let particles = [];
+      const PARTICLE_COUNT = 50;
+      const CONNECT_DIST = 100;
+
+      function resize() {
+        const section = canvas.parentElement;
+        canvas.width = section.offsetWidth;
+        canvas.height = section.offsetHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.5 + 0.5,
+          dx: (Math.random() - 0.5) * 0.25,
+          dy: (Math.random() - 0.5) * 0.15,
+          o: Math.random() * 0.25 + 0.05
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(56, 189, 248, ${p.o})`;
+          ctx.fill();
+          p.x += p.dx;
+          p.y += p.dy;
+          if (p.x < 0) p.x = canvas.width;
+          if (p.x > canvas.width) p.x = 0;
+          if (p.y < 0) p.y = canvas.height;
+          if (p.y > canvas.height) p.y = 0;
+        });
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < CONNECT_DIST) {
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.strokeStyle = `rgba(56, 189, 248, ${0.05 * (1 - dist / CONNECT_DIST)})`;
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+            }
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+    // === BACK-TO-TOP ===
+    (function() {
+      const btn = document.getElementById('backToTop');
+      if (!btn) return;
+      window.addEventListener('scroll', () => {
+        btn.classList.toggle('visible', window.scrollY > 500);
+      }, { passive: true });
+    })();
+    </script>
   </body>
 </html>
+

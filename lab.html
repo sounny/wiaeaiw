@@ -7,12 +7,14 @@
     <meta name="description" content="Follow along with the Gemini CLI hands-on lab. Run your first agentic queries, build multi-step workflows, and generate code autonomously." />
     <meta property="og:title" content="Hands-on Lab | WIA-Europe AI-W Workshop" />
     <meta property="og:description" content="Step-by-step agentic AI lab exercises for the WIA-Europe Symposium 2026." />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <a href="#main-content" class="skip-to-content">Skip to Content</a>
     <header>
       <nav class="navbar">
         <div class="logo"><a href="index.html">WIA-Europe <span class="highlight">AI-W</span></a></div>
@@ -28,7 +30,8 @@
       </nav>
     </header>
 
-    <main>
+
+    <main id="main-content">
       <section class="page-hero">
         <div class="breadcrumb"><a href="index.html">Home</a> / <a href="presentation.html">Presentation</a> / <a href="setup.html">Setup Guide</a> / Lab</div>
         <div class="module-badge">Interactive Lab</div>
@@ -38,29 +41,43 @@
 
       <div class="lab-content">
 
-        <!-- Progress Tracker -->
-        <nav class="lab-progress" aria-label="Lab progress">
-          <a href="#prereqs" class="progress-step">
+        <!-- Progress Tracker (Sticky) -->
+        <div class="lab-progress-sticky" id="labProgressSticky">
+        <nav class="lab-progress" aria-label="Lab progress" id="labProgress">
+          <a href="#prereqs" class="progress-step active" data-target="prereqs">
             <div class="progress-dot">0</div>
             <span class="progress-label">Setup</span>
           </a>
-          <a href="#lab-a" class="progress-step">
+          <a href="#lab-a" class="progress-step" data-target="lab-a">
             <div class="progress-dot">A</div>
             <span class="progress-label">Explain</span>
           </a>
-          <a href="#lab-b" class="progress-step">
+          <a href="#lab-b" class="progress-step" data-target="lab-b">
             <div class="progress-dot">B</div>
             <span class="progress-label">Automate</span>
           </a>
-          <a href="#lab-c" class="progress-step">
+          <a href="#lab-c" class="progress-step" data-target="lab-c">
             <div class="progress-dot">C</div>
             <span class="progress-label">Refactor</span>
           </a>
-          <a href="#challenge" class="progress-step">
+          <a href="#lab-d" class="progress-step" data-target="lab-d">
+            <div class="progress-dot">D</div>
+            <span class="progress-label">Prompts</span>
+          </a>
+          <a href="#challenge" class="progress-step" data-target="challenge">
             <div class="progress-dot" style="background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(236,72,153,0.2)); border-color: rgba(168,85,247,0.4);">&#9733;</div>
             <span class="progress-label">Challenge</span>
           </a>
         </nav>
+        </div>
+
+        <!-- Estimated Total Time -->
+        <div class="lab-time-estimate">
+          <span class="time-icon">&#9201;</span>
+          <span>Estimated Total Time: <strong>55 minutes</strong></span>
+          <span class="time-divider">|</span>
+          <span class="time-detail">Setup 2 min &bull; Lab A 10 min &bull; Lab B 15 min &bull; Lab C 15 min &bull; Lab D 8 min &bull; Challenge 5+ min</span>
+        </div>
 
         <!-- ============================================ -->
         <!-- PREREQS: Before You Begin                    -->
@@ -69,7 +86,7 @@
           <div class="step-header" style="margin: -2.5rem -2.5rem 2rem; border-radius: 20px 20px 0 0; background: rgba(34, 211, 238, 0.1);">
             <span class="step-badge" style="background: var(--accent-cyan);">Step 0</span>
             <h2>Before You Begin</h2>
-            <span class="task-time">2 min</span>
+            <div class="step-meta"><span class="difficulty-badge beginner">Beginner</span><span class="task-time">2 min</span></div>
           </div>
 
           <p>Before we start, let's make sure your environment is ready. Check off each item below. If anything is missing, visit the <a href="setup.html" class="text-link">Setup Guide</a> first.</p>
@@ -147,7 +164,7 @@ Press Ctrl+C to exit.
           <div class="step-header" style="margin: -2.5rem -2.5rem 2rem; border-radius: 20px 20px 0 0; background: rgba(59, 130, 246, 0.1);">
             <span class="step-badge" style="background: var(--accent-primary);">Lab A</span>
             <h2>Explain &amp; Verify</h2>
-            <span class="task-time">10 min</span>
+            <div class="step-meta"><span class="difficulty-badge beginner">Beginner</span><span class="task-time">10 min</span></div>
           </div>
 
           <p>The first rule of the Agentic Paradigm: <strong>Trust, but Verify.</strong> Before letting an AI write or modify anything, we use it to <em>explain existing work</em>. This builds your instinct for what good AI output looks like, and it is the safest way to start.</p>
@@ -260,6 +277,24 @@ This is a "Human-in-the-Loop" audit: the AI identifies issues, you decide what t
               </div>
             </div>
           </div>
+
+          <!-- Aerospace Sidebar -->
+          <div class="aerospace-callout">
+            <div class="aerospace-callout-icon">&#128752;</div>
+            <div>
+              <strong>Aerospace Connection:</strong> This "Generate, Audit, Approve" loop mirrors the V-model used in spacecraft development: design, verify, validate. When ESA reviews satellite subsystem code, they follow the same pattern. You are learning mission-grade quality assurance.
+            </div>
+          </div>
+
+          <!-- Troubleshooting Accordion -->
+          <details class="troubleshoot-accordion">
+            <summary>&#128295; Troubleshooting Lab A</summary>
+            <div class="troubleshoot-content">
+              <p><strong>"Gemini did not create the file"</strong> &mdash; Make sure you are in the correct directory (<code>ai-workshop</code>). Gemini creates files relative to where you launched it.</p>
+              <p><strong>"The code review seems incomplete"</strong> &mdash; Try being more specific: add "Check WCAG 2.1 AA compliance" to your review prompt for deeper analysis.</p>
+              <p><strong>"My file looks different from the example"</strong> &mdash; That is expected! AI output varies between sessions. Focus on the structure (did it find real issues?), not exact wording.</p>
+            </div>
+          </details>
         </div>
 
         <!-- ============================================ -->
@@ -269,7 +304,7 @@ This is a "Human-in-the-Loop" audit: the AI identifies issues, you decide what t
           <div class="step-header" style="margin: -2.5rem -2.5rem 2rem; border-radius: 20px 20px 0 0; background: rgba(16, 185, 129, 0.1);">
             <span class="step-badge" style="background: var(--success-color);">Lab B</span>
             <h2>Automate &amp; Dry Run</h2>
-            <span class="task-time">15 min</span>
+            <div class="step-meta"><span class="difficulty-badge intermediate">Intermediate</span><span class="task-time">15 min</span></div>
           </div>
 
           <p>Now we level up. Automation does not mean giving up control. It means <strong>delegating the boring parts</strong> so you can focus on decisions. The key technique is the <strong>Dry Run</strong>: ask the AI to <em>propose</em> changes before you approve them.</p>
@@ -397,6 +432,24 @@ No files were modified. You are in full control.</pre>
               <p>Open the files in VS Code and compare. Does the output match what Gemini claimed? Building this "trust but verify" habit is essential for professional AI use.</p>
             </div>
           </div>
+
+          <!-- Aerospace Sidebar -->
+          <div class="aerospace-callout" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.04);">
+            <div class="aerospace-callout-icon">&#127758;</div>
+            <div>
+              <strong>Aerospace Connection:</strong> The "Propose, then Apply" workflow is standard practice in satellite operations. Before uploading new firmware to the ISS, mission controllers perform a "dry run" simulation on ground hardware first. You are applying the same safety discipline to software development.
+            </div>
+          </div>
+
+          <!-- Troubleshooting Accordion -->
+          <details class="troubleshoot-accordion">
+            <summary>&#128295; Troubleshooting Lab B</summary>
+            <div class="troubleshoot-content">
+              <p><strong>"Gemini modified files despite my DO NOT instruction"</strong> &mdash; The AI sometimes misinterprets constraints. If this happens, use <code>Ctrl+Z</code> in VS Code to undo, and rephrase your constraint more firmly: "LIST the proposed changes only. Do NOT edit any files."</p>
+              <p><strong>"The table output looks messy"</strong> &mdash; Try adding "Format your response as a clean markdown table" to get more structured output.</p>
+              <p><strong>"Only 2 files were created instead of 4"</strong> &mdash; Sometimes Gemini batches file creation. Simply ask: "Please create the remaining files from my previous request."</p>
+            </div>
+          </details>
         </div>
 
         <!-- ============================================ -->
@@ -406,7 +459,7 @@ No files were modified. You are in full control.</pre>
           <div class="step-header" style="margin: -2.5rem -2.5rem 2rem; border-radius: 20px 20px 0 0; background: rgba(168, 85, 247, 0.1);">
             <span class="step-badge" style="background: var(--accent-tertiary);">Lab C</span>
             <h2>Agentic Refactor</h2>
-            <span class="task-time">15 min</span>
+            <div class="step-meta"><span class="difficulty-badge advanced">Advanced</span><span class="task-time">15 min</span></div>
           </div>
 
           <p>This is where it gets powerful. Instead of giving the AI one instruction at a time, we will ask it to <strong>create a plan</strong> and then <strong>execute that plan step by step</strong>. This is the heart of "agentic" behavior: the AI maintains context across multiple actions, like a colleague following a project brief.</p>
@@ -527,6 +580,152 @@ This is now a persistent "brain" that the AI can follow.</pre>
               </div>
             </div>
           </div>
+
+          <!-- Aerospace Sidebar -->
+          <div class="aerospace-callout" style="border-color: rgba(168, 85, 247, 0.3); background: rgba(168, 85, 247, 0.04);">
+            <div class="aerospace-callout-icon">&#128640;</div>
+            <div>
+              <strong>Aerospace Connection:</strong> The Plan, Execute, Document workflow you just completed mirrors the Systems Engineering lifecycle used at NASA and ESA: define requirements, implement, verify, and produce configuration-controlled documentation. In real missions, this traceability is not optional; it is mandatory for flight certification.
+            </div>
+          </div>
+
+          <!-- Troubleshooting Accordion -->
+          <details class="troubleshoot-accordion">
+            <summary>&#128295; Troubleshooting Lab C</summary>
+            <div class="troubleshoot-content">
+              <p><strong>"The roadmap file was not created"</strong> &mdash; Gemini may have displayed the roadmap in the terminal instead. Ask: "Save that roadmap as a file called improvement-roadmap.md"</p>
+              <p><strong>"The AI lost context between improvements"</strong> &mdash; Long conversations can cause context drift. Remind it: "Refer back to improvement-roadmap.md for context before proceeding."</p>
+              <p><strong>"Changes broke existing functionality"</strong> &mdash; This is normal in iterative development! Ask Gemini: "Undo the last change and try a different approach that preserves the existing navigation."</p>
+            </div>
+          </details>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- LAB D: Prompt Engineering Patterns           -->
+        <!-- ============================================ -->
+        <div class="lab-task" id="lab-d">
+          <div class="step-header" style="margin: -2.5rem -2.5rem 2rem; border-radius: 20px 20px 0 0; background: rgba(245, 158, 11, 0.1);">
+            <span class="step-badge" style="background: var(--warning-color);">Lab D</span>
+            <h2>Prompt Engineering Patterns</h2>
+            <div class="step-meta"><span class="difficulty-badge intermediate">Intermediate</span><span class="task-time">8 min</span></div>
+          </div>
+
+          <p>You have now used Gemini CLI for three different workflows. But the <strong>quality of your output depends entirely on the quality of your input.</strong> In this section, you will learn structured prompt patterns that dramatically improve results.</p>
+
+          <div class="info-callout">
+            <span>&#127919;</span>
+            <div><strong>Learning Goal:</strong> Master reusable prompt templates that transform vague requests into precise, high-quality AI outputs. These patterns work with any AI system, not just Gemini.</div>
+          </div>
+
+          <!-- Sub-step D.1 -->
+          <div class="sub-step">
+            <div class="sub-step-number">1</div>
+            <div class="sub-step-content">
+              <h4>The CRISP Framework</h4>
+              <p>Use this five-part structure for any complex prompt. Each letter stands for a component that makes your prompt more effective:</p>
+
+              <div class="prompt-framework">
+                <div class="framework-item"><span class="framework-letter" style="color: var(--accent-cyan);">C</span><div><strong>Context</strong><br/>Background information the AI needs</div></div>
+                <div class="framework-item"><span class="framework-letter" style="color: var(--accent-primary);">R</span><div><strong>Role</strong><br/>Who should the AI act as?</div></div>
+                <div class="framework-item"><span class="framework-letter" style="color: var(--success-color);">I</span><div><strong>Instructions</strong><br/>Step-by-step task description</div></div>
+                <div class="framework-item"><span class="framework-letter" style="color: var(--warning-color);">S</span><div><strong>Specifics</strong><br/>Constraints, format, length limits</div></div>
+                <div class="framework-item"><span class="framework-letter" style="color: var(--accent-tertiary);">P</span><div><strong>Persona</strong><br/>Audience and tone of the output</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-step D.2 -->
+          <div class="sub-step">
+            <div class="sub-step-number">2</div>
+            <div class="sub-step-content">
+              <h4>Practice: Transform a Weak Prompt</h4>
+              <p>Here is a common, weak prompt. Your task is to rewrite it using the CRISP framework, then compare the outputs:</p>
+
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-lang" style="color: var(--error-color);">&#10060; Weak Prompt</span>
+                </div>
+                <div class="code-content">Make me a website about space.</div>
+              </div>
+
+              <p style="margin-top: 1rem;">Now try this CRISP-structured version:</p>
+
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-lang" style="color: var(--success-color);">&#9989; CRISP Prompt</span>
+                  <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+                </div>
+                <div class="code-content">Context: I am a graduate student in aerospace engineering building a portfolio website.
+Role: Act as a senior frontend developer with expertise in modern web design.
+Instructions:
+1. Create a single-page portfolio site called "index.html" with sections: Hero, About, Projects, Contact.
+2. Use a dark space theme with CSS gradients and smooth scroll.
+3. Include a responsive navigation bar.
+Specifics: Use only HTML and CSS (no JavaScript frameworks). Keep the file under 200 lines. Add proper meta tags for SEO.
+Persona: The site should feel professional, suitable for sharing with potential employers at space agencies.</div>
+              </div>
+
+              <div class="expected-output">
+                <div class="expected-output-header">
+                  <span>&#9989;</span> Compare the Difference
+                </div>
+                <pre>The weak prompt will produce a generic, unstyled page.
+The CRISP prompt will produce a polished, portfolio-ready site
+with semantic HTML, responsive design, and professional aesthetics.
+
+Notice how specificity controls quality.</pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-step D.3 -->
+          <div class="sub-step">
+            <div class="sub-step-number">3</div>
+            <div class="sub-step-content">
+              <h4>Prompt Cheat Sheet</h4>
+              <p>Save these power phrases for your future workflows. They consistently improve AI output quality:</p>
+
+              <div class="cheat-sheet-grid">
+                <div class="cheat-item">
+                  <code>"Think step by step"</code>
+                  <span>Activates chain-of-thought reasoning</span>
+                </div>
+                <div class="cheat-item">
+                  <code>"DO NOT modify any files yet"</code>
+                  <span>Prevents premature execution</span>
+                </div>
+                <div class="cheat-item">
+                  <code>"Show me a diff before applying"</code>
+                  <span>Forces preview of changes</span>
+                </div>
+                <div class="cheat-item">
+                  <code>"Format as a markdown table"</code>
+                  <span>Structures output for readability</span>
+                </div>
+                <div class="cheat-item">
+                  <code>"Rate each issue: low/med/high"</code>
+                  <span>Adds priority to reviews</span>
+                </div>
+                <div class="cheat-item">
+                  <code>"Explain your reasoning"</code>
+                  <span>Makes the AI show its work</span>
+                </div>
+              </div>
+
+              <div class="success-callout">
+                <span>&#127942;</span>
+                <div><strong>You now have a reusable toolkit.</strong> These patterns work across ChatGPT, Claude, Gemini, or any LLM. The CRISP framework and these power phrases will improve every interaction you have with AI systems going forward.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Aerospace Sidebar -->
+          <div class="aerospace-callout" style="border-color: rgba(245, 158, 11, 0.3); background: rgba(245, 158, 11, 0.04);">
+            <div class="aerospace-callout-icon">&#128225;</div>
+            <div>
+              <strong>Aerospace Connection:</strong> In mission control, operators use standardized command formats ("Procedure, Step, Constraint, Verification") to communicate with spacecraft. The CRISP framework is the same principle applied to AI: structured communication prevents costly misunderstandings.
+            </div>
+          </div>
         </div>
 
         <!-- ============================================ -->
@@ -584,6 +783,39 @@ Here is the text:
                 <div class="code-content">Write a Python script that reads all CSV files in a folder, combines them into one spreadsheet, adds a "source_file" column to track which file each row came from, and saves the result as "combined_data.csv".</div>
               </div>
             </div>
+            <div class="challenge-card">
+              <div class="icon">&#128752;</div>
+              <h3>Mission Briefing Generator</h3>
+              <p>Create a reusable template that generates professional mission briefing documents from raw input parameters like orbit type, payload mass, and launch window.</p>
+              <div class="code-block" style="margin-top: 1rem;">
+                <div class="code-header">
+                  <span class="code-lang">Starter Prompt</span>
+                  <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+                </div>
+                <div class="code-content">Create an HTML "Mission Briefing Generator" with a form that accepts: Mission Name, Orbit Type (LEO/MEO/GEO), Payload Mass (kg), Launch Window, and Mission Duration. When submitted, generate a professional PDF-styled briefing document with sections for Mission Overview, Orbital Parameters, Risk Assessment, and Timeline. Use CSS print styles.</div>
+              </div>
+            </div>
+            <div class="challenge-card">
+              <div class="icon">&#128225;</div>
+              <h3>Meeting Minutes Extractor</h3>
+              <p>Paste in a rough transcript or notes from a meeting, and have the AI produce structured minutes with action items, decisions, and owners.</p>
+              <div class="code-block" style="margin-top: 1rem;">
+                <div class="code-header">
+                  <span class="code-lang">Starter Prompt</span>
+                  <button class="copy-btn" onclick="copyCode(this)" aria-label="Copy to clipboard">Copy</button>
+                </div>
+                <div class="code-content">I will paste raw meeting notes. Please produce structured minutes with:
+1. Meeting header (date, attendees, duration)
+2. Key decisions made (numbered list)
+3. Action items table (columns: Task, Owner, Deadline, Priority)
+4. Open questions for next meeting
+5. A one-paragraph executive summary
+
+Format as a clean markdown document.
+
+[Paste your notes here]</div>
+              </div>
+            </div>
           </div>
 
           <div class="info-callout">
@@ -614,6 +846,7 @@ Here is the text:
               <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#9989; <strong>Lab A:</strong> Used AI to explain and audit code (Human-in-the-Loop)</li>
               <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#9989; <strong>Lab B:</strong> Automated repetitive tasks with a Dry Run workflow</li>
               <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#9989; <strong>Lab C:</strong> Orchestrated a multi-step refactoring roadmap</li>
+              <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#9989; <strong>Lab D:</strong> Mastered prompt engineering with the CRISP framework</li>
               <li style="padding: 0.5rem 0; color: var(--text-secondary);">&#9733; <strong>Challenge:</strong> Designed your own agentic workflow</li>
             </ul>
             <p style="margin-bottom: 1.5rem;">You are no longer just a "prompter." You are a <strong>director</strong> of AI systems. Take this skill into your career, your research, and your teams.</p>
@@ -667,6 +900,11 @@ Here is the text:
       </div>
     </footer>
 
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+      &#8593;
+    </button>
+
     <script src="script.js"></script>
     <script>
       // Copy-to-clipboard for code blocks
@@ -674,7 +912,7 @@ Here is the text:
         const codeContent = btn.closest('.code-block').querySelector('.code-content');
         const text = codeContent.textContent;
         navigator.clipboard.writeText(text).then(() => {
-          btn.textContent = 'Copied!';
+          btn.textContent = '✓ Copied!';
           btn.classList.add('copied');
           setTimeout(() => {
             btn.textContent = 'Copy';
@@ -683,12 +921,144 @@ Here is the text:
         });
       }
 
-      // Prerequisite checklist toggle
+      // Prerequisite checklist toggle with localStorage persistence
       function toggleCheck(li) {
         const cb = li.querySelector('input[type="checkbox"]');
         cb.checked = !cb.checked;
         li.classList.toggle('checked', cb.checked);
+        saveCheckboxState();
       }
+
+      // === localStorage Persistence for Checkboxes ===
+      function saveCheckboxState() {
+        const checkboxes = document.querySelectorAll('.prereq-checklist input[type="checkbox"]');
+        const states = Array.from(checkboxes).map(cb => cb.checked);
+        try { localStorage.setItem('wiaeaiw-prereqs', JSON.stringify(states)); } catch(e) {}
+      }
+
+      function loadCheckboxState() {
+        try {
+          const saved = localStorage.getItem('wiaeaiw-prereqs');
+          if (!saved) return;
+          const states = JSON.parse(saved);
+          const checkboxes = document.querySelectorAll('.prereq-checklist input[type="checkbox"]');
+          checkboxes.forEach((cb, i) => {
+            if (states[i]) {
+              cb.checked = true;
+              cb.closest('li').classList.add('checked');
+            }
+          });
+        } catch(e) {}
+      }
+      loadCheckboxState();
+
+      // Interactive Progress Tracker: highlights current section on scroll
+      (function() {
+        const progressSteps = document.querySelectorAll('#labProgress .progress-step');
+        const sections = [];
+        progressSteps.forEach(step => {
+          const targetId = step.getAttribute('data-target');
+          if (targetId) {
+            const el = document.getElementById(targetId);
+            if (el) sections.push({ el, step });
+          }
+        });
+
+        function updateProgress() {
+          const scrollPos = window.scrollY + window.innerHeight / 3;
+          let current = sections[0];
+          sections.forEach(s => {
+            if (s.el.offsetTop <= scrollPos) current = s;
+          });
+          progressSteps.forEach(s => s.classList.remove('active'));
+          if (current) current.step.classList.add('active');
+        }
+
+        window.addEventListener('scroll', updateProgress, { passive: true });
+        updateProgress();
+      })();
+
+      // Back-to-top button visibility
+      (function() {
+        const btn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+          btn.classList.toggle('visible', window.scrollY > 600);
+        }, { passive: true });
+      })();
+
+      // === CONFETTI CELEBRATION ===
+      (function() {
+        const ctaBox = document.querySelector('.cta-box');
+        if (!ctaBox) return;
+        let confettiTriggered = false;
+
+        const confettiObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && !confettiTriggered) {
+              confettiTriggered = true;
+              launchConfetti();
+            }
+          });
+        }, { threshold: 0.5 });
+
+        confettiObserver.observe(ctaBox);
+
+        function launchConfetti() {
+          const container = document.createElement('div');
+          container.className = 'confetti-container';
+          document.body.appendChild(container);
+
+          const colors = ['#38bdf8', '#a855f7', '#22c55e', '#f59e0b', '#ec4899', '#818cf8'];
+          for (let i = 0; i < 60; i++) {
+            const piece = document.createElement('div');
+            piece.className = 'confetti-piece';
+            piece.style.left = Math.random() * 100 + '%';
+            piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            piece.style.animationDelay = Math.random() * 1.5 + 's';
+            piece.style.animationDuration = (2 + Math.random() * 2) + 's';
+            piece.style.width = (6 + Math.random() * 8) + 'px';
+            piece.style.height = (6 + Math.random() * 8) + 'px';
+            if (Math.random() > 0.5) piece.style.borderRadius = '50%';
+            container.appendChild(piece);
+          }
+
+          setTimeout(() => container.remove(), 5000);
+        }
+      })();
+
+      // === COPY ALL PROMPTS ===
+      (function() {
+        const challengeSection = document.getElementById('challenge');
+        if (!challengeSection) return;
+
+        // Create the button
+        const copyAllBtn = document.createElement('button');
+        copyAllBtn.className = 'copy-all-prompts';
+        copyAllBtn.innerHTML = '&#128203; Copy All Challenge Prompts';
+
+        // Insert before the pro-tip callout
+        const proTip = challengeSection.querySelector('.info-callout');
+        if (proTip) proTip.parentNode.insertBefore(copyAllBtn, proTip);
+
+        copyAllBtn.addEventListener('click', () => {
+          const codeBlocks = challengeSection.querySelectorAll('.code-content');
+          const allPrompts = Array.from(codeBlocks).map((block, i) => {
+            const card = block.closest('.challenge-card');
+            const title = card ? card.querySelector('h3').textContent : 'Prompt ' + (i + 1);
+            return `=== ${title} ===\n${block.textContent.trim()}`;
+          }).join('\n\n---\n\n');
+
+          navigator.clipboard.writeText(allPrompts).then(() => {
+            copyAllBtn.innerHTML = '&#9989; All Prompts Copied!';
+            copyAllBtn.classList.add('copied');
+            setTimeout(() => {
+              copyAllBtn.innerHTML = '&#128203; Copy All Challenge Prompts';
+              copyAllBtn.classList.remove('copied');
+            }, 3000);
+          });
+        });
+      })();
     </script>
   </body>
 </html>
+

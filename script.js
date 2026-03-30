@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }, observerOptions);
 
   const animatedElements = document.querySelectorAll(
-    ".feature-card, .step-item, .integration-card, .tour-text, .tour-visual, .timeline-item, .module-card, .tutorial-step, .lab-task, .instructor-card, .programme-item, .stat-item"
+    ".feature-card, .step-item, .integration-card, .tour-text, .tour-visual, .timeline-item, .module-card, .tutorial-step, .lab-task, .instructor-card, .programme-item, .stat-item, .challenge-card"
   );
 
   animatedElements.forEach((el) => {
@@ -178,6 +178,70 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setTimeout(type, 1000);
   }
+
+  // === STICKY LAB PROGRESS TRACKER ===
+  const labProgressSticky = document.getElementById('labProgressSticky');
+  if (labProgressSticky) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        labProgressSticky.classList.add('scrolled');
+      } else {
+        labProgressSticky.classList.remove('scrolled');
+      }
+    });
+
+    // Auto-highlight active lab section on scroll
+    const labSections = document.querySelectorAll('.lab-task[id]');
+    const progressSteps = document.querySelectorAll('.progress-step');
+
+    if (labSections.length > 0 && progressSteps.length > 0) {
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const targetId = entry.target.id;
+            progressSteps.forEach(step => {
+              step.classList.remove('active');
+              if (step.dataset.target === targetId) {
+                step.classList.add('active');
+              }
+            });
+          }
+        });
+      }, { threshold: 0.3, rootMargin: '-100px 0px -50% 0px' });
+
+      labSections.forEach(section => sectionObserver.observe(section));
+    }
+  }
+
+  // === LAZY LOADING FOR IMAGES ===
+  document.querySelectorAll('img:not([loading])').forEach(img => {
+    img.setAttribute('loading', 'lazy');
+  });
+
+  // === SMOOTH PAGE TRANSITIONS ===
+  document.querySelectorAll('a[href$=".html"]').forEach(link => {
+    // Only apply to internal navigation links
+    if (link.hostname === window.location.hostname || !link.hostname) {
+      link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href && !href.startsWith('http') && !this.target) {
+          e.preventDefault();
+          document.body.style.opacity = '0';
+          document.body.style.transition = 'opacity 0.25s ease';
+          setTimeout(() => {
+            window.location.href = href;
+          }, 250);
+        }
+      });
+    }
+  });
+
+  // Fade in on page load
+  document.body.style.opacity = '0';
+  requestAnimationFrame(() => {
+    document.body.style.transition = 'opacity 0.4s ease';
+    document.body.style.opacity = '1';
+  });
 });
 
 // Copy code functionality
@@ -186,15 +250,11 @@ function copyCode(button) {
   const code = codeBlock.querySelector('.code-content').textContent;
   navigator.clipboard.writeText(code.trim()).then(() => {
     const original = button.textContent;
-    button.textContent = 'Copied!';
-    button.style.background = 'var(--success-color)';
-    button.style.color = 'white';
-    button.style.borderColor = 'var(--success-color)';
+    button.textContent = '✓ Copied!';
+    button.classList.add('copied');
     setTimeout(() => {
       button.textContent = original;
-      button.style.background = '';
-      button.style.color = '';
-      button.style.borderColor = '';
+      button.classList.remove('copied');
     }, 2000);
   }).catch(() => {
     // Fallback for older browsers
@@ -204,7 +264,12 @@ function copyCode(button) {
     textArea.select();
     document.execCommand('copy');
     document.body.removeChild(textArea);
-    button.textContent = 'Copied!';
-    setTimeout(() => { button.textContent = 'Copy'; }, 2000);
+    button.textContent = '✓ Copied!';
+    button.classList.add('copied');
+    setTimeout(() => {
+      button.textContent = 'Copy';
+      button.classList.remove('copied');
+    }, 2000);
   });
 }
+

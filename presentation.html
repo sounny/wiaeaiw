@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Presentation | WIA-Europe AI-W Workshop</title>
     <meta name="description" content="Interactive slide deck for the WIA-Europe AI Workshop exploring the $4.4 trillion AI economy, gender bias in AI adoption, and the agentic AI paradigm." />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;700&display=swap" rel="stylesheet" />
@@ -1516,5 +1517,204 @@
         filter: brightness(0.6) blur(1px);
       }
     </style>
+
+    <!-- Keyboard Shortcut Overlay -->
+    <div class="keyboard-overlay" id="keyboardOverlay">
+      <div class="keyboard-overlay-content">
+        <h3>&#9000; Keyboard Shortcuts</h3>
+        <ul class="shortcut-list">
+          <li>
+            <span>Next Slide</span>
+            <span class="shortcut-key"><kbd>&#8594;</kbd> <kbd>Space</kbd> <kbd>N</kbd></span>
+          </li>
+          <li>
+            <span>Previous Slide</span>
+            <span class="shortcut-key"><kbd>&#8592;</kbd> <kbd>P</kbd></span>
+          </li>
+          <li>
+            <span>First Slide</span>
+            <span class="shortcut-key"><kbd>Home</kbd></span>
+          </li>
+          <li>
+            <span>Last Slide</span>
+            <span class="shortcut-key"><kbd>End</kbd></span>
+          </li>
+          <li>
+            <span>Slide Overview</span>
+            <span class="shortcut-key"><kbd>G</kbd></span>
+          </li>
+          <li>
+            <span>Fullscreen</span>
+            <span class="shortcut-key"><kbd>F</kbd></span>
+          </li>
+          <li>
+            <span>Reset Timer</span>
+            <span class="shortcut-key"><kbd>T</kbd></span>
+          </li>
+          <li>
+            <span>This Help</span>
+            <span class="shortcut-key"><kbd>?</kbd></span>
+          </li>
+        </ul>
+        <p class="dismiss-hint">Press <kbd style="display:inline-block;padding:0.15rem 0.4rem;background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.25);border-radius:4px;font-size:0.7rem;color:var(--accent-cyan);">Esc</kbd> or <kbd style="display:inline-block;padding:0.15rem 0.4rem;background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.25);border-radius:4px;font-size:0.7rem;color:var(--accent-cyan);">?</kbd> to close</p>
+      </div>
+    </div>
+
+    <!-- Slide Overview Grid -->
+    <div class="slide-overview" id="slideOverview">
+      <div class="slide-overview-grid" id="slideOverviewGrid"></div>
+    </div>
+    <button class="slide-overview-close" id="slideOverviewClose" onclick="toggleSlideOverview()">&times;</button>
+
+    <!-- Presenter Timer -->
+    <div class="presenter-timer" id="presenterTimer" onclick="resetPresenterTimer()" title="Click to reset">
+      <span class="timer-dot"></span>
+      <span id="presenterTimerDisplay">00:00</span>
+    </div>
+
+    <!-- Keyboard Help Hint (bottom nav) -->
+    <div class="slide-nav-hint" style="z-index: 100;">
+      Press <strong>?</strong> for keyboard shortcuts &middot; <strong>G</strong> for slide overview
+    </div>
+
+    <script>
+    // === PRESENTER TIMER ===
+    (function() {
+      let startTime = Date.now();
+      const timerEl = document.getElementById('presenterTimer');
+      const displayEl = document.getElementById('presenterTimerDisplay');
+      const TOTAL_MINUTES = 60; // 1 hour workshop
+      const WARNING_MINUTES = 50;
+
+      window.resetPresenterTimer = function() {
+        startTime = Date.now();
+        timerEl.className = 'presenter-timer';
+      };
+
+      function updateTimer() {
+        const elapsed = Date.now() - startTime;
+        const totalSec = Math.floor(elapsed / 1000);
+        const mins = Math.floor(totalSec / 60);
+        const secs = totalSec % 60;
+        displayEl.textContent = String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+
+        if (mins >= TOTAL_MINUTES) {
+          timerEl.className = 'presenter-timer overtime';
+        } else if (mins >= WARNING_MINUTES) {
+          timerEl.className = 'presenter-timer warning';
+        } else {
+          timerEl.className = 'presenter-timer';
+        }
+      }
+      setInterval(updateTimer, 1000);
+      updateTimer();
+    })();
+
+    // === KEYBOARD OVERLAY ===
+    (function() {
+      const overlay = document.getElementById('keyboardOverlay');
+
+      window.toggleKeyboardOverlay = function() {
+        overlay.classList.toggle('show');
+      };
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === '?' || (e.key === '/' && e.shiftKey)) {
+          e.preventDefault();
+          toggleKeyboardOverlay();
+        }
+        if (e.key === 'Escape' && overlay.classList.contains('show')) {
+          overlay.classList.remove('show');
+        }
+      });
+
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) overlay.classList.remove('show');
+      });
+    })();
+
+    // === SLIDE OVERVIEW ===
+    (function() {
+      const overview = document.getElementById('slideOverview');
+      const grid = document.getElementById('slideOverviewGrid');
+      const slides = document.querySelectorAll('.slide');
+
+      function buildGrid() {
+        grid.innerHTML = '';
+        slides.forEach((slide, i) => {
+          const thumb = document.createElement('div');
+          thumb.className = 'slide-thumb' + (slide.classList.contains('active') ? ' active' : '');
+
+          const titleEl = slide.querySelector('h1, h2, h3, .narrative-bar');
+          const title = titleEl ? titleEl.textContent.trim().substring(0, 50) : 'Slide ' + (i + 1);
+
+          thumb.innerHTML = `
+            <div class="slide-thumb-number">${i + 1}</div>
+            <div class="slide-thumb-title">${title}</div>
+          `;
+          thumb.addEventListener('click', () => {
+            goToSlide(i);
+            toggleSlideOverview();
+          });
+          grid.appendChild(thumb);
+        });
+      }
+
+      window.toggleSlideOverview = function() {
+        if (overview.classList.contains('show')) {
+          overview.classList.remove('show');
+          document.getElementById('slideOverviewClose').style.display = 'none';
+        } else {
+          buildGrid();
+          overview.classList.add('show');
+          document.getElementById('slideOverviewClose').style.display = 'flex';
+        }
+      };
+
+      window.goToSlide = function(index) {
+        const currentSlide = document.querySelector('.slide.active');
+        const targetSlide = slides[index];
+        if (currentSlide === targetSlide) return;
+
+        const currentIndex = Array.from(slides).indexOf(currentSlide);
+        if (currentSlide) {
+          currentSlide.classList.remove('active');
+          currentSlide.classList.add(index > currentIndex ? 'slide-exit-left' : 'slide-exit-right');
+          setTimeout(() => {
+            currentSlide.classList.remove('slide-exit-left', 'slide-exit-right');
+          }, 700);
+        }
+        targetSlide.classList.add('active');
+        window.location.hash = 'slide' + (index + 1);
+
+        // Update progress bar
+        const progressBar = document.getElementById('progressBar');
+        if (progressBar) {
+          progressBar.style.width = ((index + 1) / slides.length * 100) + '%';
+        }
+      };
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'g' || e.key === 'G') {
+          // Only if not inside inputs and overlay not showing keyboard
+          if (document.getElementById('keyboardOverlay').classList.contains('show')) return;
+          if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
+          e.preventDefault();
+          toggleSlideOverview();
+        }
+        if (e.key === 'Escape' && overview.classList.contains('show')) {
+          toggleSlideOverview();
+        }
+        // T for timer reset
+        if ((e.key === 't' || e.key === 'T') && !e.ctrlKey && !e.metaKey) {
+          if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
+          if (document.getElementById('keyboardOverlay').classList.contains('show')) return;
+          if (overview.classList.contains('show')) return;
+          resetPresenterTimer();
+        }
+      });
+    })();
+    </script>
   </body>
 </html>
+

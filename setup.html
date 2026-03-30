@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Setup Guide | WIA-Europe AI-W Workshop</title>
     <meta name="description" content="Prepare your environment for the AI Workshop. Install VS Code and Gemini CLI to participate in hands-on agentic AI exercises." />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <a href="#main-content" class="skip-to-content">Skip to Content</a>
     <header>
       <nav class="navbar">
         <div class="logo"><a href="index.html">WIA-Europe <span class="highlight">AI-W</span></a></div>
@@ -26,12 +28,16 @@
       </nav>
     </header>
 
-    <main>
+    <main id="main-content">
       <section class="page-hero">
         <div class="breadcrumb"><a href="index.html">Home</a> / <a href="presentation.html">Presentation</a> / Setup Guide</div>
         <div class="module-badge">Pre-Workshop</div>
         <h1>Setup <span class="gradient-text">Guide</span></h1>
         <p class="page-subtitle">Complete these steps <strong>before May 6th</strong> so you can follow along during the live session.</p>
+        <div class="reading-time">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          ~10 min to complete
+        </div>
       </section>
 
       <div class="tutorial-content">
@@ -216,6 +222,20 @@ npm --version</div>
       </div>
     </footer>
 
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+      &#8593;
+    </button>
+
     <script src="script.js"></script>
+    <script>
+      (function() {
+        const btn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+          btn.classList.toggle('visible', window.scrollY > 400);
+        }, { passive: true });
+      })();
+    </script>
   </body>
 </html>
+
